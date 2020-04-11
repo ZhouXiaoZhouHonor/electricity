@@ -1,0 +1,12 @@
+@charset "UTF-8";
+.ze-operator-div{
+	width:500px;
+	/* border:1px solid black; */
+	margin:auto; 
+	position:absolute;
+	top:15%;
+	left:35%;
+}
+.ze-width{
+	width:350px;
+}

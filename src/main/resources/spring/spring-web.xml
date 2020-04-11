@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- 配置springMVC -->
+	<!-- 1.开启SpringMVC注解模式 -->
+	<mvc:annotation-driven />
+
+	<!-- 2.静态资源默认servlet配置 （1）加入对静态资源的处理：js,gif,png。不通过拦截器进行拦截，默认交由servlet去处理 
+		（2）允许使用"/"做整体映射 -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+	<mvc:default-servlet-handler />
+
+	<!-- 3.定义视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/html/"></property><!-- 利用该文件夹的安全性 -->
+		<property name="suffix" value=".html"></property>
+	</bean>
+	
+	<!-- 文件上传解析器,需要响应的jar包 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 尺寸，1024*1024*20 -->
+		<property name="maxUploadSize" value="20971520"></property>
+		<!-- 内存 -->
+		<property name="maxInMemorySize" value="20971520"></property>
+	</bean>
+	
+	<!-- 4.扫描web相关的bean -->
+	<context:component-scan base-package="com.ze.zhou.web" />
+</beans>

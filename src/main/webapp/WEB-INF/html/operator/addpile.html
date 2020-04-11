@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="../resources/layui/css/layui.css">
+<link rel="stylesheet" href="../resources/css/common/common.css">
+<link rel="stylesheet" href="../resources/css/map/addpile.css">
+<body>
+<div class="ze-operator-div">
+	<div class="layui-fluid"><!-- layui-container -->
+	<form id="add-pile-form" class="layui-form" action="" lay-filter="addPileForm" method="post" enctype="multipart/form-data" >
+	<!-- 区域信息 -->
+	<div class="layui-row">
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">充电桩区域</label>
+    		<div class="layui-input-block ze-width">
+      			<select name="area" lay-verify="required" id="area-list" 
+      				lay-filter="arealist">
+        			<option value=""></option>
+			        <!-- <option value="0">北京</option>
+			        <option value="1">上海</option>
+			        <option value="2">广州</option>
+			        <option value="3">深圳</option>
+			        <option value="4">杭州</option> -->
+      			</select>
+    		</div>
+  		</div>
+  	</div>
+  	
+  	<!-- 坐标系(相当于充电站) -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		<label class="layui-form-label">充电桩站点</label>
+    		<div class="layui-input-block ze-width">
+      			<select name="coordinate" lay-verify="required" id="coordinate-list" 
+      				lay-filter="coordinatelist">
+        			<option value=""></option>
+			        <!-- <option value="0">北京</option>
+			        <option value="1">上海</option>
+			        <option value="2">广州</option>
+			        <option value="3">深圳</option>
+			        <option value="4">杭州</option> -->
+      			</select>
+    		</div>
+  		</div>
+  	</div>
+  	<!-- 站点位置选择 (跟电影院选座位差不多)-->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+  			<label class="layui-form-label">充电桩编号</label>
+  			<div class="layui-input-block ze-width">
+    			<input type="text" name="pileCoordinateNumber" required lay-verify="required" 
+    			placeholder="请选择充电桩编号" autocomplete="off" class="layui-input" 
+    			lay-filter="pileCoordinateNumber" id="pile-number">
+  			</div>
+  		</div>
+  	</div>
+  	
+  <!-- 充电桩图片 -->
+  <!-- 添加一张图片即可，不需要添加多张 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+  			<label class="layui-form-label">充电桩图片</label>
+  			<div class="layui-input-block ze-width">
+    			<input id="pile-img" type="file" name="pileImg" required lay-verify="required" 
+    			placeholder="请选择图片" autocomplete="off" class="layui-input">
+  			</div>
+  		</div>
+  	</div>
+  <!-- 充电桩介绍 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item layui-form-text">
+    		<label class="layui-form-label">详细描述</label>
+    		<div class="layui-input-block ze-width">
+      			<textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+    		</div>
+  		</div>
+  	</div>
+  <!-- 验证码 -->
+  	<div class="layui-row">
+    	<div class="layui-col-md8">
+    		<div class="layui-form-item">
+  				<label class="layui-form-label">验证码</label>
+  				<div class="layui-input-block ze-width">
+    				<input type="text" name="pileKaptcha" required lay-verify="required" 
+    					placeholder="请输入验证码" autocomplete="off" class="layui-input" 
+    						lay-filter="kaptcha" id="pile-kaptcha">
+  				</div>
+  			</div>
+    	</div>
+    	<div class="layui-col-md2">
+  		<!-- 验证码 -->
+			<img id="kaptcha_img" alt="点击更换"  title="点击更换"  
+				onclick="changeVerifyCode(this)" 
+				src="../Kaptcha"><!-- 资源是放在web.xml下的servlet中 -->
+    	</div>
+  	</div>
+  <!-- 提交按钮 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		<div class="layui-input-block">
+      			<button class="layui-btn" lay-submit lay-filter="addPileSubmit">立即提交</button>
+      			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    		</div>
+  		</div>
+  	</div>
+</form>
+</div>
+</div>
+
+</body>
+<script src="../resources/layui/layui.js"></script>
+<script src="../resources/js/common/common.js"></script>
+<script src="../resources/js/operator/addpile.js"></script>
+</html>

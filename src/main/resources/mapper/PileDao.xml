@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.PileDao">
+	<!-- 充电桩的映射，与管理员、区域信息，电信息存在一对多关系。 -->
+	<resultMap type="com.ze.zhou.entity.Pile" id="pileMap">
+		<id column="pile_id" property="pileId"/>
+		<result column="pile_name" property="pileName"/>
+		<result column="pile_longitude" property="pileLongitude"/>
+		<result column="pile_latitude" property="pileLatitude"/>
+		<result column="pile_img" property="pileImg"/>
+		<result column="pile_enable_status" property="pileEnableStatus"/>
+		<result column="create_time" property="createTime"/>
+		<result column="last_edit_time" property="lastEditTime"/>
+		<result column="pile_addr" property="pileAddr"/>
+		<result column="pile_desc" property="pileDesc"/>
+		<result column="pile_number" property="pileNumber"/>
+		<!-- 区域信息映射 -->
+		<association column="area_id" property="area" javaType="com.ze.zhou.entity.Area">
+			<id column="area_id" property="areaId" />
+			<result column="area_name" property="areaName" />
+			<!-- 其他字段暂时不写 -->
+			<!-- <result column="area_priority" property="area_priority" /> -->
+		</association>
+		<!-- 坐标点映射(相当于充电站) -->
+		<association property="coordinate" column="coordinate_id" 
+		javaType="com.ze.zhou.entity.Coordinate">
+			<id property="coordinateId" column="coordinate_id"/>
+			<result property="coordinateName" column="coordinate_name"/>
+			<result property="coordinatePileNumber" column="coordinate_pile_number"/>
+			<!-- 其他字段暂时不写 -->
+		</association>
+		<!-- 所属管理员映射 -->
+		<association property="operator" column="owner_id" 
+		javaType="com.ze.zhou.entity.Operator">
+			<id property="operatorId" column="operator_id"/>
+			<result property="operatorName" column="operator_name"/>
+			<result property="operatorImg" column="operator_img"/>
+		</association>
+		
+		<!-- 充电桩数据映射 -->
+		<!-- 
+		<association property="">
+			
+		</association>
+		 -->
+	</resultMap>
+	
+	<!-- 根据条件获取pileList -->
+	<select id="queryPileList" resultMap="pileMap">
+		SELECT
+		p.pile_id,
+    	p.pile_name,
+     	p.pile_longitude,
+     	p.pile_latitude,
+    	p.pile_img,
+     	p.pile_enable_status,
+     	p.create_time,
+     	p.last_edit_time,
+   		p.pile_addr,
+     	p.pile_desc,
+     	p.pile_number,
+     	a.area_id,
+    	a.area_name,
+    	c.coordinate_id,
+    	c.coordinate_name,
+    	c.coordinate_pile_number,
+    	o.operator_id,
+    	o.operator_name,
+    	o.operator_img
+     	FROM
+     	tb_pile p,
+     	tb_area a,
+     	tb_coordinate c,
+     	tb_operator o
+     	<where>
+     		<!-- 通过coordinate_id获取对应的pile -->
+     		<if test="pileCondition.coordinate!=null and pileCondition.coordinate.coordinateId!=null and 
+     		pileCondition.coordinate.coordinateId>0">
+     			and p.coordinate_id=#{pileCondition.coordinate.coordinateId}
+     		</if>
+     		<!-- 通过area_id获取对应的pile -->
+     		<if test="pileCondition.area!=null and pileCondition.area.areaId!=null and 
+     		pileCondition.area.areaId>0">
+     			and p.area_id=#{pileCondition.area.areaId}
+     		</if>
+     		<!-- 通过operator_id获取对应的pile -->
+     		<if test="pileCondition.operator!=null and pileCondition.operator.operatorId!=null and 
+     		pileCondition.operator.operatorId>0">
+     			and p.owner_id=#{pileCondition.operator.operatorId}
+     		</if>
+     		<!-- 通过名字进行模糊查询 -->
+     		<if test="pileCondition!=null and pileCondition.pileName!=null and 
+     		!('').equals(pileCondition.pileName)">
+     			and p.pile_name like '%${pileCondition.pileName}%'
+     		</if>
+     		<!-- 
+     		<if test=""></if>
+     		<if test=""></if>
+     		<if test=""></if>
+     		<if test=""></if>
+     		 -->
+     	</where>
+     	AND
+     	p.area_id=a.area_id
+     	AND
+     	p.coordinate_id=c.coordinate_id
+     	AND
+     	p.owner_id=o.operator_id
+     	AND 
+     	p.pile_enable_status=1
+     	ORDER BY
+     	p.pile_id
+     	DESC
+     	LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<!-- 根据查询pileList一样的相同条件，在该条件下有多少数量的pileList --><!-- 用于分页展示 -->
+	<select id="queryPileCount" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		tb_pile p,
+     	tb_area a,
+     	tb_coordinate c,
+     	tb_operator o
+     	<where>
+     		<!-- 通过coordinate_id获取对应的pile -->
+     		<if test="pileCondition.coordinate!=null and pileCondition.coordinate.coordinateId!=null and 
+     		pileCondition.coordinate.coordinateId>0">
+     			and p.coordinate_id=#{pileCondition.coordinate.coordinateId}
+     		</if>
+     		<!-- 通过area_id获取对应的pile -->
+     		<if test="pileCondition.area!=null and pileCondition.area.areaId!=null and 
+     		pileCondition.area.areaId>0">
+     			and p.area_id=#{pileCondition.area.areaId}
+     		</if>
+     		<!-- 通过operator_id获取对应的pile -->
+     		<if test="pileCondition.operator!=null and pileCondition.operator.operatorId!=null and 
+     		pileCondition.operator.operatorId>0">
+     			and p.owner_id=#{pileCondition.operator.operatorId}
+     		</if>
+     		<!-- 通过名字进行模糊查询 -->
+     		<if test="pileCondition!=null and pileCondition.pileName!=null and 
+     		!('').equals(pileCondition.pileName)">
+     			and p.pile_name like '%${pileCondition.pileName}%'
+     		</if>
+     	</where>
+     	AND
+     	p.area_id=a.area_id
+     	AND
+     	p.coordinate_id=c.coordinate_id
+     	AND
+     	p.owner_id=o.operator_id
+     	AND 
+     	p.pile_enable_status=1
+	</select>
+	
+	<!-- 通过id获取单个pile -->
+	<select id="queryPileById" resultType="com.ze.zhou.entity.Pile" parameterType="Long">
+		SELECT
+		p.pile_id,
+    	p.pile_name,
+     	p.pile_longitude,
+     	p.pile_latitude,
+    	p.pile_img,
+     	p.pile_enable_status,
+     	p.create_time,
+     	p.last_edit_time,
+   		p.pile_addr,
+     	p.pile_desc,
+     	p.pile_number,
+     	a.area_id,
+    	a.area_name
+     	FROM
+     	tb_pile p,
+     	tb_area a
+     	<where>
+     		<if test="pileId!=null and pileId>0">
+     			and p.pile_id=#{pileId}
+     		</if>
+     	</where>
+     	AND
+     	p.area_id=a.area_id
+     	AND 
+     	p.pile_enable_status=1
+	</select>
+	
+	<!-- 增加充电桩 -->
+	<insert id="insertPile" useGeneratedKeys="true"
+		keyColumn="pile_id" keyProperty="pileId">
+		INSERT INTO
+		tb_pile
+		(pile_name,
+     	pile_longitude,
+     	pile_latitude,
+    	pile_img,
+     	pile_enable_status,
+     	create_time,
+     	last_edit_time,
+   		pile_addr,
+     	pile_desc,
+     	area_id,
+     	owner_id,
+     	coordinate_id,
+     	pile_number
+     	)
+     	VALUES
+     	(#{pileName},
+     	#{pileLongitude},
+     	#{pileLatitude},
+     	#{pileImg},
+     	#{pileEnableStatus},
+     	#{createTime},
+     	#{lastEditTime},
+     	#{pileAddr},
+     	#{pileDesc},
+     	#{area.areaId},
+     	#{operator.operatorId},
+     	#{coordinate.coordinateId},
+     	#{pileNumber}
+     	)
+	</insert>
+	
+	<!-- 更新充电桩信息 -->
+	<update id="updatePile" parameterType="com.ze.zhou.entity.Pile">
+		UPDATE tb_pile 
+		<set>
+			<if test="pileName!=null">pile_name=#{pileName},</if>
+			<if test="pileDesc!=null">pile_desc=#{pileDesc},</if>
+			<if test="pileAddr!=null">pile_addr=#{pileAddr},</if>
+			<if test="pileImg!=null">pile_img=#{pileImg},</if>
+			<if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
+			<if test="pileEnableStatus!=null">pile_enable_status=#{pileEnableStatus},</if>
+			<if test="area!=null">area_id=#{area.areaId},</if>
+			<if test="operator!=null">owner_id=#{operator.operatorId},</if>
+			<if test="coordinate!=null">coordinate_id=#{coordinate.coordinateId},</if>
+			<if test="pileLongitude!=null">pile_longitude=#{pileLongitude},</if>
+			<if test="pileLatitude!=null">pile_latitude=#{pileLatitude}</if>
+		</set>
+		WHERE
+		pile_id=#{pileId}
+	</update>
+	
+	<!-- 批量获取充电桩集合pileList -->
+	<!-- TODO -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

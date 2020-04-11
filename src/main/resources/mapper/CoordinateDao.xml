@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.CoordinateDao">
+
+	<resultMap type="com.ze.zhou.entity.Coordinate" id="coordinateMap">
+		<id property="coordinateId" column="coordinate_id"/>
+		<result property="coordinateLongitude" column="coordinate_longitude"/>
+		<result property="coordinateLatitude" column="coordinate_latitude"/>
+		<result property="createTime" column="create_time"/>
+		<result property="lastEditTime" column="last_edit_time"/>
+		<result property="priority" column="priority"/>
+		<result property="coordinateName" column="coordinate_name"/>
+		<result property="coordinatePileNumber" column="coordinate_pile_number"/>
+		<result property="coordinateEnableStatus" column="coordinate_enable_status"/>
+		<association property="area" column="area_id" javaType="com.ze.zhou.entity.Area">
+			<id property="areaId" column="area_id"/>
+		</association>
+	</resultMap>
+	<select id="queryCoordinate" parameterType="int" resultMap="coordinateMap">
+		SELECT
+		coordinate_id,  
+ 		coordinate_longitude,
+ 		coordinate_latitude,
+ 		create_time,    
+ 		last_edit_time,
+ 		area_id,
+ 		priority,
+ 		coordinate_name,
+ 		coordinate_pile_number,
+ 		coordinate_enable_status
+ 		FROM
+ 		tb_coordinate
+ 		WHERE
+ 		area_id=#{areaId}
+ 		AND 
+ 		coordinate_enable_status=1
+ 		ORDER BY
+ 		priority
+ 		DESC
+	</select>
+</mapper>
