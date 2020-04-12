@@ -3,3 +3,12 @@
 	width:400px;
 	height:400px;
 }
+
+#pileMessages span{
+	font-size:20px;
+	/* color:red; */
+}
+#pileMessages i{
+	font-size: 36px;
+	padding-right:5px;
+}

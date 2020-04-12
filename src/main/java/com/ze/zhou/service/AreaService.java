@@ -12,4 +12,6 @@ import com.ze.zhou.entity.Area;
 
 public interface AreaService {
 	List<Area> getQueryArea();
+	
+	List<Area> getQueryAreaByOperator(Area areaCondition);
 }

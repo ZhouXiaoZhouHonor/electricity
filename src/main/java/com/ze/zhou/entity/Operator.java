@@ -16,7 +16,6 @@ public class Operator {
 	private Integer operatorEnableStatus;//管理员账户号是否可用，1、可用；0、不可用
 	private Date createTime;//管理员创建时间
 	private Date lastEditTime;//管理员修改时间
-	private Area area;//管理员所能管辖的区域
 	
 	public Integer getOperatorId() {
 		return operatorId;
@@ -66,12 +65,4 @@ public class Operator {
 	public void setLastEditTime(Date lastEditTime) {
 		this.lastEditTime = lastEditTime;
 	}
-	public Area getArea() {
-		return area;
-	}
-	public void setArea(Area area) {
-		this.area = area;
-	}
-	
-	
 }

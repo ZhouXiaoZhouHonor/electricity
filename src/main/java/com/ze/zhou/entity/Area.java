@@ -13,6 +13,7 @@ public class Area {
 	private Integer areaPriority;
 	private Date createTime;
 	private Date lastEditTime;
+	private Operator operator;
 	public Integer getAreaId() {
 		return areaId;
 	}
@@ -42,6 +43,12 @@ public class Area {
 	}
 	public void setLastEditTime(Date lastEditTime) {
 		this.lastEditTime = lastEditTime;
+	}
+	public Operator getOperator() {
+		return operator;
+	}
+	public void setOperator(Operator operator) {
+		this.operator = operator;
 	}
 	
 	

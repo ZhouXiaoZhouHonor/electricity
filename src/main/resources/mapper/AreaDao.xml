@@ -15,4 +15,19 @@
 		area_priority
 		DESC
 	</select>
+	<select id="queryAreaByOperator" resultType="com.ze.zhou.entity.Area">
+		SELECT
+		area_id,
+		area_name,
+		area_priority,
+		create_time,
+		last_edit_time
+		FROM 
+		tb_area
+		WHERE
+		operator_id=#{areaCondition.operator.operatorId}
+		ORDER BY
+		area_priority
+		DESC
+	</select>
 </mapper>

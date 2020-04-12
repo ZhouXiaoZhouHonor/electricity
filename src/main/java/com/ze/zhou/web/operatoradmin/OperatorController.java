@@ -104,13 +104,19 @@ public class OperatorController {
 	}
 	
 	//获取注册充电桩的初始化信息，区域、coordinate
-	//获取区域信息
+	//获取区域信息,需要根据operatorId来进行判断
 	@RequestMapping(value="/getarealist",method=RequestMethod.GET)
 	@ResponseBody
 	private Map<String,Object> getAreaList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
+		//TODO 从session中获取area
+		//目前使用设值注入的方式，将operatorId写死
+		Operator operator=new Operator();
+		operator.setOperatorId(1);
+		Area areaCondition=new Area();
+		areaCondition.setOperator(operator);
 		//获取所有的区域信息
-		List<Area> areaList=areaService.getQueryArea();
+		List<Area> areaList=areaService.getQueryAreaByOperator(areaCondition);
 		modelMap.put("success", true);
 		modelMap.put("areaList", areaList);
 		return modelMap;

@@ -25,5 +25,12 @@ public class AreaServiceImpl implements AreaService{
 		// TODO Auto-generated method stub
 		return areaDao.queryArea();
 	}
+	
+	@Override
+	public List<Area> getQueryAreaByOperator(Area areaCondition) {
+		// TODO Auto-generated method stub
+		
+		return areaDao.queryAreaByOperator(areaCondition);
+	}
 
 }
