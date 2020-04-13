@@ -8,6 +8,7 @@ layui.use(['form','layer','jquery','element'],function(){
 	var element=layui.element;
 	var coordinateList;//站点集合对象
 	var coordinateId;//站点Id
+	//var coordinateNumber;//保存站点中可容纳充电桩数量的值
 	var pileList;//充电桩集合对象
 	var pileNumberIndex;//座位号弹出层的序号
 	var isAddPileIndex;//是否继续添加充电桩的弹出层的序号
@@ -58,7 +59,8 @@ layui.use(['form','layer','jquery','element'],function(){
 	//当coordinate发生改变时，需要将该站点下还有几个可用的充电桩显示出来其座位号
 	form.on('select(coordinatelist)',function(data){
 		coordinateId=data.value;
-		var coordinateNumberUrl='/zhou/operator/getpilelist?coordinateId='+coordinateId;
+		var coordinateNumberUrl='/zhou/operator/getpilelist?coordinateId='+
+		coordinateId+'&pageSize=50';//pagesize写死
 		$.getJSON(coordinateNumberUrl,function(data){
 			if(data.success){//向充电站插入选位置的html进行选择
 				pileList=data.pileList;
@@ -139,7 +141,7 @@ layui.use(['form','layer','jquery','element'],function(){
 				//console.log('寻找经纬度2');
 				//添加经纬度
 				pile.pileLongitude=item.coordinateLongitude;//经度不变
-				pile.pileLatitude=item.coordinateLatitude+0.000002*pileData.pileCoordinateNumber;//纬度变
+				pile.pileLatitude=item.coordinateLatitude+0.00004*pileData.pileCoordinateNumber;//纬度变，每隔4米放一个充电桩
 				pile.pileName=item.coordinateName+pileData.pileCoordinateNumber;//充电桩名称
 			}
 		});

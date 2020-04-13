@@ -19,23 +19,15 @@ layui.use(['jquery','table','layer','element'],function(){
 			'<div class="layui-col-md3">'+
 				'<label class="layui-form-label">名称查询</label>'+
 				'<div class="layui-input-block">'+
-					'<input id="zhouze" type="text" name="title" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">'+
+					'<input id="pile-list-name" type="text" name="title" required  lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">'+
 				'</div>'+
 			'</div>'+
 			'<div class="layui-col-md3">'+
 				'<label class="layui-form-label">区域查询</label>'+
 				'<div class="layui-input-block">'+
-					'<select name="city" lay-verify="required" class="layui-input">'+
+					'<select id="pile-list-area" name="city" lay-verify="required" class="layui-input">'+
 						'<option value="">请选择</option>'+
-						'<option value="0">北京</option>'+
-						'<option value="1">上海</option>'+
 					'</select>'+
-				'</div>'+
-			'</div>'+
-			'<div class="layui-col-md3">'+
-				'<label class="layui-form-label">站点查询</label>'+
-				'<div class="layui-input-block">'+
-					'<input type="text" name="title" required  lay-verify="required" placeholder="请选择站点" autocomplete="off" class="layui-input">'+
 				'</div>'+
 			'</div>'+
 		'</div>'+
@@ -47,6 +39,12 @@ layui.use(['jquery','table','layer','element'],function(){
 	'<a class="layui-btn layui-btn-xs detail" lay-event="detail">查看</a>'+
 	'<a class="layui-btn layui-btn-xs edit" lay-event="edit">编辑</a>'+
 	/*'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>'+*/
+	/*'<div class="layui-col-md3">'+
+	'<label class="layui-form-label">站点查询</label>'+
+	'<div class="layui-input-block">'+
+		'<input type="text" name="title" required  lay-verify="required" placeholder="请选择站点" autocomplete="off" class="layui-input">'+
+	'</div>'+
+	'</div>'+*//*站点查询就不要了*/
 	'</script>';
 	//动态添加HTML和表单
 	//需要将方法暴露出来才可以让别的js文件中的layui.use()进行调用
@@ -57,27 +55,60 @@ layui.use(['jquery','table','layer','element'],function(){
 		exports('pileTable',function(){
 			//先将样式插入进去，搜索框的样式
 			$('.layui-body').html(html);
-			//TODO 需要另外将该操作员下的所有管理的区域以及站点全部列出来。方便查询
-			
+			//需要另外将该操作员下的所有管理的区域全部列出来。方便查询
+			pileListAreaAndCoordianteInit();
 			//获取该管理员下的所有充电桩信息列表
-			pileListTable(table);
+			var operatorPileUrl='http://localhost:8080/zhou/operator/getpilelist';
+			pileListTable(table,operatorPileUrl);
 			//对操作栏的按钮进行事件监听
 			watchPileList(table,layer);
-			//
+			//TODO 对搜索框进行监听，主要是监听按照名称查询的模糊查询信息
+			watchPileListInput(table);
 		});
 	});
 	
+	//对搜索框进行监听，主要是监听按照名称查询的模糊查询信息
+	function watchPileListInput(table){
+		//按名字模糊查询
+		$('#pile-list-name').on('change',function(){
+			var pileName=$('#pile-list-name').val();//获取输入框中的信息
+			alert(pileName);
+			var operatorPileByNameUrl='http://localhost:8080/zhou/operator/getpilelist?pileName='+pileName;
+			pileListTable(table,operatorPileByNameUrl);
+		});
+		//按区域信息查询
+		$('#pile-list-area').on('change',function(e){
+			var areaId=$("#pile-list-area option:selected").val();
+			//alert('改变了:'+$("#pile-list-area option:selected").val());
+			var operatorPileByAreaUrl='http://localhost:8080/zhou/operator/getpilelist?areaId='+areaId;
+			pileListTable(table,operatorPileByAreaUrl);
+		});
+	}
+	
 	//获取该管理员下的所有区域信息以及站点信息
 	function pileListAreaAndCoordianteInit(){
-		//var get
-		$.getJSON();
+		var getOperatorArea='/zhou/operator/getarealist';
+		var getOperatorCoordinate='/zhou/operator/getarealist';
+		//获取区域信息
+		$.getJSON(getOperatorArea,function(data){
+			if(data.success){
+				var areaList=data.areaList;
+				var areaHtml='';
+				areaList.map(function(item,index){
+					areaHtml+='<option value="'+item.areaId+'">'+item.areaName+'</option>';
+				});
+				$('#pile-list-area').append(areaHtml);
+			}else{
+				//layer.msg();
+			}
+		});
 	}
 	
 	//获取该管理员下的所有充电桩信息列表
-	function pileListTable(table){
+	function pileListTable(table,pileUrl){
 		table.render({
 			elem:'#pile-table',
-			url:'http://localhost:8080/zhou/operator/getpilelist',
+			url:pileUrl,
 			method:'get',
 			request:{
 				pageName:'pageIndex',

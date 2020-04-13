@@ -24,4 +24,7 @@ public interface PileService {
 	
 	//获取充电桩集合
 	PileExecution getPileList(Pile pile,int pageIndex,int pageSize);
+	
+	//获取某一条件下，该充电桩的总数
+	int getQueryPileListCount(Pile pile);
 }

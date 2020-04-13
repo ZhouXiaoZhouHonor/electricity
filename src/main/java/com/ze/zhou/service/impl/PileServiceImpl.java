@@ -121,7 +121,13 @@ public class PileServiceImpl implements PileService{
 	public PileExecution getPileList(Pile pile,int pageIndex,int pageSize) {
 		//分页功能的实现
 		//获得起始位置和需要获取的数量
-		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		int rowIndex = 0;
+		if(pageIndex==-1&&pageSize==-1) {
+			pageIndex=0;
+			pageSize=-1;
+		}else {
+			rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		} 
 		List<Pile> pileList=null;
 		int pileCount=0;
 		PileExecution pe=new PileExecution();
@@ -134,5 +140,12 @@ public class PileServiceImpl implements PileService{
 			pe.setState(PileStateEnum.NULL_PILE.getState());
 		}
 		return pe;
+	}
+
+	//获取条件下充电桩的总数
+	@Override
+	public int getQueryPileListCount(Pile pile) {
+		// TODO Auto-generated method stub
+		return pileDao.queryPileCount(pile);
 	}
 }

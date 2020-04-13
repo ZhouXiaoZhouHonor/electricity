@@ -35,6 +35,5 @@ public interface PileDao {
 	
 	//获取查询的pile总数
 	int queryPileCount(@Param("pileCondition") Pile pileCondition);
-	//批量添加充电桩
-	/* int addPileList(List<Pile> pileList); */
+	
 }

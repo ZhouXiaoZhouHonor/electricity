@@ -3,12 +3,14 @@ package com.ze.zhou.service;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ze.zhou.BaseTest;
+import com.ze.zhou.dto.PileExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Operator;
@@ -26,6 +28,18 @@ public class PileServiceTest extends BaseTest{
 	private PileService pileService;
 	
 	@Test
+	public void getPileListTest() {
+		Operator op=new Operator();
+		op.setOperatorId(1);
+		Pile pile=new Pile();
+		pile.setOperator(op);
+		int pageSize=pileService.getQueryPileListCount(pile);
+		PileExecution pe=pileService.getPileList(pile, 0, pageSize);
+		System.out.println(pe.getPileList().size());
+	}
+	
+	@Test
+	@Ignore
 	public void addPileTest() {
 		Pile pile=new Pile();
 		pile.setPileName("充电桩4");

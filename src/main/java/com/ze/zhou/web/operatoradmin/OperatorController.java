@@ -57,23 +57,37 @@ public class OperatorController {
 	@ResponseBody
 	private Map<String,Object> getPileList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
-		//TODO 暂时只有coordinateId,后面还会有别的参数
+		//TODO 从session中获取operatorId
+		//先使用设值注入的方法
+		Operator operator=new Operator();
+		operator.setOperatorId(1);
+		//设置充电桩的传值对象
+		Pile pileCondition=new Pile();
+		pileCondition.setOperator(operator);
 		//从路径中取出参数:coordinateId
 		int coordinateId=HttpServletRequestUtil.getInt(request, "coordinateId");
 		//从路径中获取页码和条数
 		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
 		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
-		//TODO 从session中获取operatorId
-		//先使用设值注入的方法
-		Operator operator=new Operator();
-		operator.setOperatorId(1);
-		if(coordinateId>0||(operator!=null&&operator.getOperatorId()>0)||(pageIndex>=0&&pageSize>0)) {
+		
+		//如果分页需要的参数没有传递过来，那么需要先获取该管理员下有多少充电桩的数量,防止分页无法获得，造成sql查询失败
+		if(pageIndex<0&&pageSize<0) {
+			pageSize=pileService.getQueryPileListCount(pileCondition);
+		}
+		//从路径中获取充电桩名称
+		String pileName=HttpServletRequestUtil.getString(request, "pileName");
+		//从路径中获取区域信息
+		int areaId=HttpServletRequestUtil.getInt(request, "areaId");
+		
+		if(coordinateId>0||(operator!=null&&operator.getOperatorId()>0)||(pageIndex>=0&&pageSize>0)||pileName!=null||areaId>0) {
 			//创建查询对象
-			Pile pileCondition=new Pile();
 			Coordinate coordinate=new Coordinate();
 			coordinate.setCoordinateId(coordinateId);
 			pileCondition.setCoordinate(coordinate);
-			pileCondition.setOperator(operator);
+			pileCondition.setPileName(pileName);
+			Area area=new Area();
+			area.setAreaId(areaId);
+			pileCondition.setArea(area);
 			PileExecution pe=pileService.getPileList(pileCondition,pageIndex,pageSize);
 			logger.info("获取pileList成功");
 			modelMap.put("success", true);
@@ -217,6 +231,4 @@ public class OperatorController {
 			return modelMap;
 		}
 	}
-	
-	
 }
