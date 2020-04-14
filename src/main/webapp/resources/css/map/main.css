@@ -12,75 +12,88 @@
 	margin-top:15px;
 }
 
+/*地图上的信息*/
+#infoWindow-pileImage{
+	width:100px;
+	height:80px;
+}
+
 /* 地图的信息窗体样式 */
  .content-window-card {
-            position: relative;
-            box-shadow: none;
-            bottom: 0;
-            left: 0;
-            width: auto;
-            padding: 0;
-        }
+ 	position: relative;
+    box-shadow: none;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    padding: 0;
+}
 
-        .content-window-card p {
-            height: 2rem;
-        }
+.content-window-card p {
+	height: 2rem;
+}
 
-        .custom-info {
-            border: solid 1px silver;
-        }
+.custom-info {
+	border: solid 1px silver;
+}
 
-        div.info-top {
-            position: relative;
-            background: none repeat scroll 0 0 #F9F9F9;
-            border-bottom: 1px solid #CCC;
-            border-radius: 5px 5px 0 0;
-        }
+div.info-top {
+	position: relative;
+    background: none repeat scroll 0 0 #F9F9F9;
+    border-bottom: 1px solid #CCC;
+    border-radius: 5px 5px 0 0;
+}
 
-        div.info-top div {
-            display: inline-block;
-            color: #333333;
-            font-size: 14px;
-            font-weight: bold;
-            line-height: 31px;
-            padding: 0 10px;
-        }
+div.info-top div {
+    display: inline-block;
+    color: #333333;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 31px;
+    padding: 0 10px;
+}
 
-        div.info-top img {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            transition-duration: 0.25s;
-        }
+div.info-top img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition-duration: 0.25s;
+}
 
-        div.info-top img:hover {
-            box-shadow: 0px 0px 5px #000;
-        }
+div.info-top img:hover {
+    box-shadow: 0px 0px 5px #000;
+}
 
-        div.info-middle {
-            font-size: 12px;
-            padding: 10px 6px;
-            line-height: 20px;
-        }
+div.info-middle {
+    font-size: 12px;
+    padding: 10px 6px;
+    /* line-height: 20px; */
+    line-height:50px;;
+}
 
-        div.info-bottom {
-            height: 0px;
-            width: 100%;
-            clear: both;
-            text-align: center;
-        }
+div.info-bottom {
+	height: 0px;
+    width: 100%;
+    clear: both;
+    text-align: center;
+}
 
-        div.info-bottom img {
-            position: relative;
-            z-index: 104;
-        }
+div.info-bottom img {
+    position: relative;
+    z-index: 104;
+}
 
-        span {
-            margin-left: 5px;
-            font-size: 11px;
-        }
+span {
+    margin-left: 5px;
+    font-size: 11px;
+}
 
-        .info-middle img {
-            float: left;
-            margin-right: 6px;
-        }
+.info-middle img {
+    float: left;
+    margin-right: 6px;
+}
+
+/*给消息窗体内容添加样式*/
+.infowindow-font{
+	font-size:14px;
+	font-weight:bold;
+}

@@ -34,15 +34,7 @@ function mainMapInit(jquery){
 	    zooms:[3,20],//级别范围
 	    center:[117.254932,31.751945],//中心点坐标
 	});
-	//异步加载高德地图
-	function loadScript() {
-		var url='https://webapi.amap.com/maps?v=1.4.15&key=22744305285882a70dbdcad3f5e8fb77&callback=onLoad';
-		var jsapi=document.createElement('script');
-		jsapi.charset='utf-8';
-		jsapi.src=url;
-		document.body.appendChild(jsapi);
-	}
-	window.onreadystatechange=loadScript;
+	
 	
 	//获取该管理员的所有充电桩
 	var getPileListUrl='/zhou/operator/getpilelist';
@@ -70,6 +62,90 @@ function mainMapInit(jquery){
 	});
 }
 
+//定义信息窗体函数
+function makeInfoWindow(pile,map){
+	var title=pile.pileName;//信息窗体的标题
+	var content=[];//信息窗体的主体内容
+	//使用layui对内容进行布局
+	var infoWindow_layui=''+
+	'<div class="layui-fluid">'+
+		'<div class="layui-row">'+
+			'<div class="layui-col-md7">'+
+				'<img id="infoWindow-pileImage" src="'+pile.pileImg+'"/>'+
+			'</div>'+
+			'<div class="layui-col-md5">'+
+				'<div class="layui-row infowindow-font">'+
+					'管理员:'+pile.operator.operatorName+
+				'</div>'+
+				'<div class="layui-row infowindow-font">'+
+					'运行状态:'+(pile.pileEnableStatus==1?'<span style="color:#00ff33;font-size:16px;">良好</span>':'<span style="color:red;font-size:16px;">故障</span>')+
+				'</div>'+
+			'</div>'+
+		'</div>'+
+		'<div class="layui-row infowindow-font">'+
+			'地址:'+pile.pileAddr+
+		'</div>'+
+		'<div class="layui-row infowindow-font" >'+
+			'<button type="button" class="layui-btn layui-btn-radius layui-btn-normal">'+
+				'<i class="iconfont layui-icon-extendshishijiance-copy-copy"></i>'+
+			'</button>'+
+		'</div>'+
+	'</div> ';
+	content.push(infoWindow_layui);
+	return  new AMap.InfoWindow({
+	    isCustom: true,  //使用自定义窗体
+	    size:new AMap.Size(400,200),
+	    content:createInfoWindow(title, content.join("<br/>"),map),
+	    offset: new AMap.Pixel(16,-45)
+	});
+}
+//构建自定义信息窗体
+function createInfoWindow(title,content,map) {
+    var info = document.createElement("div");
+    info.className= "custom-info input-card content-window-card";
+
+    //可以通过下面的方式修改自定义窗体的宽高
+    //info.style.width = "400px";
+    // 定义顶部标题
+    var top = document.createElement("div");
+    var titleD = document.createElement("div");
+    var closeX = document.createElement("img");//信息窗体上的‘叉’图片
+    top.className = "info-top";
+    titleD.innerHTML = title;
+    closeX.src = "https://webapi.amap.com/images/close2.gif";
+    //关闭信息窗体
+    closeX.onclick=function(){
+    	map.clearInfoWindow();
+    }
+    
+    top.appendChild(titleD);
+    top.appendChild(closeX);
+    info.appendChild(top);
+
+    // 定义中部内容
+    var middle = document.createElement("div");
+    middle.className="info-middle";
+    middle.style.backgroundColor='white';
+    middle.innerHTML=content;
+    info.appendChild(middle);
+
+    // 定义底部内容
+    var bottom=document.createElement("div");
+    bottom.className="info-bottom";
+    bottom.style.position='relative';
+    bottom.style.top='0px';
+    bottom.style.margin='0 auto';
+    var sharp=document.createElement("img");
+    sharp.src="https://webapi.amap.com/images/sharp.png";
+    bottom.appendChild(sharp);
+    info.appendChild(bottom);
+    return info;
+}
+//关闭信息窗体
+/*function closeInfoWindow() {
+    map.clearInfoWindow();
+}*/
+
 //定义图标函数
 function makePileIcon(){
 	return new AMap.Icon({
@@ -91,68 +167,6 @@ function makePileMarker(icon,pile){
         title:pile.pileAddr
     });
 }
-
-//定义信息窗体函数
-function makeInfoWindow(pile,map){
-	var title=pile.pileName;//信息窗体的标题
-	var content=[];//信息窗体的主体内容
-	content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
-	content.push("电话：010-64733333");
-	content.push("<a href='https://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
-	return  new AMap.InfoWindow({
-	    isCustom: true,  //使用自定义窗体
-	    content:createInfoWindow(title, content.join("<br/>"),map),
-	    offset: new AMap.Pixel(16,-45)
-	});
-}
-//构建自定义信息窗体
-function createInfoWindow(title, content,map) {
-    var info = document.createElement("div");
-    info.className = "custom-info input-card content-window-card";
-
-    //可以通过下面的方式修改自定义窗体的宽高
-    //info.style.width = "400px";
-    // 定义顶部标题
-    var top = document.createElement("div");
-    var titleD = document.createElement("div");
-    var closeX = document.createElement("img");
-    top.className = "info-top";
-    titleD.innerHTML = title;
-    closeX.src = "https://webapi.amap.com/images/close2.gif";
-    //关闭信息窗体
-    closeX.onclick=function(){
-    	map.clearInfoWindow();
-    }
-    
-    top.appendChild(titleD);
-    top.appendChild(closeX);
-    info.appendChild(top);
-
-    // 定义中部内容
-    var middle = document.createElement("div");
-    middle.className = "info-middle";
-    middle.style.backgroundColor = 'white';
-    middle.innerHTML = content;
-    info.appendChild(middle);
-
-    // 定义底部内容
-    var bottom = document.createElement("div");
-    bottom.className = "info-bottom";
-    bottom.style.position = 'relative';
-    bottom.style.top = '0px';
-    bottom.style.margin = '0 auto';
-    var sharp = document.createElement("img");
-    sharp.src = "https://webapi.amap.com/images/sharp.png";
-    bottom.appendChild(sharp);
-    info.appendChild(bottom);
-    return info;
-}
-//关闭信息窗体
-/*function closeInfoWindow() {
-    map.clearInfoWindow();
-}*/
-
-
 
 
 
