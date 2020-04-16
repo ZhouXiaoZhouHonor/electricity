@@ -17,12 +17,6 @@ public class PageAdmin {
 		return "operator/main";
 	}
 	
-	//test包下测试用的
-	/*
-	 * @RequestMapping(value="/map",method=RequestMethod.GET) private String map() {
-	 * return "test/map"; }
-	 */
-	
 	@RequestMapping("/addpile")
 	private String addPile() {
 		return "operator/addpile";

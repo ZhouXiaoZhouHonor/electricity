@@ -1,5 +1,9 @@
 package com.ze.zhou.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -54,5 +58,29 @@ public class HttpServletRequestUtil {
 			}catch(Exception e) {
 				return null;
 			}
+		}
+		//字符串转换成Date类型，字符串也是毫秒数
+		public static Date getDate(HttpServletRequest request,String key) {
+			DateFormat result=new SimpleDateFormat();
+			try {
+				Long dateChar=Long.valueOf(request.getParameter(key));
+				Date date=new Date();
+				if(dateChar!=null) {
+					date.setTime(dateChar);
+				}else {
+					dateChar=null;
+				}
+				return date;
+			}catch(Exception e) {
+				return null;
+			}
+		}
+		
+		public static void main(String[]args) {
+			//HttpServletRequest request=new HttpServletRequest();
+		/*
+		 * long milliSecond = 1570650412089L; Date date = new Date();
+		 * date.setTime(milliSecond); System.out.println(date);
+		 */
 		}
 }
