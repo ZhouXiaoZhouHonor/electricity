@@ -12,13 +12,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/page")
 public class PageAdmin {
+	//网站首页
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 	private String electricityMap() {
 		return "operator/main";
 	}
-	
+	//注册充电桩页面
 	@RequestMapping("/addpile")
 	private String addPile() {
 		return "operator/addpile";
 	}
+	
+	//充电桩检测页面
+	@RequestMapping(value="/pileelectricity",method=RequestMethod.GET)
+	private String pileElectricity() {
+		return "operator/pileelectricity";
+	}
+	
 }
