@@ -30,4 +30,42 @@
 		area_priority
 		DESC
 	</select>
+	<!-- 添加area -->
+	<insert id="insertArea" useGeneratedKeys="true" 
+		keyColumn="area_id" keyProperty="areaId">
+		INSERT INTO
+		tb_area
+		( 
+     	area_name,
+     	area_priority,
+     	create_time,
+     	last_edit_time,
+     	operator_id
+		)
+		VALUES
+		(
+		#{areaName},
+		#{areaPriority},
+		#{createTime},
+		#{lastEditTime},
+		#{operator.operatorId}
+		)
+	</insert>
+	<!-- 删除area -->
+	<delete id="deleteArea">
+		DELETE FROM
+		tb_area
+		WHERE
+		area_id=#{areaId}
+	</delete>
 </mapper>
+
+
+
+
+
+
+
+
+
+

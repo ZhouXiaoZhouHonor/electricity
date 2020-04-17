@@ -17,4 +17,10 @@ public interface AreaDao {
 	
 	//根据OperatorId将对应的area取出来
 	List<Area> queryAreaByOperator(@Param("areaCondition")Area areaCondition);
+	
+	//添加区域信息
+	int insertArea(Area area);
+	
+	//删除区域信息，根据areaId进行删除
+	int deleteArea(int areaId);
 }

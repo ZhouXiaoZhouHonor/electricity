@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 */
 @Controller
 @RequestMapping("/page")
-public class PageAdmin {
+public class PageOperatorAdmin {
 	//网站首页
 	@RequestMapping(value="/main",method=RequestMethod.GET)
 	private String electricityMap() {
@@ -28,5 +28,7 @@ public class PageAdmin {
 	private String pileElectricity() {
 		return "operator/pileelectricity";
 	}
+	
+	
 	
 }

@@ -1,3 +1,23 @@
 2020-04-17 13:45:49.529[main]DEBUG c.z.z.d.P.queryPileElectricityListByPileIdAndDate - ==>  Preparing: SELECT pe.pile_electricity_id, pe.pile_electricity_time, pe.pile_electricity_v, pe.pile_electricity_i, pe.pile_electricity_hz, pe.pile_electricity_active_power, pe.pile_electricity_active_energy, pe.pile_electricity_reactive_energy, pe.electricity_v, pe.electricity_i, pe.electricity_hz, pe.electricity_active_power, pe.electricity_active_energy, pe.electricity_reactive_energy, p.pile_id FROM tb_pile_electricity pe, tb_pile p WHERE pe.pile_id=? AND pe.pile_electricity_time >=? AND pe.pile_electricity_time <=? AND pe.pile_id=p.pile_id 
 2020-04-17 13:45:49.595[main]DEBUG c.z.z.d.P.queryPileElectricityListByPileIdAndDate - ==> Parameters: 23(Integer), 2020-04-15 22:06:18.0(Timestamp), 2020-04-15 22:06:22.0(Timestamp)
 2020-04-17 13:45:49.624[main]DEBUG c.z.z.d.P.queryPileElectricityListByPileIdAndDate - <==      Total: 4
+2020-04-17 16:15:54.874[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id ) VALUES ( ? ? ? ? ? ) 
+2020-04-17 16:15:54.906[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), 2020-04-17 16:15:54.44(Timestamp), 2020-04-17 16:15:54.44(Timestamp), 1(Integer)
+2020-04-17 16:16:52.333[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-04-17 16:16:52.367[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), 2020-04-17 16:16:51.879(Timestamp), 2020-04-17 16:16:51.879(Timestamp), 1(Integer)
+2020-04-17 16:16:52.371[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - <==    Updates: 1
+2020-04-17 16:21:10.625[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-04-17 16:21:10.667[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), 2020-04-17 16:21:10.163(Timestamp), 2020-04-17 16:21:10.163(Timestamp), 1(Integer)
+2020-04-17 16:21:10.674[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - <==    Updates: 1
+2020-04-17 16:31:47.800[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-04-17 16:31:47.839[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), 2020-04-17 16:31:47.36(Timestamp), 2020-04-17 16:31:47.36(Timestamp), 1(Integer)
+2020-04-17 16:31:47.844[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - <==    Updates: 1
+2020-04-17 16:33:27.265[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-04-17 16:33:27.329[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), 2020-04-17 16:33:26.762(Timestamp), 2020-04-17 16:33:26.762(Timestamp), 1(Integer)
+2020-04-17 16:33:27.335[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - <==    Updates: 1
+2020-04-17 16:44:07.220[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-04-17 16:44:07.266[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), 2020-04-17 16:44:06.751(Timestamp), 2020-04-17 16:44:06.751(Timestamp), 1(Integer)
+2020-04-17 16:44:07.269[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - <==    Updates: 1
+2020-04-17 16:52:15.417[main]DEBUG com.ze.zhou.dao.AreaDao.deleteArea - ==>  Preparing: DELETE FROM tb_area WHERE area_id=? 
+2020-04-17 16:52:15.467[main]DEBUG com.ze.zhou.dao.AreaDao.deleteArea - ==> Parameters: 3(Integer)
+2020-04-17 16:52:15.471[main]DEBUG com.ze.zhou.dao.AreaDao.deleteArea - <==    Updates: 1
