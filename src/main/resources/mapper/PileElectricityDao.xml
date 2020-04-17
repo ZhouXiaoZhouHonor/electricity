@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.PileElectricityDao">
+	<resultMap type="com.ze.zhou.entity.PileElectricity" id="pileElectricity_map">
+		<id column="pile_electricity_id" property="pileElectricityId"/>
+		<result column="pile_electricity_time" property="pileElectricityTime"/>
+		<result column="pile_electricity_v" property="pileElectricityV"/>
+		<result column="pile_electricity_i" property="pileElectricityI"/>
+		<result column="pile_electricity_hz" property="pileElectricityHz"/>
+		<result column="pile_electricity_active_power" property="pileElectricityActivePower"/>
+		<result column="pile_electricity_active_energy" property="pileElectricityActiveEnergy"/>
+		<result column="pile_electricity_reactive_energy" property="pileElectricityReactiveEnergy"/>
+		<result column="electricity_v" property="electricityV"/>
+		<result column="electricity_i" property="electricityI"/>
+		<result column="electricity_hz" property="electricityHz"/>
+		<result column="electricity_active_power" property="electricityActivePower"/>
+		<result column="electricity_active_energy" property="electricityActiveEnergy"/>
+		<result column="electricity_reactive_energy" property="electricityReactiveEnergy"/>
+		<!-- <result column="" property=""/>
+		<result column="" property=""/> -->
+		<association column="pile_id" property="pile" javaType="com.ze.zhou.entity.Pile">
+			<id column="pile_id" property="pileId"/>
+		</association>
+	</resultMap>
+	<select id="queryPileElectricityListByPileIdAndDate" resultMap="pileElectricity_map">
+		SELECT
+		pe.pile_electricity_id,
+    	pe.pile_electricity_time,
+    	pe.pile_electricity_v,
+     	pe.pile_electricity_i,
+     	pe.pile_electricity_hz,
+     	pe.pile_electricity_active_power,
+     	pe.pile_electricity_active_energy,
+     	pe.pile_electricity_reactive_energy,
+     	pe.electricity_v,
+     	pe.electricity_i,
+     	pe.electricity_hz,
+     	pe.electricity_active_power,
+     	pe.electricity_active_energy,
+     	pe.electricity_reactive_energy,
+     	p.pile_id
+     	FROM
+     	tb_pile_electricity pe,
+     	tb_pile p
+     	<where>
+     		<if test="pileId>0">
+     			AND pe.pile_id=#{pileId}
+     		</if>
+     		<!-- 时间范围的查询，采用的方法是将时间进行分段比较，[a,b] -->
+     		<if test="firstTime!=null">
+     			AND pe.pile_electricity_time <![CDATA[>=]]>#{firstTime}
+     		</if>
+     		<if test="endTime!=null">
+     			AND pe.pile_electricity_time <![CDATA[<=]]>#{endTime}
+     		</if>
+     	</where>
+     	AND 
+     	pe.pile_id=p.pile_id
+     	<!-- ORDER BY
+     	pe.pile_electricity_time -->
+	</select>
+</mapper>
