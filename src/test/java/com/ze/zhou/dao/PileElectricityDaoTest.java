@@ -29,7 +29,7 @@ public class PileElectricityDaoTest extends BaseTest{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		try {
 			firstTime=sdf.parse("2020-04-15 22:06:18");
-			endTime=sdf.parse("2020-04-15 23:06:18"); 
+			endTime=sdf.parse("2020-04-15 22:06:22"); 
 		}catch(Exception e) {
 			e.printStackTrace(); 
 		}
