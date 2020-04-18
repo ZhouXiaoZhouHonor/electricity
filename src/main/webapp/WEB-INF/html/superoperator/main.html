@@ -4,10 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>layout 后台大布局 - Layui</title>
-  <link rel="stylesheet" href="../resources/layui/css/layui.css">
-  <link rel="stylesheet" href="../resources/css/map/main.css">
-  <link rel="stylesheet" href="../resources/css/map/pilelist.css">
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1748661_n2r25slni8.css">
+  <link rel="stylesheet" href="../resources/layui/css/layui.css"> 
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -49,8 +46,8 @@
         <li class="layui-nav-item "><!-- layui-nav-itemed（用来将栏目展开就行了） -->
           <a class="" href="javascript:;">区域信息管理</a>
           <dl class="layui-nav-child">
-            <dd><a id="pile-message" href="javascript:;">区域信息详情</a></dd>
-            <dd><a id="pile-add" href="javascript:;">添加区域信息</a></dd>
+            <dd><a id="area-message" href="javascript:;">区域信息详情</a></dd>
+            <dd><a id="area-add" href="javascript:;">添加区域信息</a></dd>
             <dd><a href="javascript:;">列表三</a></dd>
             <dd><a href="">超链接</a></dd>
           </dl>
@@ -70,73 +67,8 @@
   </div>
   
   <div class="layui-body">
-    <!-- 当用户登录进来后，可以直接显示高德地图，并将该用户下的所有充电桩全部渲染出来 -->
-    <div id="container"></div>
-    <!-- 内容主体区域 -->
-    <!-- 1、需要一个功能框的div,用于功能 -->
-    <!-- <div class="layui-container ze-palette">
-  		<div class="layui-row layui-col-space10">
-  			<div class="layui-col-md3">
-    			<label class="layui-form-label">输入框</label>
-    			<div class="layui-input-block">
-      				<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-    			</div>
-  			</div>
-  			<div class="layui-col-md3">
-    			<label class="layui-form-label">输入框</label>
-    			<div class="layui-input-block">
-      				<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-    			</div>
-  			</div>
-  			<div class="layui-col-md3">
-    			<label class="layui-form-label">输入框</label>
-    			<div class="layui-input-block">
-      				<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-    			</div>
-  			</div>
-  			<div class="layui-col-md3">
-    			<label class="layui-form-label">输入框</label>
-    			<div class="layui-input-block">
-      				<input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-    			</div>
-  			</div>
-  		</div> -->
-  		<!-- 内容展示 (表格展示)-->
-  		<!-- <div class="layui-row">
-  			<table class="layui-table">
-  				<colgroup>
-    				<col width="50">
-    				<col width="50">
-    				<col width="200">
-    				<col width="50">
-    				<col width="100">
-  				</colgroup>
-  				<thead>
-    				<tr>
-      					<th>名称</th>
-      					<th>状态</th>
-     	 				<th>地址</th>
-     	 				<th>位置标号</th>
-     	 				<th>操作</th>
-    				</tr> 
-  				</thead>
-  				<tbody>
-				    <tr>
-				      <td>贤心</td>
-				      <td>2016-11-29</td>
-				      <td>人生就像是一场修行</td>
-				    </tr>
-				    <tr>
-				      <td>许闲心</td>
-				      <td>2016-11-28</td>
-				      <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-				    </tr>
-  				</tbody>
-			</table>
-  		</div>
-	</div>    -->
-    <!-- 2、主要展示功能 -->
-    <!-- <div style="padding: 15px;">内容主体区域</div> -->
+  <!-- 内容区域 -->
+    <!-- <div id="container"></div> -->
   </div>
   
   <div class="layui-footer">
@@ -146,10 +78,8 @@
 </div>
 <script src="../resources/layui/layui.js"></script>
 <script src="../resources/layui/layui.all.js"></script>
-<script type="text/javascript" 
-	src="https://webapi.amap.com/maps?v=1.4.15&key=22744305285882a70dbdcad3f5e8fb77"></script> 
 <script src="../resources/js/common/common.js"></script>
-<script src="../resources/js/operator/main.js"></script>
-<script src="../resources/js/operator/pilelist.js"></script>
+<script src="../resources/js/superoperator/main.js"></script>
+<script src="../resources/js/superoperator/arealist.js"></script>
 </body>
 </html>

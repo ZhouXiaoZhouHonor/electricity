@@ -14,6 +14,8 @@ public class Area {
 	private Date createTime;
 	private Date lastEditTime;
 	private Operator operator;
+	private Integer areaEnableStatus;
+	
 	public Integer getAreaId() {
 		return areaId;
 	}
@@ -49,6 +51,12 @@ public class Area {
 	}
 	public void setOperator(Operator operator) {
 		this.operator = operator;
+	}
+	public Integer getAreaEnableStatus() {
+		return areaEnableStatus;
+	}
+	public void setAreaEnableStatus(Integer areaEnableStatus) {
+		this.areaEnableStatus = areaEnableStatus;
 	}
 	
 	

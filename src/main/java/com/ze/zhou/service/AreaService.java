@@ -16,6 +16,10 @@ public interface AreaService {
 	List<Area> getQueryArea();
 	//根据区域信息查找对应的area
 	List<Area> getQueryAreaByOperator(Area areaCondition);
+	//根据区域信息查找对应的area并进行分页
+	AreaExecution getQueryAreaPage(int pageIndex,int pageSize);
+	//更新area状态
+	int changeAreaState(int areaId);
 	//添加area
 	AreaExecution addArea(Area area);
 }

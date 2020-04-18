@@ -10,8 +10,8 @@ public enum AreaStateEnum {
 	SUCCESS(1,"操作成功"),
 	PASS(2,"通过认证"),
 	INNER_ERROR(-1001,"内部系统错误"),
-	NULL_PILEID(-1002,"areaId为空"),
-	NULL_PILE(-1003,"area信息为空");
+	NULL_AREAID(-1002,"areaId为空"),
+	NULL_AREA(-1003,"area信息为空");
 	private int state;
 	private String stateInfo;
 	

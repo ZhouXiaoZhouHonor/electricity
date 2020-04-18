@@ -25,6 +25,27 @@ public class AreaDaoTest extends BaseTest{
 	
 	@Test
 	@Ignore
+	public void updateArea() {
+		int effectnum=areaDao.updateArea(1);
+		System.out.println(effectnum);
+	}
+	
+	@Test
+	@Ignore
+	public void queryAreaCount() {
+		int count=areaDao.queryAreaCount();
+		System.out.println(count);
+	}
+	
+	@Test
+	@Ignore
+	public void queryAreaByOperatorAndPageTest() {
+		List<Area> areaList=areaDao.queryAreaPage(0, 5);
+		System.out.println(areaList.size());
+	}
+	
+	@Test
+	@Ignore
 	public void deleteAreaTest() {
 		int effectnum=areaDao.deleteArea(3);
 		assertEquals(1,effectnum);
@@ -53,7 +74,7 @@ public class AreaDaoTest extends BaseTest{
 		Area area=new Area();
 		area.setOperator(op);
 		List<Area> areaList=areaDao.queryAreaByOperator(area);
-		System.out.println(areaList.size());
+		System.out.println(areaList.get(0).getAreaEnableStatus());
 	}
 	
 	@Test

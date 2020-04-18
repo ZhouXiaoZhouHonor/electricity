@@ -16,6 +16,7 @@ import com.ze.zhou.dto.AreaExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Operator;
 import com.ze.zhou.service.AreaService;
+import com.ze.zhou.util.HttpServletRequestUtil;
 
 /*
 	author:zhouze
@@ -33,16 +34,13 @@ public class SuperOperatorController {
 	@ResponseBody
 	private Map<String,Object> getAreaList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
-		//TODO 从session中获取operatorId
-		//先写死
-		Operator operator=new Operator();
-		operator.setOperatorId(1);
-		Area areaCondition=new Area();
-		areaCondition.setOperator(operator);
-		List<Area> areaList=areaService.getQueryAreaByOperator(areaCondition);
-		if(areaList!=null) {
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
+		AreaExecution ae=areaService.getQueryAreaPage(pageIndex, pageSize);
+		if(ae.getState()==1) {//获取数据成功
 			modelMap.put("success", true);
-			modelMap.put("areaList", areaList);
+			modelMap.put("areaList", ae.getAreaList());
+			modelMap.put("count", ae.getCount());
 		}else {
 			modelMap.put("success", false);
 			modelMap.put("errMsg", "empty area");
@@ -50,8 +48,24 @@ public class SuperOperatorController {
 		return modelMap;
 	}
 	
+	//更新区域信息状态
+	@RequestMapping(value="/modifyareastate",method=RequestMethod.GET)
+	private Map<String,Object> modifyAreaState(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int areaId=HttpServletRequestUtil.getInt(request, "areaId");
+		int effectNum=areaService.changeAreaState(areaId);
+		if(effectNum==1) {
+			modelMap.put("success", true);
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "更新失败");
+		}
+		return modelMap;
+	}
+	
 	//添加区域信息
 	@RequestMapping(value="/registerarea",method=RequestMethod.POST)
+	@ResponseBody
 	private Map<String,Object> registerArea(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
 		

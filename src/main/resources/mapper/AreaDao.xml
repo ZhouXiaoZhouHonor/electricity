@@ -2,33 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ze.zhou.dao.AreaDao">
+<!-- 测试用的，查询全部area -->
 	<select id="queryArea" resultType="com.ze.zhou.entity.Area">
 		SELECT
 		area_id,
 		area_name,
 		area_priority,
 		create_time,
-		last_edit_time
+		last_edit_time,
+		area_enable_status
 		FROM 
 		tb_area
+		WHERE
+		area_enable_status=1
 		ORDER BY
 		area_priority
 		DESC
 	</select>
+	<!-- 根据operatorId查询Id -->
 	<select id="queryAreaByOperator" resultType="com.ze.zhou.entity.Area">
 		SELECT
 		area_id,
 		area_name,
 		area_priority,
 		create_time,
-		last_edit_time
+		last_edit_time,
+		area_enable_status
 		FROM 
 		tb_area
 		WHERE
 		operator_id=#{areaCondition.operator.operatorId}
+		AND 
+		area_enable_status=1
 		ORDER BY
 		area_priority
 		DESC
+	</select>
+	<!-- 需要进行分页 -->
+	<select id="queryAreaPage" resultType="com.ze.zhou.entity.Area">
+		SELECT
+		area_id,
+		area_name,
+		area_priority,
+		create_time,
+		last_edit_time,
+		area_enable_status
+		FROM 
+		tb_area
+		WHERE
+		area_enable_status=1
+		ORDER BY
+		area_priority
+		DESC
+		LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<!-- 分页过程中获取area的总数 -->
+	<select id="queryAreaCount" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		tb_area
 	</select>
 	<!-- 添加area -->
 	<insert id="insertArea" useGeneratedKeys="true" 
@@ -40,7 +73,8 @@
      	area_priority,
      	create_time,
      	last_edit_time,
-     	operator_id
+     	operator_id,
+     	area_enable_status
 		)
 		VALUES
 		(
@@ -48,9 +82,19 @@
 		#{areaPriority},
 		#{createTime},
 		#{lastEditTime},
-		#{operator.operatorId}
+		#{operator.operatorId},
+		#{areaEnableStatus}
 		)
 	</insert>
+	<!-- 更新area,只更新area的状态信息 -->
+	<update id="updateArea">
+		UPDATE
+		tb_area
+		SET
+		area_enable_status=0
+		WHERE
+		area_id=#{areaId}
+	</update>
 	<!-- 删除area -->
 	<delete id="deleteArea">
 		DELETE FROM
