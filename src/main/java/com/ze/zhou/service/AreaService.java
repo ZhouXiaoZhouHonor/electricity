@@ -19,7 +19,7 @@ public interface AreaService {
 	//根据区域信息查找对应的area并进行分页
 	AreaExecution getQueryAreaPage(int pageIndex,int pageSize);
 	//更新area状态
-	int changeAreaState(int areaId);
+	int changeAreaState(Area area);
 	//添加area
 	AreaExecution addArea(Area area);
 }

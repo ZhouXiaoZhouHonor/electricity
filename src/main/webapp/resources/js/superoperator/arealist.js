@@ -11,20 +11,13 @@ layui.use(['jquery','table','layer','element'],function(){
 	var html=''+
 	'<div class="layui-container ze-palette">'+
 		'<div class="layui-row">'+
-			'<table id="area-table" class="layui-table" lay-filter="piletable"></table>'+
+			'<table id="area-table" class="layui-table" lay-filter="areatable"></table>'+
 		'</div>'+
 	'</div>'+
 	'<script type="text/html" id="barDemo">'+
-	'<a class="layui-btn layui-btn-xs detail" lay-event="stop">启用</a>'+
+	'<a class="layui-btn layui-btn-xs detail" lay-event="start">启用</a>'+
 	'<a class="layui-btn layui-btn-xs layui-btn-danger detail" lay-event="stop">禁用</a>'+
-	/*'<a class="layui-btn layui-btn-xs edit" lay-event="edit">编辑</a>'+*/
-	/*'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>'+*/
-	/*'<div class="layui-col-md3">'+
-	'<label class="layui-form-label">站点查询</label>'+
-	'<div class="layui-input-block">'+
-		'<input type="text" name="title" required  lay-verify="required" placeholder="请选择站点" autocomplete="off" class="layui-input">'+
-	'</div>'+
-	'</div>'+*//*站点查询就不要了*/
+	'<a class="layui-btn layui-btn-xs layui-btn-warm detail" lay-event="operation">分配管理员</a>'+
 	'</script>';
 	
 	//动态添加HTML和表单
@@ -33,20 +26,69 @@ layui.use(['jquery','table','layer','element'],function(){
 		var table=layui.table;
 		var layer=layui.layer;
 		//var pileList;/*将table从后台获取的数据保存起来，在点击查看详情的时候，将数据拿出来进行显示即可*/
+		//可以定义多个exports
+		//区域表格
 		exports('areaTable',function(){
 			//先将样式插入进去，搜索框的样式
 			$('.layui-body').html(html);
-			//需要另外将该操作员下的所有管理的区域全部列出来。方便查询
-			//pileListAreaAndCoordianteInit();
 			//获取该管理员下的所有充电桩信息列表
 			var operatorAreaUrl='http://localhost:8080/zhou/superoperator/getarealist';
 			areaListTable(table,operatorAreaUrl);
 			//对操作栏的按钮进行事件监听
-			//watchPileList(table,layer);
+			watchAreaList(table,layer);
+			
+		});
+		//添加区域信息
+		exports('areaAdd',function(){
+			//alert('通过layui调用了areaAdd');
 			
 		});
 	});
 	
+	//操作栏中按钮实施监听
+	function watchAreaList(table,layer){
+		table.on('tool(areatable)',function(obj){
+			var areaList=obj.data;
+			switch(obj.event){
+			case 'start':
+				console.log('点击了启用按钮');
+				var changeAreaStateUrl='/zhou/superoperator/modifyareastate?areaId='+areaList.areaId+'&enableStatus=1';
+				$.getJSON(changeAreaStateUrl,function(data){
+					if(data.success){
+						layer.msg('更新成功');
+					}else{
+						layer.msg('更新失败'+data.errMsg);
+					}
+				});
+				break;
+			case 'stop':
+				var changeAreaStateUrl='/zhou/superoperator/modifyareastate?areaId='+areaList.areaId+'&enableStatus=0';
+				$.getJSON(changeAreaStateUrl,function(data){
+					if(data.success){
+						layer.msg('更新成功');
+					}else{
+						layer.msg('更新失败'+data.errMsg);
+					}
+				});
+				break;
+			case 'operation':
+				//弹出带有下拉列表框的弹出层，进行选择，将区域进行分配
+				areaOperationInitOfOperator(layer);
+				break;
+			}
+			$('#area-message').click();
+		});
+	}
+	//获取所有的管理员的信息，用于在下拉列表框中进行展示
+	function areaOperationInitOfOperator(layer){
+		var areaOperationHtml='';//定义下拉列表框的样式
+		var areaOperationOfOperatorUrl='/zhou/operator';//从后台获取所有的操作员的信息
+		layer.open({
+			type:1
+		});
+	}
+	
+	//形成分页表格显示区域信息
 	function areaListTable(table,operatorAreaUrl){
 		table.render({
 			elem:'#area-table',
@@ -62,9 +104,9 @@ layui.use(['jquery','table','layer','element'],function(){
 			      {field: 'areaName',title:'区域名称',align:'center',width:200},
 			      {field: 'areaEnableStatus',title:'状态',align:'center',width:80,templet:function(data){
 			    	  if(data.areaEnableStatus==1){
-			    		  return '可用';
+			    		  return '<span style="color:#1E9FFF">可用</span>';
 			    	  }else{
-			    		  return '禁用';
+			    		  return '<span style="color:red">禁用</span>';
 			    	  }
 			      }},
 			      {fixed: 'right',title:'操作',align:'center',toolbar:'#barDemo'}
@@ -84,14 +126,11 @@ layui.use(['jquery','table','layer','element'],function(){
 					'data':data.areaList
 				};
 			},
-			/*done:function(res,curr,count){
-				console.log('res:'+res.data[0].pileLongitude);
-				console.log('curr:'+curr);
-				console.log('count:'+count);
-				pileList=res.data;//将数据赋值给全局变量，用于后面的页面展示
-			}*/
 		});
 	}
+	
+	
+	
 	
 });
 

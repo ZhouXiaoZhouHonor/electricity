@@ -28,7 +28,7 @@ public interface AreaDao {
 	int insertArea(Area area);
 	
 	//更新状态信息
-	int updateArea(@Param("areaId")int areaId);
+	int updateArea(Area area);
 	
 	//删除区域信息，根据areaId进行删除
 	int deleteArea(int areaId);

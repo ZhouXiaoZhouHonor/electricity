@@ -49,8 +49,6 @@
 		area_enable_status
 		FROM 
 		tb_area
-		WHERE
-		area_enable_status=1
 		ORDER BY
 		area_priority
 		DESC
@@ -91,7 +89,7 @@
 		UPDATE
 		tb_area
 		SET
-		area_enable_status=0
+		area_enable_status=#{areaEnableStatus}
 		WHERE
 		area_id=#{areaId}
 	</update>

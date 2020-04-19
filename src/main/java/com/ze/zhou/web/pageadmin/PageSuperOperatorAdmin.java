@@ -17,4 +17,9 @@ public class PageSuperOperatorAdmin {
 	private String main() {
 		return "superoperator/main";
 	}
+	//超级管理员添加充电桩页面
+	@RequestMapping("/addarea")
+	private String addArea() {
+		return "superoperator/addarea";
+	}
 }

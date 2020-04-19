@@ -79,8 +79,7 @@ public class AreaServiceImpl implements AreaService{
 
 	//更新area的状态
 	@Override
-	public int changeAreaState(int areaId) {
-		// TODO Auto-generated method stub
-		return areaDao.updateArea(areaId);
+	public int changeAreaState(Area area) {
+		return areaDao.updateArea(area);
 	}
 }

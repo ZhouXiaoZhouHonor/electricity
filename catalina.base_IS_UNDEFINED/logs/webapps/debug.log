@@ -1,24 +1,3 @@
-2020-04-18 08:55:04.004[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperator - ==>  Preparing: SELECT area_id, area_name, area_priority, create_time, last_edit_time FROM tb_area WHERE operator_id=? AND area_enable_status=1 ORDER BY area_priority DESC 
-2020-04-18 08:55:04.047[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperator - ==> Parameters: 1(Integer)
-2020-04-18 08:55:04.066[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperator - <==      Total: 2
-2020-04-18 08:55:43.710[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperator - ==>  Preparing: SELECT area_id, area_name, area_priority, create_time, last_edit_time, area_enable_status FROM tb_area WHERE operator_id=? AND area_enable_status=1 ORDER BY area_priority DESC 
-2020-04-18 08:55:43.742[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperator - ==> Parameters: 1(Integer)
-2020-04-18 08:55:43.769[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperator - <==      Total: 2
-2020-04-18 08:59:52.398[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id, area_enable_status ) VALUES ( ?, ?, ?, ?, ? ? ) 
-2020-04-18 08:59:52.440[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), null, null, 1(Integer), null
-2020-04-18 09:00:36.179[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==>  Preparing: INSERT INTO tb_area ( area_name, area_priority, create_time, last_edit_time, operator_id, area_enable_status ) VALUES ( ?, ?, ?, ?, ?, ? ) 
-2020-04-18 09:00:36.213[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - ==> Parameters: 瑶海区(String), 3(Integer), null, null, 1(Integer), null
-2020-04-18 09:00:36.219[main]DEBUG com.ze.zhou.dao.AreaDao.insertArea - <==    Updates: 1
-2020-04-18 14:03:05.925[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperatorAndPage - ==>  Preparing: SELECT area_id, area_name, area_priority, create_time, last_edit_time, area_enable_status FROM tb_area WHERE operator_id=? AND area_enable_status=1 LIMIT ?,? ORDER BY area_priority DESC 
-2020-04-18 14:03:05.992[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperatorAndPage - ==> Parameters: 1(Integer), 0(Integer), 5(Integer)
-2020-04-18 14:05:32.450[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperatorAndPage - ==>  Preparing: SELECT area_id, area_name, area_priority, create_time, last_edit_time, area_enable_status FROM tb_area WHERE operator_id=? AND area_enable_status=1 ORDER BY area_priority DESC LIMIT ?,? 
-2020-04-18 14:05:32.490[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperatorAndPage - ==> Parameters: 1(Integer), 0(Integer), 5(Integer)
-2020-04-18 14:05:32.522[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaByOperatorAndPage - <==      Total: 2
-2020-04-18 14:38:54.353[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaCount - ==>  Preparing: SELECT count(1) FROM tb_area 
-2020-04-18 14:38:54.400[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaCount - ==> Parameters: 
-2020-04-18 14:40:26.030[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaCount - ==>  Preparing: SELECT count(1) FROM tb_area 
-2020-04-18 14:40:26.069[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaCount - ==> Parameters: 
-2020-04-18 14:40:26.085[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaCount - <==      Total: 1
-2020-04-18 14:57:44.114[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - ==>  Preparing: UPDATE tb_area SET area_enable_status=0 WHERE area_id=? 
-2020-04-18 14:57:44.154[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - ==> Parameters: 1(Integer)
-2020-04-18 14:57:44.157[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - <==    Updates: 1
+2020-04-19 08:25:20.837[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperator - ==>  Preparing: SELECT operator_id, operator_name FROM tb_operator WHERE operator_enable_status=1 
+2020-04-19 08:25:20.873[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperator - ==> Parameters: 
+2020-04-19 08:25:20.894[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperator - <==      Total: 1

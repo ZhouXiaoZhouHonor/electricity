@@ -26,7 +26,10 @@ public class AreaDaoTest extends BaseTest{
 	@Test
 	@Ignore
 	public void updateArea() {
-		int effectnum=areaDao.updateArea(1);
+		Area area=new Area();
+		area.setAreaId(1);
+		area.setAreaEnableStatus(0);
+		int effectnum=areaDao.updateArea(area);
 		System.out.println(effectnum);
 	}
 	

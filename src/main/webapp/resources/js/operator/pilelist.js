@@ -177,7 +177,6 @@ layui.use(['jquery','table','layer','element'],function(){
 				console.log('pileEnableStatus:'+pileList.pileEnableStatus);
 				//点击查看建可以弹出充电桩详情信息的弹出框
 				//该弹出层需要很大的页面，需要自定义才可以，这样看着比较美观
-				//TODO 设计内容页面，展示充电桩的详细信息。使用栅格化即可
 				var pileMessage='<div id="pileMessages" class="layui-container">'+
 				'<div class="layui-row">'+
 					'<div class="layui-col-md7">'+
