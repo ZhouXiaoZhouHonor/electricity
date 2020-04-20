@@ -27,6 +27,9 @@ public class AreaDaoTest extends BaseTest{
 	@Ignore
 	public void updateArea() {
 		Area area=new Area();
+		Operator operator=new Operator();
+		operator.setOperatorId(2);
+		area.setOperator(operator);
 		area.setAreaId(1);
 		area.setAreaEnableStatus(0);
 		int effectnum=areaDao.updateArea(area);
@@ -41,7 +44,7 @@ public class AreaDaoTest extends BaseTest{
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void queryAreaByOperatorAndPageTest() {
 		List<Area> areaList=areaDao.queryAreaPage(0, 5);
 		System.out.println(areaList.size());

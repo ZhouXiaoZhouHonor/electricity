@@ -45,6 +45,7 @@ layui.use(['layer','jquery','form','element'],function(){
 				}else{
 					layer.msg("errMsg:"+data.errMsg);
 				}
+				
 			}
 		});
 		return false;

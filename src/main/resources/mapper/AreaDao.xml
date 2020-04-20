@@ -39,16 +39,35 @@
 		DESC
 	</select>
 	<!-- 需要进行分页 -->
-	<select id="queryAreaPage" resultType="com.ze.zhou.entity.Area">
+	<resultMap type="com.ze.zhou.entity.Area" id="areaMap">
+		<id column="area_id" property="areaId"/>
+		<result column="area_name" property="areaName"/>
+		<result column="area_priority" property="areaPriority"/>
+		<result column="create_time" property="createTime"/>
+		<result column="last_edit_time" property="lastEditTime"/>
+		<result column="area_enable_status" property="areaEnableStatus"/>
+		<association property="operator" column="operator_id" javaType="com.ze.zhou.entity.Operator">
+			<id column="operator_id" property="operatorId"/>
+			<result column="operator_name" property="operatorName"/>
+		</association>
+	</resultMap>
+	<select id="queryAreaPage" resultMap="areaMap">
 		SELECT
-		area_id,
-		area_name,
-		area_priority,
-		create_time,
-		last_edit_time,
-		area_enable_status
+		a.area_id,
+		a.area_name,
+		a.area_priority,
+		a.create_time,
+		a.last_edit_time,
+		a.area_enable_status,
+		o.operator_id,
+		o.operator_name
 		FROM 
-		tb_area
+		tb_area a
+		<!-- 使用左连接，将不存在operator的也要查找出来 -->
+		LEFT JOIN
+		tb_operator o
+		ON
+		a.operator_id=o.operator_id
 		ORDER BY
 		area_priority
 		DESC
@@ -88,8 +107,12 @@
 	<update id="updateArea">
 		UPDATE
 		tb_area
-		SET
-		area_enable_status=#{areaEnableStatus}
+		<set>
+			area_enable_status=#{areaEnableStatus},
+			<if test="operator!=null and operator.operatorId>0">
+				operator_id=#{operator.operatorId}
+			</if>
+		</set>
 		WHERE
 		area_id=#{areaId}
 	</update>

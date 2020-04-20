@@ -71,16 +71,22 @@ public class SuperOperatorController {
 	}
 	
 	//更新区域信息状态
-	@RequestMapping(value="/modifyareastate",method=RequestMethod.GET)
+	@RequestMapping(value="/modifyareastate",method=RequestMethod.POST)
 	@ResponseBody
 	private Map<String,Object> modifyAreaState(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
 		int areaId=HttpServletRequestUtil.getInt(request, "areaId");
 		int enableStatus=HttpServletRequestUtil.getInt(request, "enableStatus");
+		int operatorId=HttpServletRequestUtil.getInt(request, "operatorId");
 		Area area=new Area();
 		area.setAreaId(areaId);
 		area.setAreaEnableStatus(enableStatus);
-		int effectNum=areaService.changeAreaState(area);
+		if(operatorId>0) {//判断是否分配管理员
+			Operator operator=new Operator();
+			operator.setOperatorId(operatorId);
+			area.setOperator(operator);
+		}
+		int effectNum=areaService.changeArea(area);
 		if(effectNum==1) {
 			modelMap.put("success", true);
 		}else {

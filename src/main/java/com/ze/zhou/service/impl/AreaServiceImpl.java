@@ -79,7 +79,7 @@ public class AreaServiceImpl implements AreaService{
 
 	//更新area的状态
 	@Override
-	public int changeAreaState(Area area) {
+	public int changeArea(Area area) {
 		return areaDao.updateArea(area);
 	}
 }

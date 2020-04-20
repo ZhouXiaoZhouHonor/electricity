@@ -1,3 +1,18 @@
 2020-04-19 08:25:20.837[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperator - ==>  Preparing: SELECT operator_id, operator_name FROM tb_operator WHERE operator_enable_status=1 
 2020-04-19 08:25:20.873[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperator - ==> Parameters: 
 2020-04-19 08:25:20.894[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperator - <==      Total: 1
+2020-04-19 16:14:08.399[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - ==>  Preparing: UPDATE tb_area SET area_enable_status=?, operator_id=? WHERE area_id=? 
+2020-04-19 16:14:08.461[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - ==> Parameters: 0(Integer), 1(Integer), 1(Integer)
+2020-04-19 16:14:08.468[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - <==    Updates: 1
+2020-04-19 16:14:33.180[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - ==>  Preparing: UPDATE tb_area SET area_enable_status=?, operator_id=? WHERE area_id=? 
+2020-04-19 16:14:33.231[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - ==> Parameters: 0(Integer), 2(Integer), 1(Integer)
+2020-04-19 16:14:33.238[main]DEBUG com.ze.zhou.dao.AreaDao.updateArea - <==    Updates: 1
+2020-04-19 19:40:00.663[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - ==>  Preparing: SELECT a.area_id, a.area_name, a.area_priority, a.create_time, a.last_edit_time, a.area_enable_status, o.operator_id, o.operator_name FROM tb_area a, tb_operator o WHERE a.operator_id=o.operator_id ORDER BY area_priority DESC LIMIT ?,? 
+2020-04-19 19:40:00.714[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - ==> Parameters: 0(Integer), 5(Integer)
+2020-04-19 19:40:00.744[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - <==      Total: 4
+2020-04-19 21:52:23.135[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - ==>  Preparing: SELECT a.area_id, a.area_name, a.area_priority, a.create_time, a.last_edit_time, a.area_enable_status, o.operator_id, o.operator_name FROM tb_area a, tb_operator o WHERE a.operator_id=o.operator_id ORDER BY area_priority DESC LIMIT ?,? 
+2020-04-19 21:52:23.179[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - ==> Parameters: 0(Integer), 5(Integer)
+2020-04-19 21:52:23.205[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - <==      Total: 4
+2020-04-19 21:59:07.279[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - ==>  Preparing: SELECT a.area_id, a.area_name, a.area_priority, a.create_time, a.last_edit_time, a.area_enable_status, o.operator_id, o.operator_name FROM tb_area a LEFT JOIN tb_operator o ON a.operator_id=o.operator_id ORDER BY area_priority DESC LIMIT ?,? 
+2020-04-19 21:59:07.318[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - ==> Parameters: 0(Integer), 5(Integer)
+2020-04-19 21:59:07.344[main]DEBUG com.ze.zhou.dao.AreaDao.queryAreaPage - <==      Total: 5

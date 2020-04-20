@@ -49,42 +49,106 @@ layui.use(['jquery','table','layer','element'],function(){
 	function watchAreaList(table,layer){
 		table.on('tool(areatable)',function(obj){
 			var areaList=obj.data;
+			var formData=new FormData();
+			formData.append('areaId',areaList.areaId);
 			switch(obj.event){
 			case 'start':
 				console.log('点击了启用按钮');
-				var changeAreaStateUrl='/zhou/superoperator/modifyareastate?areaId='+areaList.areaId+'&enableStatus=1';
-				$.getJSON(changeAreaStateUrl,function(data){
-					if(data.success){
-						layer.msg('更新成功');
-					}else{
-						layer.msg('更新失败'+data.errMsg);
-					}
-				});
+				formData.append('enableStatus',1);
+				modifyAreaState(formData)
 				break;
 			case 'stop':
-				var changeAreaStateUrl='/zhou/superoperator/modifyareastate?areaId='+areaList.areaId+'&enableStatus=0';
-				$.getJSON(changeAreaStateUrl,function(data){
-					if(data.success){
-						layer.msg('更新成功');
-					}else{
-						layer.msg('更新失败'+data.errMsg);
-					}
-				});
+				formData.append('enableStatus',0);
+				modifyAreaState(formData)
 				break;
 			case 'operation':
 				//弹出带有下拉列表框的弹出层，进行选择，将区域进行分配
-				areaOperationInitOfOperator(layer);
+				areaOperationInitOfOperator(layer,areaList.areaId);
 				break;
 			}
-			$('#area-message').click();
 		});
 	}
+	//更新area状态
+	function modifyAreaState(formData){
+		//定义地址
+		var changeAreaStateUrl='/zhou/superoperator/modifyareastate';
+		$.ajax({
+			url:changeAreaStateUrl,
+			method:'POST',
+			data:formData,
+			contentType:false,
+			processData:false,
+			cache:false,//是否启用cache缓存
+			success:function(data){
+				if(data.success){
+					layer.msg('更新成功');
+				}else{
+					layer.msg('更新失败'+data.errMsg);
+				}
+				$('#area-message').click();
+			}
+		});
+	}
+	
 	//获取所有的管理员的信息，用于在下拉列表框中进行展示
-	function areaOperationInitOfOperator(layer){
-		var areaOperationHtml='';//定义下拉列表框的样式
-		var areaOperationOfOperatorUrl='/zhou/operator';//从后台获取所有的操作员的信息
+	function areaOperationInitOfOperator(layer,areaId){
+		var areaOperationHtml=''+
+			'<div class="layui-form-item">'+
+				'<label class="layui-form-label">管理员</label>'+
+				'<div class="layui-input-block" style="width:150px;">'+
+					'<select id="area-operator" name="city" lay-verify="required" class="layui-input">'+
+					'<option value="">请选择</option>'+
+						'</select>'+
+				'</div>'+
+			'</div>';//定义下拉列表框的样式
+		var areaOperationOfOperatorUrl='/zhou/superoperator/getoperatorlist';//从后台获取所有的操作员的信息
+		$.getJSON(areaOperationOfOperatorUrl,function(data){
+			if(data.success){
+				var operatorList=data.operatorList;
+				var html='';
+				operatorList.map(function(item,index){
+					html+='<option value="'+item.operatorId+'">'+item.operatorName+'</option>';
+				});
+				$('#area-operator').append(html);
+			}else{
+				
+			}
+		});
 		layer.open({
-			type:1
+			type:1,
+			content:areaOperationHtml,
+			area:['300px','200px'],
+			btn:['取消','确定'],
+			yes:function(index,layero){//按钮一(取消按钮)
+				//点击取消按钮，跳转到展示页面 TODO
+			},
+			btn2:function(index,layero){//按钮二(继续添加按钮)
+				//更新后台area的operator
+				var operatorId=$('#area-operator').val();//获取operatorId
+				var formData=new FormData();
+				formData.append("operatorId",operatorId);
+				formData.append("areaId",areaId);
+				formData.append("enableStatus",1);
+				//更新area
+				var changeAreaOfOperator='/zhou/superoperator/modifyareastate';
+				$.ajax({
+					url:changeAreaOfOperator,
+					method:'POST',
+					data:formData,
+					contentType:false,
+					processData:false,
+					cache:false,//是否启用cache缓存
+					success:function(data){
+						if(data.success){
+							layer.msg('更新成功');
+						}else{
+							layer.msg('更新失败'+data.errMsg);
+						}
+						$('#area-message').click();
+					}
+				});
+				//console.log('operatorId:'+operatorId);
+			}
 		});
 	}
 	
@@ -101,7 +165,14 @@ layui.use(['jquery','table','layer','element'],function(){
 			 cols:[[ //表头
 				  {type: 'checkbox', fixed: 'left'},
 				  {fixed:'left',title:'序号',align:'center',width:80,type:'numbers'},
-			      {field: 'areaName',title:'区域名称',align:'center',width:200},
+			      {field:'areaName',title:'区域名称',align:'center',width:200},
+			      {field:'operator.operatorName',title:'管理员',align:'center',templet:function(data){
+			    	  if(data.operator==null){
+			    		  return '<span style="color:#009688">无</span>';
+			    	  }else{
+			    		  return data.operator.operatorName;
+			    	  }
+			      }},
 			      {field: 'areaEnableStatus',title:'状态',align:'center',width:80,templet:function(data){
 			    	  if(data.areaEnableStatus==1){
 			    		  return '<span style="color:#1E9FFF">可用</span>';
