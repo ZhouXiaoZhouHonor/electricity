@@ -12,4 +12,6 @@ import com.ze.zhou.entity.Coordinate;
 public interface CoordinateDao {
 	//获取coordinate集合,通过areaId获取指定区域内的coordinate
 	List<Coordinate> queryCoordinate(int areaId);
+	//添加站点信息
+	int insertCoordinate(Coordinate coordinate);
 }

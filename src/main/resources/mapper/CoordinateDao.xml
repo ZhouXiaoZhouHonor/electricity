@@ -39,4 +39,33 @@
  		priority
  		DESC
 	</select>
+	<!-- 添加站点信息 -->
+	<insert id="insertCoordinate" useGeneratedKeys="true" 
+		keyColumn="area_id" keyProperty="areaId">
+		INSERT INTO
+		tb_coordinate
+		(
+		coordinate_longitude,
+ 		coordinate_latitude,
+ 		create_time,
+ 		last_edit_time,
+ 		priority,
+ 		area_id,
+ 		coordinate_name,
+ 		coordinate_pile_number,
+ 		coordinate_enable_status
+		)
+		VALUES
+		(
+		#{coordinateLongitud},
+		#{coordinateLatitude},
+		#{createTime},
+		#{lastEditTime},
+		#{priority},
+		#{area.areaId},
+		#{coordinateNmae},
+		#{coordinatePileNumber},
+		#{coordinateEnableStatus}
+		)
+	</insert>
 </mapper>
