@@ -41,7 +41,7 @@
 	</select>
 	<!-- 添加站点信息 -->
 	<insert id="insertCoordinate" useGeneratedKeys="true" 
-		keyColumn="area_id" keyProperty="areaId">
+		keyColumn="coordinate_id" keyProperty="coordinateId">
 		INSERT INTO
 		tb_coordinate
 		(
@@ -57,15 +57,50 @@
 		)
 		VALUES
 		(
-		#{coordinateLongitud},
+		#{coordinateLongitude},
 		#{coordinateLatitude},
 		#{createTime},
 		#{lastEditTime},
 		#{priority},
 		#{area.areaId},
-		#{coordinateNmae},
+		#{coordinateName},
 		#{coordinatePileNumber},
 		#{coordinateEnableStatus}
 		)
 	</insert>
+	<!-- 更新站点 -->
+	<!-- 改名字或者经纬度就相当于删除站点，还不如直接建设站点 A-->
+	<update id="updateCoordinate">
+		UPDATE tb_coordinate
+		<set>
+ 			<!-- coordinate_name -->
+			<if test="lastEditTime!=null">
+				last_edit_time=#{lastEditTime},
+			</if>
+			<if test="priority!=null and priority>0">
+				priority=#{priority},
+			</if>
+			<if test="coordinateEnableStatus!=null and coordinateEnableStatus>0">
+				coordinate_enable_status=#{coordinateEnableStatus},
+			</if>
+			<if test="coordinatePileNumber!=null and coordinatePileNumber>0">
+				coordinate_pile_number=#{coordinatePileNumber},
+			</if>
+		</set>
+		WHERE
+		coordinate_id=#{coordinateId}
+	</update>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,13 +21,26 @@ public class CoordinateDaoTest extends BaseTest{
 	private CoordinateDao coordinateDao;
 	
 	@Test
+	@Ignore
+	public void updateCoordinate() {
+		Coordinate c=new Coordinate();
+		c.setCoordinateId(4);
+		c.setLastEditTime(new Date());
+		c.setCoordinatePileNumber(15);
+		int effect=coordinateDao.updateCoordinate(c);
+		System.out.println(effect);
+	}
+	
+	@Test
+	@Ignore
 	public void insertCoordinate() {
 		Coordinate c=new Coordinate();
 		Area area=new Area();
 		area.setAreaId(1);
 		c.setArea(area);
 		c.setCoordinateEnableStatus(1);
-		/* 117.251097,31.865709 *///经纬度
+		/* 117.251097,31.865709 */
+		//经纬度
 		c.setCoordinateName("安农大");
 		c.setCoordinateLongitude(117.251097d);
 		c.setCoordinateLatitude(31.865709d);
@@ -47,4 +60,6 @@ public class CoordinateDaoTest extends BaseTest{
 			System.out.println(co.toString());
 		}
 	}
+	
+	
 }

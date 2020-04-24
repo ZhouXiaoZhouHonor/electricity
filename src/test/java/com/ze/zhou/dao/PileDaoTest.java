@@ -24,7 +24,7 @@ public class PileDaoTest extends BaseTest{
 	private PileDao pileDao;
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void queryPileListTest() {
 		Pile pileCondition=new Pile();
 		Coordinate coordinate=new Coordinate();
@@ -41,8 +41,9 @@ public class PileDaoTest extends BaseTest{
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void updatePileTest() {
+		/*
 		Pile pile=new Pile();
 		pile.setPileId(4L);
 		pile.setPileName("充电桩3-1");
@@ -63,6 +64,17 @@ public class PileDaoTest extends BaseTest{
 		pile.setOperator(operator);
 		int effectNum=pileDao.updatePile(pile);
 		assertEquals(1,effectNum);
+		*/
+		//根据coordinateId来更新，主要是批量更新充电桩状态
+		/*
+		Coordinate c=new Coordinate();
+		c.setCoordinateId(1);
+		Pile p=new Pile();
+		p.setCoordinate(c);
+		p.setPileEnableStatus(1);
+		int effectNum=pileDao.updatePile(p);
+		System.out.println(effectNum);
+		*/
 	}
 	
 	@Test

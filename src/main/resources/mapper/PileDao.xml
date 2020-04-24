@@ -237,8 +237,15 @@
 			<if test="pileLongitude!=null">pile_longitude=#{pileLongitude},</if>
 			<if test="pileLatitude!=null">pile_latitude=#{pileLatitude}</if>
 		</set>
-		WHERE
-		pile_id=#{pileId}
+		<!-- 限制的条件不同，则使用的方式也不相同 -->
+		<where>
+			<if test="pileId!=null and pileId>0">
+				and pile_id=#{pileId}
+			</if>
+			<if test="coordinate!=null and coordinate.coordinateId>0">
+				and coordinate_id=#{coordinate.coordinateId}
+			</if>
+		</where>
 	</update>
 	
 	<!-- 批量获取充电桩集合pileList -->

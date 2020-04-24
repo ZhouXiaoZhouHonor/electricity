@@ -14,4 +14,6 @@ public interface CoordinateDao {
 	List<Coordinate> queryCoordinate(int areaId);
 	//添加站点信息
 	int insertCoordinate(Coordinate coordinate);
+	//更新站点
+	int updateCoordinate(Coordinate coordinate);
 }

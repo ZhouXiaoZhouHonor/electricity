@@ -2,6 +2,7 @@ package com.ze.zhou.service;
 
 import java.util.List;
 
+import com.ze.zhou.dto.CoordinateExecution;
 import com.ze.zhou.entity.Coordinate;
 
 /*
@@ -12,4 +13,8 @@ import com.ze.zhou.entity.Coordinate;
 public interface CoordinateService {
 	//通过areaId获取对应的coordinate集合对象
 	List<Coordinate> getCoordinateList(int areaId);
+	//添加站点信息
+	CoordinateExecution addCoordinate(Coordinate coordinate);
+	//更新站点信息
+	CoordinateExecution changeCoordinate(Coordinate coordinate);
 }
