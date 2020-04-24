@@ -1,5 +1,6 @@
 package com.ze.zhou.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Pile;
 import com.ze.zhou.enums.CoordinateStateEnum;
 import com.ze.zhou.service.CoordinateService;
+import com.ze.zhou.util.PageCalculator;
 
 
 /*
@@ -65,12 +67,14 @@ public class CoordinateServiceImpl implements CoordinateService{
 		CoordinateExecution ce=new CoordinateExecution();
 		int effectNum;
 		if(coordinate!=null&&coordinate.getCoordinateId()>0) {
+			coordinate.setLastEditTime(new Date());
 			effectNum=coordinateDao.updateCoordinate(coordinate);
 			//若更改成功，则查看该站点是否可用，若不可用则更改充电桩状态
 			if(effectNum>0&&coordinate.getCoordinateEnableStatus()!=1) {
 				Pile pile=new Pile();
 				pile.setCoordinate(coordinate);
 				pile.setPileEnableStatus(0);
+				pile.setLastEditTime(new Date());
 				effectNum=pileDao.updatePile(pile);
 				if(effectNum>0) {//更新充电桩成功
 					ce.setStateInfo("所属的充电桩更新成功");
@@ -81,6 +85,23 @@ public class CoordinateServiceImpl implements CoordinateService{
 		}else {
 			ce.setState(CoordinateStateEnum.NULL_Coordinate.getState());
 			ce.setStateInfo("empty coordinate or coordinateId");
+		}
+		return ce;
+	}
+	@Override
+	//分页获取站点信息
+	public CoordinateExecution getCoordinateList(int pageIndex, int pageSize) {
+		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		int count=coordinateDao.queryCountCoordinate();
+		List<Coordinate> coordinateList=coordinateDao.queryCoordinateList(rowIndex, pageSize);
+		CoordinateExecution ce=new CoordinateExecution();
+		if(coordinateList!=null&&coordinateList.size()>0) {
+			ce.setState(CoordinateStateEnum.SUCCESS.getState());
+			ce.setCoordinateList(coordinateList);
+			ce.setCount(count);
+		}else {
+			ce.setState(CoordinateStateEnum.NULL_Coordinate.getState());
+			ce.setStateInfo("没有获取到站点数据");
 		}
 		return ce;
 	}

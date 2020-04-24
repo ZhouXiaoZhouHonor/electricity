@@ -14,10 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.AreaExecution;
+import com.ze.zhou.dto.CoordinateExecution;
 import com.ze.zhou.entity.Area;
+import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Operator;
 import com.ze.zhou.entity.Pile;
+import com.ze.zhou.enums.AreaStateEnum;
+import com.ze.zhou.enums.CoordinateStateEnum;
 import com.ze.zhou.service.AreaService;
+import com.ze.zhou.service.CoordinateService;
 import com.ze.zhou.service.OperatorService;
 import com.ze.zhou.util.CodeUtil;
 import com.ze.zhou.util.HttpServletRequestUtil;
@@ -34,6 +39,52 @@ public class SuperOperatorController {
 	private AreaService areaService;
 	@Autowired
 	private OperatorService operatorService;
+	@Autowired
+	private CoordinateService coordinateService;
+	
+	//更新站点信息状态
+	@RequestMapping(value="/modifycoordinatestate",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyCoordinateState(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int coordinateId=HttpServletRequestUtil.getInt(request, "coordinateId");
+		int coordinateEnableStatus=HttpServletRequestUtil.getInt(request, "enableStatus");
+		if(coordinateId>0) {//获取到有效的id
+			Coordinate coordinate=new Coordinate();
+			coordinate.setCoordinateId(coordinateId);
+			coordinate.setCoordinateEnableStatus(coordinateEnableStatus);
+			CoordinateExecution ce=coordinateService.changeCoordinate(coordinate);
+			if(ce.getState()==CoordinateStateEnum.SUCCESS.getState()) {//更改成功
+				modelMap.put("success", true);
+			}else {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", "change failure");
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty coordinateId");
+		}
+		return modelMap;
+	}
+	
+	//获取站点信息
+	@RequestMapping(value="/getcoordinatelist",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getCoordinateList(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
+		CoordinateExecution ce=coordinateService.getCoordinateList(pageIndex, pageSize);
+		if(ce.getState()==1) {//获取数据成功
+			modelMap.put("coordinateList", ce.getCoordinateList());
+			modelMap.put("count", ce.getCount());
+			modelMap.put("success", true);
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty coordinate");
+		}
+		return modelMap;
+	}
 	
 	//获取操作员信息
 	@RequestMapping(value="/getoperatorlist",method=RequestMethod.GET)
@@ -121,7 +172,7 @@ public class SuperOperatorController {
 		if(area!=null) {
 			//开始注册区域信息
 			AreaExecution ae=areaService.addArea(area);
-			if(ae.getState()==1) {
+			if(ae.getState()==AreaStateEnum.SUCCESS.getState()) {
 				modelMap.put("success", true);
 				modelMap.put("msg", ae.getStateInfo());
 			}else {
@@ -131,5 +182,4 @@ public class SuperOperatorController {
 		}
 		return modelMap;
 	}
-	
 }

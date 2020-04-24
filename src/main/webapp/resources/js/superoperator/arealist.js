@@ -199,10 +199,6 @@ layui.use(['jquery','table','layer','element'],function(){
 			},
 		});
 	}
-	
-	
-	
-	
 });
 
 

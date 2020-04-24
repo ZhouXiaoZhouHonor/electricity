@@ -22,11 +22,26 @@ public class CoordinateDaoTest extends BaseTest{
 	
 	@Test
 	@Ignore
+	public void queryCoordinateListTest() {
+		List<Coordinate> coordinateList=coordinateDao.queryCoordinateList(0, 5);
+		System.out.println(coordinateList.get(0).getCoordinateName());
+	}
+	
+	@Test
+	@Ignore
+	public void queryCountCoordinateTest() {
+		int num=coordinateDao.queryCountCoordinate();
+		System.out.println(num);
+	}
+	
+	@Test
+	@Ignore
 	public void updateCoordinate() {
 		Coordinate c=new Coordinate();
 		c.setCoordinateId(4);
 		c.setLastEditTime(new Date());
-		c.setCoordinatePileNumber(15);
+		c.setCoordinatePileNumber(16);
+		c.setCoordinateEnableStatus(1);
 		int effect=coordinateDao.updateCoordinate(c);
 		System.out.println(effect);
 	}

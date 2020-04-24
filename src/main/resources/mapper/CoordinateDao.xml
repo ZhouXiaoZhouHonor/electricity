@@ -80,16 +80,42 @@
 			<if test="priority!=null and priority>0">
 				priority=#{priority},
 			</if>
-			<if test="coordinateEnableStatus!=null and coordinateEnableStatus>0">
+			<if test="coordinateEnableStatus!=null">
 				coordinate_enable_status=#{coordinateEnableStatus},
 			</if>
 			<if test="coordinatePileNumber!=null and coordinatePileNumber>0">
-				coordinate_pile_number=#{coordinatePileNumber},
+				coordinate_pile_number=#{coordinatePileNumber}
 			</if>
 		</set>
 		WHERE
 		coordinate_id=#{coordinateId}
 	</update>
+	<!-- 分页查询站点信息 -->
+	<select id="queryCoordinateList" resultMap="coordinateMap">
+		SELECT
+		coordinate_id,  
+ 		coordinate_longitude,
+ 		coordinate_latitude,
+ 		create_time,    
+ 		last_edit_time,
+ 		priority,
+ 		coordinate_name,
+ 		coordinate_pile_number,
+ 		coordinate_enable_status
+ 		FROM
+ 		tb_coordinate
+ 		ORDER BY
+ 		priority
+ 		DESC
+ 		LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<!-- 分页查询站点信息总数 -->
+	<select id="queryCountCoordinate" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		tb_coordinate
+	</select>
 </mapper>
 
 

@@ -1,1 +1,46 @@
-2020-04-23 21:50:12.830[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==>  Preparing: INSERT INTO tb_coordinate ( coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, area_id, coordinate_name, coordinate_pile_number, coordinate_enable_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+2020-04-24 14:00:55.544[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==>  Preparing: INSERT INTO tb_coordinate ( coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, area_id, coordinate_name, coordinate_pile_number, coordinate_enable_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+2020-04-24 14:01:52.291[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==>  Preparing: INSERT INTO tb_coordinate ( coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, area_id, coordinate_name, coordinate_pile_number, coordinate_enable_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+2020-04-24 14:02:27.725[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==>  Preparing: INSERT INTO tb_coordinate ( coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, area_id, coordinate_name, coordinate_pile_number, coordinate_enable_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+2020-04-24 14:02:27.771[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==> Parameters: 117.251097(Double), 31.865709(Double), 2020-04-24 14:02:27.278(Timestamp), 2020-04-24 14:02:27.278(Timestamp), 14(Integer), 1(Integer), 安农大(String), 5(Integer), 1(Integer)
+2020-04-24 14:02:27.776[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - <==    Updates: 1
+2020-04-24 14:04:23.676[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==>  Preparing: INSERT INTO tb_coordinate ( coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, area_id, coordinate_name, coordinate_pile_number, coordinate_enable_status ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+2020-04-24 14:04:23.712[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - ==> Parameters: 117.251097(Double), 31.865709(Double), 2020-04-24 14:04:23.221(Timestamp), 2020-04-24 14:04:23.221(Timestamp), 14(Integer), 1(Integer), 安农大(String), 5(Integer), 1(Integer)
+2020-04-24 14:04:23.720[main]DEBUG com.ze.zhou.dao.CoordinateDao.insertCoordinate - <==    Updates: 1
+2020-04-24 14:29:59.713[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==>  Preparing: UPDATE tb_coordinate SET last_edit_time=?, coordinate_pile_number=? WHERE coordinate_id=? 
+2020-04-24 14:29:59.758[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==> Parameters: 2020-04-24 14:29:59.177(Timestamp), 15(Integer), 4(Integer)
+2020-04-24 14:29:59.764[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - <==    Updates: 1
+2020-04-24 15:15:53.595[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - ==>  Preparing: UPDATE tb_pile SET coordinate_id=? WHERE coordinate_id=? 
+2020-04-24 15:15:53.645[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - ==> Parameters: 1(Integer), 1(Integer)
+2020-04-24 15:15:53.646[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - <==    Updates: 10
+2020-04-24 15:16:34.911[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - ==>  Preparing: UPDATE tb_pile SET pile_enable_status=?, coordinate_id=? WHERE coordinate_id=? 
+2020-04-24 15:16:34.959[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - ==> Parameters: 0(Integer), 1(Integer), 1(Integer)
+2020-04-24 15:16:34.965[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - <==    Updates: 10
+2020-04-24 15:16:50.316[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - ==>  Preparing: UPDATE tb_pile SET pile_enable_status=?, coordinate_id=? WHERE coordinate_id=? 
+2020-04-24 15:16:50.351[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - ==> Parameters: 1(Integer), 1(Integer), 1(Integer)
+2020-04-24 15:16:50.356[main]DEBUG com.ze.zhou.dao.PileDao.updatePile - <==    Updates: 10
+2020-04-24 19:35:12.353[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCountCoordinate - ==>  Preparing: SELECT count(1) FROM tb_coordinate 
+2020-04-24 19:35:12.387[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCountCoordinate - ==> Parameters: 
+2020-04-24 19:36:31.082[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCountCoordinate - ==>  Preparing: SELECT count(1) FROM tb_coordinate 
+2020-04-24 19:36:31.121[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCountCoordinate - ==> Parameters: 
+2020-04-24 19:36:31.148[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCountCoordinate - <==      Total: 1
+2020-04-24 19:37:54.099[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
+2020-04-24 19:37:54.137[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-04-24 19:37:54.165[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 3
+2020-04-24 19:38:14.523[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
+2020-04-24 19:38:14.573[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-04-24 19:38:14.610[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 3
+2020-04-24 20:35:38.996[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==>  Preparing: UPDATE tb_coordinate SET last_edit_time=?, coordinate_pile_number=? WHERE coordinate_id=? 
+2020-04-24 20:35:39.082[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==> Parameters: 2020-04-24 20:35:38.549(Timestamp), 15(Integer), 4(Integer)
+2020-04-24 20:35:39.087[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - <==    Updates: 1
+2020-04-24 20:37:46.223[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==>  Preparing: UPDATE tb_coordinate SET last_edit_time=?, coordinate_pile_number=? WHERE coordinate_id=? 
+2020-04-24 20:37:46.286[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==> Parameters: 2020-04-24 20:37:45.791(Timestamp), 15(Integer), 4(Integer)
+2020-04-24 20:37:46.292[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - <==    Updates: 1
+2020-04-24 20:39:14.288[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==>  Preparing: UPDATE tb_coordinate SET last_edit_time=?, coordinate_pile_number=? WHERE coordinate_id=? 
+2020-04-24 20:39:14.343[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==> Parameters: 2020-04-24 20:39:13.831(Timestamp), 16(Integer), 4(Integer)
+2020-04-24 20:39:14.349[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - <==    Updates: 1
+2020-04-24 20:40:00.882[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==>  Preparing: UPDATE tb_coordinate SET last_edit_time=?, coordinate_enable_status=?, coordinate_pile_number=? WHERE coordinate_id=? 
+2020-04-24 20:40:00.929[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==> Parameters: 2020-04-24 20:40:00.439(Timestamp), 0(Integer), 16(Integer), 4(Integer)
+2020-04-24 20:40:00.935[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - <==    Updates: 1
+2020-04-24 20:40:16.063[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==>  Preparing: UPDATE tb_coordinate SET last_edit_time=?, coordinate_enable_status=?, coordinate_pile_number=? WHERE coordinate_id=? 
+2020-04-24 20:40:16.106[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - ==> Parameters: 2020-04-24 20:40:15.622(Timestamp), 1(Integer), 16(Integer), 4(Integer)
+2020-04-24 20:40:16.108[main]DEBUG com.ze.zhou.dao.CoordinateDao.updateCoordinate - <==    Updates: 1

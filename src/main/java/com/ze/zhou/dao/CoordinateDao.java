@@ -2,6 +2,8 @@ package com.ze.zhou.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ze.zhou.entity.Coordinate;
 
 /*
@@ -16,4 +18,9 @@ public interface CoordinateDao {
 	int insertCoordinate(Coordinate coordinate);
 	//更新站点
 	int updateCoordinate(Coordinate coordinate);
+	//分页获取数据
+	int queryCountCoordinate();//获取总数
+	//按分页获取数据
+	List<Coordinate> queryCoordinateList(@Param("rowIndex")int rowIndex,
+			@Param("pageSize")int pageSize);
 }
