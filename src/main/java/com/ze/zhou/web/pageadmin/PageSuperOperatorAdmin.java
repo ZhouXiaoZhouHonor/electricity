@@ -22,4 +22,9 @@ public class PageSuperOperatorAdmin {
 	private String addArea() {
 		return "superoperator/addarea";
 	}
+	//超级管理员添加站点页面
+	@RequestMapping("/addcoordinate")
+	private String addCoordinate() {
+		return "superoperator/addcoordinate";
+	}
 }

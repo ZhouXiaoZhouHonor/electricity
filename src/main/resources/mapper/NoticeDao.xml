@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.NoticeDao">
+	<select id="queryNotice" resultType="com.ze.zhou.entity.Notice">
+		SELECT
+		notice_id,
+    	notice_name,
+     	notice_link,
+     	create_time,
+     	notice_priority,
+     	notice_enable_status,
+     	notice_img,
+     	last_edit_time
+     	FROM
+     	tb_notice
+     	WHERE
+     	notice_enable_status=1
+	</select>
+	<insert id="insertNotice" useGeneratedKeys="true" 
+	keyColumn="notice_id" keyProperty="noticeId">
+	INSERT INTO
+	tb_notice
+	(
+    notice_link,
+    create_time,
+    notice_priority,
+    notice_enable_status,
+    notice_img,
+    last_edit_time
+	)
+	VALUES
+	(
+	#{noticeLink},
+	#{createTime},
+	#{noticePriority},
+	#{noticeEnableStatus},
+	#{noticeImg},
+	#{lastEditTime}
+	)
+	</insert>
+	<update id="updateNotice">
+		UPDATE tb_notice
+		<set>
+			<if test="noticeEnableStatus!=null and noticeEnableStatus>=0">
+				notice_enable_status=#{noticeEnableStatus},
+			</if>
+			<if test="noticePriority!=null and noticePriority>=0">
+				notice_priority=#{noticePriority},
+			</if>
+			<if test="lastEditTime!=null">
+			last_edit_time=#{lastEditTime}
+			</if>
+		</set>
+		WHERE
+		notice_id=#{noticeId}
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+

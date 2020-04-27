@@ -43,6 +43,10 @@ public class CoordinateServiceImpl implements CoordinateService{
 		CoordinateExecution ce=new CoordinateExecution();
 		int effectNum;//存储影响行数
 		if(coordinate!=null) {//判断站点信息是否为空
+			coordinate.setCreateTime(new Date());
+			coordinate.setLastEditTime(new Date());
+			coordinate.setCoordinatePileNumber(10);
+			coordinate.setCoordinateEnableStatus(1);
 			effectNum=coordinateDao.insertCoordinate(coordinate);
 			if(effectNum>0) {//插入成功
 				ce.setState(CoordinateStateEnum.SUCCESS.getState());

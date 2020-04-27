@@ -84,7 +84,10 @@
 				coordinate_enable_status=#{coordinateEnableStatus},
 			</if>
 			<if test="coordinatePileNumber!=null and coordinatePileNumber>0">
-				coordinate_pile_number=#{coordinatePileNumber}
+				coordinate_pile_number=#{coordinatePileNumber},
+			</if>
+			<if test="area!=null and area.areaId>0">
+				area_id=#{area.areaId}
 			</if>
 		</set>
 		WHERE

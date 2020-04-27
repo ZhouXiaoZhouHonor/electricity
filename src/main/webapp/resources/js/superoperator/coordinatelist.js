@@ -20,6 +20,7 @@ layui.use(['layer','jquery','element','table'],function(){
 		'<script type="text/html" id="barDemo">'+
 		'<a class="layui-btn layui-btn-xs detail" lay-event="start">启用</a>'+
 		'<a class="layui-btn layui-btn-xs layui-btn-danger detail" lay-event="stop">禁用</a>'+
+		'<a class="layui-btn layui-btn-xs detail" lay-event="operation">分配区域</a>'+
 		'</script>';
 		
 		exports('coordinateTable',function(){
@@ -47,10 +48,77 @@ layui.use(['layer','jquery','element','table'],function(){
 					formData.append('enableStatus',0);
 					modifyCoordinateState(formData)
 					break;
+				case 'operation':
+					coordinateOperationInitOfArea(layer,coordinateList.coordinateId);
+					break;
 				}
 			});
 		}
-		
+		//分配区域信息
+		function coordinateOperationInitOfArea(layer,coordinateId){
+			var coordinateOperationHtml=''+
+			'<div class="layui-form-item">'+
+				'<label class="layui-form-label">管理员</label>'+
+				'<div class="layui-input-block" style="width:150px;">'+
+					'<select id="coordinate-area" name="city" lay-verify="required" class="layui-input">'+
+					'<option value="">请选择</option>'+
+						'</select>'+
+				'</div>'+
+			'</div>';//定义下拉列表框的样式
+			
+			var coordinateOperationOfAreaUrl='/zhou/superadmin/getarealist';//从后台获取所有的操作员的信息
+			$.getJSON(coordinateOperationOfAreaUrl,function(data){
+				if(data.success){
+					var areaList=data.areaList;
+					var html='';
+					areaList.map(function(item,index){
+						html+='<option value="'+item.areaId+'">'+item.areaName+'</option>';
+					});
+					$('#coordinate-area').append(html);
+				}else{
+					
+				}
+			});
+			
+			layer.open({
+				type:1,
+				content:coordinateOperationHtml,
+				area:['300px','200px'],
+				btn:['取消','确定'],
+				yes:function(index,layero){//按钮一(取消按钮)
+					//点击取消按钮，跳转到展示页面 TODO
+				},
+				btn2:function(index,layero){//按钮二(继续添加按钮)
+					//更新后台area的operator
+					var areaId=$('#coordinate-area').val();//获取operatorId
+					var formData=new FormData();
+					formData.append("areaId",areaId);
+					formData.append("coordinateId",coordinateId);
+					formData.append("enableStatus",1);
+					//更新area
+					var changeCoordinatOfArea='/zhou/superoperator/modifycoordinatestate';
+					$.ajax({
+						url:changeCoordinatOfArea,
+						method:'POST',
+						data:formData,
+						contentType:false,
+						processData:false,
+						cache:false,//是否启用cache缓存
+						success:function(data){
+							if(data.success){
+								layer.msg('更新成功');
+							}else{
+								layer.msg('更新失败'+data.errMsg);
+							}
+							$('#coordinate-message').click();
+						}
+					});
+					//console.log('operatorId:'+operatorId);
+				}
+			});
+			
+		}
+		//更新站点状态
 		function modifyCoordinateState(formData){
 			var changeCoordinateStateUrl='/zhou/superoperator/modifycoordinatestate';
 			$.ajax({
