@@ -19,4 +19,6 @@ public interface CoordinateService {
 	CoordinateExecution changeCoordinate(Coordinate coordinate);
 	//分页获取数据
 	CoordinateExecution getCoordinateList(int pageIndex,int pageSize);
+	//手机用户获取站点数据
+	List<Coordinate> getAllCoordinateList();
 }

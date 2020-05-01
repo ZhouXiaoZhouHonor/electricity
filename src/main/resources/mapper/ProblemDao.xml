@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.ProblemDao">
+	<resultMap type="com.ze.zhou.entity.Problem" id="problemmap">
+		<id column="problem_id" property="problemId"/>
+		<result column="problem_desc" property="problemDesc"/>
+		<result column="problem_title" property="problemTitle"/>
+		<result column="problem_enable_status" property="problemEnableStatus"/>
+		<result column="create_time" property="createTime"/>
+		<result column="last_edit_time" property="lastEditTime"/>
+		<association column="user_id" property="user" 
+			javaType="com.ze.zhou.entity.PhoneUser">
+			<!-- 目前只取出一个id就可以了 -->
+			<id column="user_id" property="userId"/>
+		</association>
+	</resultMap>
+	<!-- 查询问题 -->
+	<select id="queryProblemByUser" resultMap="problemmap">
+		SELECT
+		p.problem_id,
+	 	p.problem_desc,
+	 	p.problem_title,
+	 	p.problem_enable_status,
+	 	p.create_time,
+	 	p.last_edit_time,    
+	 	p.user_id
+	 	FROM
+	 	tb_problem p,
+	 	tb_phone_user pu
+	 	<where>
+	 		p.user_id=pu.user_id
+	 		<if test="problem.user!=null and problem.user.userId>0">
+	 			and p.user_id=#{problem.user.userId}
+	 		</if>
+	 	</where>
+	</select>
+	<!-- 添加问题 -->
+	<insert id="insertProblem" useGeneratedKeys="true"
+		keyColumn="problem_id" keyProperty="problemId">
+		INSERT INTO 
+		tb_problem
+		(
+	 	problem_desc,
+	 	problem_title,
+	 	problem_enable_status,
+	 	create_time,
+	 	last_edit_time,      
+	 	user_id
+		)
+		VALUES
+		(
+		#{problemDesc},
+		#{problemTitle},
+		#{problemEnableStatus},
+		#{createTime},
+		#{lastEditTime},
+		#{user.userId}
+		)
+	</insert>
+	<!-- 更新问题状态 -->
+	<!-- 只更改状态和更改日期 -->
+	<update id="updateProblem" parameterType="com.ze.zhou.entity.Problem">
+		UPDATE tb_problem
+		<set>
+			<if test="problemEnableStatus!=null">
+				problem_enable_status=#{problemEnableStatus},
+			</if>
+			<if test="lastEditTime!=null">
+				last_edit_time=#{lastEditTime}
+			</if>
+		</set>
+		WHERE
+		problem_id=#{problemId}
+	</update>
+</mapper>
+
+
+
+
+
+
+

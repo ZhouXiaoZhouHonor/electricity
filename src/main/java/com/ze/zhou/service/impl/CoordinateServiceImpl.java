@@ -109,4 +109,9 @@ public class CoordinateServiceImpl implements CoordinateService{
 		}
 		return ce;
 	}
+	
+	@Override
+	public List<Coordinate> getAllCoordinateList() {
+		return coordinateDao.queryAllCoordinate();
+	}
 }

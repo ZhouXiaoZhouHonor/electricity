@@ -23,4 +23,7 @@ public interface CoordinateDao {
 	//按分页获取数据
 	List<Coordinate> queryCoordinateList(@Param("rowIndex")int rowIndex,
 			@Param("pageSize")int pageSize);
+	
+	//手机用户查询电站即可,只要能用就需要查出来
+	List<Coordinate> queryAllCoordinate();
 }

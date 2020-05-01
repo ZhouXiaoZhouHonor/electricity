@@ -119,6 +119,23 @@
 		FROM
 		tb_coordinate
 	</select>
+	
+	<select id="queryAllCoordinate" resultType="com.ze.zhou.entity.Coordinate">
+		SELECT
+		coordinate_id,  
+ 		coordinate_longitude,
+ 		coordinate_latitude,
+ 		create_time,    
+ 		last_edit_time,
+ 		priority,
+ 		coordinate_name,
+ 		coordinate_pile_number,
+ 		coordinate_enable_status
+ 		FROM
+ 		tb_coordinate
+ 		WHERE
+ 		coordinate_enable_status=1
+	</select>
 </mapper>
 
 

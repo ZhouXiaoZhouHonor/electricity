@@ -35,5 +35,4 @@ public interface PileDao {
 	
 	//获取查询的pile总数
 	int queryPileCount(@Param("pileCondition") Pile pileCondition);
-	
 }
