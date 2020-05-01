@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.ze.zhou.dao.ProblemDao;
 import com.ze.zhou.dto.ProblemExecution;
 import com.ze.zhou.entity.Problem;
-import com.ze.zhou.entity.ProblemImg;
 import com.ze.zhou.enums.ProblemStateEnum;
 import com.ze.zhou.service.ProblemService;
+import com.ze.zhou.util.ImageHolder;
 
 /*
 	author:zhouze
@@ -28,10 +28,11 @@ public class ProblemServiceImpl implements ProblemService{
 	}
 
 	@Override
-	public ProblemExecution addProblem(Problem problem,List<ProblemImg> problemImgList) {
+	public ProblemExecution addProblem(Problem problem,List<ImageHolder> problemImgList) {
 		ProblemExecution peu=new ProblemExecution();
 		/*1、将problem插入；
-		 *2、若第一步成功，则将图片进行插入*/
+		 *2、若第一步成功，则将图片进行插入
+		 **/
 		if(problem!=null&&problem.getUser()!=null) {
 			problem.setCreateTime(new Date());
 			problem.setLastEditTime(new Date());
@@ -39,6 +40,8 @@ public class ProblemServiceImpl implements ProblemService{
 			int effectNum=problemDao.insertProblem(problem);
 			if(effectNum>0) {
 				peu.setState(ProblemStateEnum.SUCCESS.getState());
+				//TODO 添加图片，使用批量插入的方法
+				//ProblemImg pi=new ProblemImg();
 				
 			}else {
 				peu.setState(ProblemStateEnum.INNER_ERROR.getState());

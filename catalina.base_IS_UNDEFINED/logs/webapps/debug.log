@@ -1,38 +1,34 @@
-2020-04-29 15:03:03.001[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUser - ==>  Preparing: SELECT p.problem_id, p.problem_desc, p.problem_title, p.problem_enable_status, p.create_time, p.user_id FROM tb_problem p, tb_phone_user pu WHERE p.user_id=pu.user_id and p.user_id=? 
-2020-04-29 15:03:03.038[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUser - ==> Parameters: 1(Integer)
-2020-04-29 15:03:03.061[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUser - <==      Total: 1
-2020-04-29 15:39:39.728[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, user_id ) VALUES ( ?, ?, ?, ?, ? ) 
-2020-04-29 15:39:39.768[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题1(String), 问题1(String), 1(Integer), 2020-04-29 15:39:39.255(Timestamp), 1(Integer)
-2020-04-29 15:39:39.774[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
-2020-04-29 15:47:57.228[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUser - ==>  Preparing: SELECT p.problem_id, p.problem_desc, p.problem_title, p.problem_enable_status, p.create_time, p.last_edit_time, p.user_id FROM tb_problem p, tb_phone_user pu WHERE p.user_id=pu.user_id and p.user_id=? 
-2020-04-29 15:47:57.270[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUser - ==> Parameters: 1(Integer)
-2020-04-29 15:47:57.293[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUser - <==      Total: 2
-2020-04-29 15:48:57.083[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
-2020-04-29 15:48:57.125[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2(String), 问题2(String), 1(Integer), 2020-04-29 15:48:56.665(Timestamp), 2020-04-29 15:48:56.665(Timestamp), 1(Integer)
-2020-04-29 15:48:57.130[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
-2020-04-29 15:51:48.865[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==>  Preparing: UPDATE tb_problem SET problem_enable_status=?, last_edit_time=? WHERE problem_id=? 
-2020-04-29 15:51:48.914[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==> Parameters: 0(Integer), 2020-04-29 15:51:48.463(Timestamp), 2(Integer)
-2020-04-29 15:51:48.920[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - <==    Updates: 1
-2020-04-29 15:52:41.638[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==>  Preparing: UPDATE tb_problem SET problem_enable_status=?, last_edit_time=? WHERE problem_id=? 
-2020-04-29 15:52:41.697[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==> Parameters: 0(Integer), 2020-04-29 15:52:41.174(Timestamp), 3(Integer)
-2020-04-29 15:52:41.704[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - <==    Updates: 1
-2020-04-29 15:55:11.801[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==>  Preparing: UPDATE tb_problem SET problem_enable_status=?, last_edit_time=? WHERE problem_id=? 
-2020-04-29 15:55:11.844[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==> Parameters: 0(Integer), 2020-04-29 15:55:11.423(Timestamp), 3(Integer)
-2020-04-29 15:55:11.851[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - <==    Updates: 1
-2020-04-29 16:47:11.863[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id 
-2020-04-29 16:47:11.910[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 
-2020-04-29 16:47:11.926[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 0
-2020-04-29 16:47:59.846[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id 
-2020-04-29 16:47:59.895[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 
-2020-04-29 16:48:39.577[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id 
-2020-04-29 16:48:39.644[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 
-2020-04-29 16:48:39.665[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 2
-2020-04-29 16:56:51.237[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==>  Preparing: INSERT INTO tb_problem_img ( problem_img_link, problem_img_priority, problem_id ) VALUES ( problem_img_link=?, problem_img_priority=?, problem_id=? ) 
-2020-04-29 16:56:51.308[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==> Parameters: qwe(String), 1(Integer), 3(Integer)
-2020-04-29 16:56:51.316[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - <==    Updates: 1
-2020-04-29 17:04:24.910[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==>  Preparing: INSERT INTO tb_problem_img ( problem_img_link, problem_img_priority, problem_id ) VALUES ( problem_img_link=?, problem_img_priority=?, problem_id=? ) 
-2020-04-29 17:04:25.048[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==> Parameters: qwe(String), 1(Integer), 3(Integer)
-2020-04-29 17:04:25.055[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - <==    Updates: 1
-2020-04-29 17:08:41.820[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==>  Preparing: INSERT INTO tb_problem_img ( problem_img_link, problem_img_priority, problem_id ) VALUES ( ?, ?, ? ) 
-2020-04-29 17:08:41.863[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==> Parameters: qwe(String), 1(Integer), 3(Integer)
-2020-04-29 17:08:41.869[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - <==    Updates: 1
+2020-05-01 12:55:19.366[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
+2020-05-01 12:55:19.414[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2-1(String), 问题2-1(String), 1(Integer), 2020-05-01 12:55:18.818(Timestamp), 2020-05-01 12:55:18.818(Timestamp), 1(Integer)
+2020-05-01 12:55:19.418[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
+2020-05-01 12:55:19.421[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==>  Preparing: select last_insert_id() 
+2020-05-01 12:55:19.421[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==> Parameters: 
+2020-05-01 12:55:19.438[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - <==      Total: 1
+2020-05-01 12:57:05.952[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
+2020-05-01 12:57:06.008[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2-1(String), 问题2-1(String), 1(Integer), 2020-05-01 12:57:05.436(Timestamp), 2020-05-01 12:57:05.436(Timestamp), 1(Integer)
+2020-05-01 12:57:06.016[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
+2020-05-01 12:57:06.019[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==>  Preparing: select last_insert_id() 
+2020-05-01 12:57:06.019[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==> Parameters: 
+2020-05-01 12:57:06.039[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - <==      Total: 1
+2020-05-01 13:07:02.730[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
+2020-05-01 13:07:02.763[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2-1(String), 问题2-1(String), 1(Integer), 2020-05-01 13:07:02.297(Timestamp), 2020-05-01 13:07:02.297(Timestamp), 1(Integer)
+2020-05-01 13:07:02.769[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
+2020-05-01 13:07:02.770[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==>  Preparing: select last_insert_id() 
+2020-05-01 13:07:02.771[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==> Parameters: 
+2020-05-01 13:07:02.788[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - <==      Total: 1
+2020-05-01 13:26:40.217[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
+2020-05-01 13:26:40.286[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2-1(String), 问题2-1(String), 1(Integer), 2020-05-01 13:26:39.787(Timestamp), 2020-05-01 13:26:39.787(Timestamp), 1(Integer)
+2020-05-01 13:26:40.290[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
+2020-05-01 13:26:40.292[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==>  Preparing: select last_insert_id() 
+2020-05-01 13:26:40.292[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - ==> Parameters: 
+2020-05-01 13:26:40.306[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem!selectKey - <==      Total: 1
+2020-05-01 13:27:18.739[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
+2020-05-01 13:27:18.784[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2-1(String), 问题2-1(String), 1(Integer), 2020-05-01 13:27:18.33(Timestamp), 2020-05-01 13:27:18.33(Timestamp), 1(Integer)
+2020-05-01 13:27:18.790[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
+2020-05-01 13:27:48.928[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==>  Preparing: INSERT INTO tb_problem ( problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, user_id ) VALUES ( ?, ?, ?, ?, ?, ? ) 
+2020-05-01 13:27:48.997[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - ==> Parameters: 问题2-1(String), 问题2-1(String), 1(Integer), 2020-05-01 13:27:48.53(Timestamp), 2020-05-01 13:27:48.53(Timestamp), 1(Integer)
+2020-05-01 13:27:49.004[main]DEBUG com.ze.zhou.dao.ProblemDao.insertProblem - <==    Updates: 1
+2020-05-01 14:31:59.494[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==>  Preparing: INSERT INTO tb_problem_img ( problem_img_link, problem_img_priority, problem_id ) VALUES ( ?, ?, ? ) , ( ?, ?, ? ) 
+2020-05-01 14:33:02.949[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==>  Preparing: INSERT INTO tb_problem_img ( problem_img_link, problem_img_priority, problem_id ) VALUES ( ?, ?, ? ) , ( ?, ?, ? ) 
+2020-05-01 14:33:02.994[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - ==> Parameters: qwe1(String), 1(Integer), 3(Integer), qwe2(String), 1(Integer), 3(Integer)
+2020-05-01 14:33:03.003[main]DEBUG com.ze.zhou.dao.ProblemImgDao.insertProblemImg - <==    Updates: 2

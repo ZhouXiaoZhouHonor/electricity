@@ -36,6 +36,9 @@
 	 	</where>
 	</select>
 	<!-- 添加问题 -->
+	<!-- 第一次执行后获得的id是1，嗯，没错，但是第二、第三、第n次获取的id怎么还是1？
+	原来真正的id已经被注入到传参对象的id属性里了，只需要使用插入语句的入参对象的get方法即可获取到正确的自增id，
+	如我插入用户信息组装的用户对象是user，使用user插入了数据，然后user.getID()得到的值就是已插入获取的id。-->
 	<insert id="insertProblem" useGeneratedKeys="true"
 		keyColumn="problem_id" keyProperty="problemId">
 		INSERT INTO 

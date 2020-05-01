@@ -1,5 +1,6 @@
 package com.ze.zhou.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Ignore;
@@ -20,15 +21,23 @@ public class ProblemImgDaoTest extends BaseTest{
 	private ProblemImgDao problemImgDao;
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void insertProblemTest() {
-		ProblemImg problemImg=new ProblemImg();
-		problemImg.setProblemImgLink("qwe");
-		problemImg.setProblemImgPriority(1);
+		List<ProblemImg> list=new ArrayList<>();
+		ProblemImg problemImg1=new ProblemImg();
+		problemImg1.setProblemImgLink("qwe1");
+		problemImg1.setProblemImgPriority(1);
 		Problem problem=new Problem();
 		problem.setProblemId(3);
-		problemImg.setProblem(problem);
-		int effectNum=problemImgDao.insertProblemImg(problemImg);
+		problemImg1.setProblem(problem);
+		list.add(problemImg1);
+		ProblemImg problemImg2=new ProblemImg();
+		problemImg2.setProblemImgLink("qwe2");
+		problemImg2.setProblemImgPriority(1);
+		problemImg2.setProblem(problem);
+		list.add(problemImg2);
+		System.out.println(list.size());
+		int effectNum=problemImgDao.insertProblemImg(list);
 		System.out.println(effectNum);
 	}
 	

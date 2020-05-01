@@ -12,6 +12,6 @@ import com.ze.zhou.entity.ProblemImg;
 public interface ProblemImgDao {
 	//获取img
 	List<ProblemImg> queryProblemImgByProblem(ProblemImg problemImg);
-	//添加img
-	int insertProblemImg(ProblemImg problemImg);
+	//批量添加img
+	int insertProblemImg(List<ProblemImg> problemImg);
 }

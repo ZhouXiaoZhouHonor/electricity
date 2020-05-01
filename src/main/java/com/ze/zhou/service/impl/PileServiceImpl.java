@@ -14,6 +14,7 @@ import com.ze.zhou.enums.PileStateEnum;
 import com.ze.zhou.exceptions.PileOperationException;
 import com.ze.zhou.service.PileService;
 import com.ze.zhou.util.ImageHolder;
+import com.ze.zhou.util.ImageSize;
 import com.ze.zhou.util.ImageUtil;
 import com.ze.zhou.util.PageCalculator;
 import com.ze.zhou.util.PathUtil;
@@ -79,7 +80,7 @@ public class PileServiceImpl implements PileService{
 	//将真正的图片添加到指定目录下并将真实的地址返回到pile对象中
 	private void addPileImg(Pile pile,ImageHolder imageholder) {
 		String dest=PathUtil.getPileImagePath(pile.getPileId());
-		String pileImgAddr=ImageUtil.generateThumbnail(imageholder, dest);
+		String pileImgAddr=ImageUtil.generateThumbnail(imageholder, dest,ImageSize.IMAGE_PILE);
 		pile.setPileImg(pileImgAddr);
 	}
 

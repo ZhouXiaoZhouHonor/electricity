@@ -21,6 +21,7 @@ public class ProblemDaoTest extends BaseTest{
 	private ProblemDao problemDao;
 	
 	@Test
+	@Ignore
 	public void updateProblemTest() {
 		Problem problem=new Problem();
 		problem.setProblemId(3);
@@ -31,7 +32,7 @@ public class ProblemDaoTest extends BaseTest{
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void insertProblemTest() {
 		PhoneUser phoneUser=new PhoneUser();
 		/*phoneUser.setCreateTime(new Date());
@@ -43,12 +44,13 @@ public class ProblemDaoTest extends BaseTest{
 		Problem problem=new Problem();
 		problem.setCreateTime(new Date());
 		problem.setLastEditTime(new Date());
-		problem.setProblemDesc("问题2");
+		problem.setProblemDesc("问题2-1");
 		problem.setProblemEnableStatus(1);
-		problem.setProblemTitle("问题2");
+		problem.setProblemTitle("问题2-1");
 		problem.setUser(phoneUser);
 		int effectNum=problemDao.insertProblem(problem);
 		System.out.println(effectNum);
+		System.out.println(problem.getProblemId());
 	}
 	
 	@Test

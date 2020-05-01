@@ -39,10 +39,10 @@ public class ImageUtil {
 	private static final Random r=new Random();//创建随机数生成对象
 	private static Logger logger=(Logger) LoggerFactory.getLogger(ImageUtil.class);//创建日志对象
 	
-	
+	/*处理图片的尺寸不是全都相同的，可以将尺寸作为参数进行调用，参数的值可以写成枚举类*/
 	//处理缩略图，用户传递过来的图片。充电桩的展示图
 	//第一个参数:接收上传的文件;第二个参数:存放的目录
-	public static String generateThumbnail(ImageHolder thumbnail,String targetAddr) {
+	public static String generateThumbnail(ImageHolder thumbnail,String targetAddr,ImageSize imageSize) {
 		String realFileName=getRandomFileName();//获得图片名称，随机生成，使得图片的名字不会重复
 		String extension=getFileExtension(thumbnail.getImageName());//获取图片的文件扩展名(png、jpg等)
 		makeDirPath(targetAddr);//创建目标路径上所涉及的目录
@@ -52,7 +52,7 @@ public class ImageUtil {
 		logger.debug("current complete addr is:"+PathUtil.getImgBasePath()+relativeAddr);
 		try {/*.watermark(Positions.BOTTOM_CENTER,ImageIO.read(new File(basePath+"timg.jpg")).outputQuality(0.8f),0.25f)不打水印了*/
 			Thumbnails.of(thumbnail.getImage())
-			.size(200, 200)
+			.size(imageSize.getWidth(), imageSize.getHeight())
 			.toFile(dest);
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -60,7 +60,7 @@ public class ImageUtil {
 		return relativeAddr;//返回图片的路径，因为shop中的有一个字段用来存放图片地址。返回的是相对路径，适配不同的系统上
 	}
 	
-	//处理图片详情图
+	//处理图片详情图(暂时不用了)
 	public static String generateNormalImg(ImageHolder thumbnail,String targetAddr) {
 		String realFileName=getRandomFileName();//获得图片名称，随机生成，使得图片的名字不会重复
 		String extension=getFileExtension(thumbnail.getImageName());//获取图片的文件扩展名(png、jpg等)
