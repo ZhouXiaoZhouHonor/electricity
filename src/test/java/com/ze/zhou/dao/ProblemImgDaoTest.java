@@ -21,7 +21,7 @@ public class ProblemImgDaoTest extends BaseTest{
 	private ProblemImgDao problemImgDao;
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void insertProblemTest() {
 		List<ProblemImg> list=new ArrayList<>();
 		ProblemImg problemImg1=new ProblemImg();

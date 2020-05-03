@@ -1,5 +1,6 @@
 package com.ze.zhou.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -7,11 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ze.zhou.dao.ProblemDao;
+import com.ze.zhou.dao.ProblemImgDao;
 import com.ze.zhou.dto.ProblemExecution;
+import com.ze.zhou.dto.ProblemImgExecution;
 import com.ze.zhou.entity.Problem;
+import com.ze.zhou.entity.ProblemImg;
+import com.ze.zhou.enums.ProblemImgStateEnum;
 import com.ze.zhou.enums.ProblemStateEnum;
 import com.ze.zhou.service.ProblemService;
 import com.ze.zhou.util.ImageHolder;
+import com.ze.zhou.util.ImageSize;
+import com.ze.zhou.util.ImageUtil;
+import com.ze.zhou.util.PathUtil;
 
 /*
 	author:zhouze
@@ -22,6 +30,9 @@ import com.ze.zhou.util.ImageHolder;
 public class ProblemServiceImpl implements ProblemService{
 	@Autowired
 	private ProblemDao problemDao;
+	@Autowired
+	private ProblemImgDao problemImgDao;
+	
 	@Override
 	public List<Problem> getQueryProblem(Problem problem) {
 		return problemDao.queryProblemByUser(problem);
@@ -41,8 +52,18 @@ public class ProblemServiceImpl implements ProblemService{
 			if(effectNum>0) {
 				peu.setState(ProblemStateEnum.SUCCESS.getState());
 				//TODO 添加图片，使用批量插入的方法
-				//ProblemImg pi=new ProblemImg();
-				
+				/*
+				 * 1、将List<ImageHolder> problemImgList真正的数据存储起来
+				 * 2、执行添加操作*/
+				//详情图不为空
+				ProblemImgExecution pie=new ProblemImgExecution();
+				if(problemImgList!=null&&problemImgList.size()>0) {
+					pie=addProblemImgList(problem,problemImgList);
+				}
+				if(pie.getState()!=ProblemImgStateEnum.SUCCESS.getState()) {//插入详情图成功
+					peu.setState(ProblemStateEnum.INNER_ERROR.getState());
+					peu.setStateInfo("insert problemImg failure");
+				}
 			}else {
 				peu.setState(ProblemStateEnum.INNER_ERROR.getState());
 				peu.setStateInfo("insert failure");
@@ -53,7 +74,36 @@ public class ProblemServiceImpl implements ProblemService{
 		}
 		return peu;
 	}
-
+	
+	//添加图片集合
+	private ProblemImgExecution addProblemImgList(Problem problem,
+			List<ImageHolder> problemImgList) {
+		//获取图片存储路径
+		String dest=PathUtil.getProblemImagePath(problem.getProblemId());
+		List<ProblemImg> imgList=new ArrayList<>();
+		int priority=1;
+		for(ImageHolder imageholder:problemImgList) {
+			String imgAddr=ImageUtil.generateThumbnail(imageholder, dest,ImageSize.IMAGE_PROBLEM);
+			ProblemImg problemImg=new ProblemImg();
+			problemImg.setProblemImgLink(imgAddr);
+			problemImg.setProblem(problem);
+			problemImg.setProblemImgPriority(priority++);
+			imgList.add(problemImg);
+		}
+		//执行添加操作
+		ProblemImgExecution pie=new ProblemImgExecution();
+		if(imgList!=null&&imgList.size()>0) {
+			int effectNum=problemImgDao.insertProblemImg(imgList);
+			if(effectNum<0) {//插入不成功
+				pie.setState(ProblemImgStateEnum.INNER_ERROR.getState());
+				pie.setStateInfo("插入问题反馈图片失败");
+			}else {
+				pie.setState(ProblemImgStateEnum.SUCCESS.getState());
+			}
+		}
+		return pie;
+	}
+	
 	@Override
 	public ProblemExecution changeProblem(Problem problem) {
 		ProblemExecution peu=new ProblemExecution();
