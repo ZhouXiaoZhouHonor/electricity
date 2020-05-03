@@ -62,7 +62,7 @@ public class PhoneController {
 		pu.setUserId(1);
 		//获取分页用的数值
 		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
-		int pageSize=HttpServletRequestUtil.getInt(request, "Size");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
 		Problem problem=new Problem();
 		problem.setUser(pu);
 		ProblemExecution pec=problemService.getQueryProblem(problem, pageIndex, pageSize);

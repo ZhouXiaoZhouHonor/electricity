@@ -47,7 +47,7 @@
 		tb_problem
 		<where>
 			<if test="problem.user!=null and problem.user.userId>0">
-	 			and p.user_id=#{problem.user.userId}
+	 			and user_id=#{problem.user.userId}
 	 		</if>
 		</where>
 	</select>
