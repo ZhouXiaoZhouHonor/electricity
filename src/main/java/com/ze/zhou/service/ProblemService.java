@@ -14,7 +14,7 @@ import com.ze.zhou.util.ImageHolder;
 */
 public interface ProblemService {
 	//获取问题
-	List<Problem> getQueryProblem(Problem problem);
+	ProblemExecution getQueryProblem(Problem problem,int pageIndex,int pageSize);
 	//添加问题
 	ProblemExecution addProblem(Problem problem,List<ImageHolder> problemImgList);
 	//更改问题状态

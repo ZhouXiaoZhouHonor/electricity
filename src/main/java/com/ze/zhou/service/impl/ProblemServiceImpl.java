@@ -19,6 +19,7 @@ import com.ze.zhou.service.ProblemService;
 import com.ze.zhou.util.ImageHolder;
 import com.ze.zhou.util.ImageSize;
 import com.ze.zhou.util.ImageUtil;
+import com.ze.zhou.util.PageCalculator;
 import com.ze.zhou.util.PathUtil;
 
 /*
@@ -34,10 +35,23 @@ public class ProblemServiceImpl implements ProblemService{
 	private ProblemImgDao problemImgDao;
 	
 	@Override
-	public List<Problem> getQueryProblem(Problem problem) {
-		return problemDao.queryProblemByUser(problem);
+	public ProblemExecution getQueryProblem(Problem problem,
+			int pageIndex,int pageSize) {
+		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<Problem> problemList=problemDao.queryProblemByUser(problem,
+				rowIndex,pageSize);
+		int count=problemDao.queryProblemByUserCount(problem);
+		ProblemExecution pec=new ProblemExecution();
+		if(problemList!=null&&problemList.size()>0&&count>0) {
+			pec.setState(ProblemStateEnum.SUCCESS.getState());
+			pec.setProblemList(problemList);
+			pec.setCount(count);
+		}else {
+			pec.setState(ProblemStateEnum.NULL_PROBLEM.getState());
+		}
+		return pec;
 	}
-
+	
 	@Override
 	public ProblemExecution addProblem(Problem problem,List<ImageHolder> problemImgList) {
 		ProblemExecution peu=new ProblemExecution();

@@ -32,7 +32,7 @@ public class ProblemDaoTest extends BaseTest{
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void insertProblemTest() {
 		PhoneUser phoneUser=new PhoneUser();
 		/*phoneUser.setCreateTime(new Date());
@@ -60,8 +60,8 @@ public class ProblemDaoTest extends BaseTest{
 		phoneUser.setUserId(1);
 		Problem problem=new Problem();
 		problem.setUser(phoneUser);
-		List<Problem> problemList=problemDao.queryProblemByUser(problem);
-		System.out.println(problemList.size());
+		List<Problem> problemList=problemDao.queryProblemByUser(problem,0,5);
+		System.out.println(problemList.get(0).getLastEditTime());
+		System.out.println(problemList.get(0).getProblemDesc());
 	}
-	
 }

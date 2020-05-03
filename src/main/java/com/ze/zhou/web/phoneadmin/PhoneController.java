@@ -50,12 +50,39 @@ public class PhoneController {
 	private CoordinateService coordinateService;
 	@Autowired
 	private ProblemService problemService;
+
+	//获取问题列表，根据userId
+	@RequestMapping(value="/getproblemlist",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getProblemList(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//TODO 从session中获取userId
+		//先写死
+		PhoneUser pu=new PhoneUser();
+		pu.setUserId(1);
+		//获取分页用的数值
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "Size");
+		Problem problem=new Problem();
+		problem.setUser(pu);
+		ProblemExecution pec=problemService.getQueryProblem(problem, pageIndex, pageSize);
+		if(pec.getState()==ProblemStateEnum.SUCCESS.getState()) {
+			modelMap.put("success", true);
+			modelMap.put("problemList", pec.getProblemList());
+			modelMap.put("count", pec.getCount());
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty probleList");
+		}
+		return modelMap;
+	}
 	
 	//上传的图片不超过6张
 	private static final int IMAGEMAXCOUNT=6;
 	
 	//添加客户反馈问题模块
 	@RequestMapping(value="/registerproblem",method=RequestMethod.POST)
+	@ResponseBody
 	private Map<String,Object> registerProblem(HttpServletRequest request) throws IOException{
 		Map<String,Object> modelMap=new HashMap<>();
 		/*获取前端传过来的json字符串*/

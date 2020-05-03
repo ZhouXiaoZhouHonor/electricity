@@ -34,6 +34,22 @@
 	 			and p.user_id=#{problem.user.userId}
 	 		</if>
 	 	</where>
+	 	ORDER BY
+	 	p.last_edit_time
+	 	DESC
+	 	LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<!-- 分页总数 -->
+	<select id="queryProblemByUserCount" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		tb_problem
+		<where>
+			<if test="problem.user!=null and problem.user.userId>0">
+	 			and p.user_id=#{problem.user.userId}
+	 		</if>
+		</where>
 	</select>
 	<!-- 添加问题 -->
 	<!-- 第一次执行后获得的id是1，嗯，没错，但是第二、第三、第n次获取的id怎么还是1？

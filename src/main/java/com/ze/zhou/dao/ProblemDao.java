@@ -12,9 +12,10 @@ import com.ze.zhou.entity.Problem;
 	@goal:
 */
 public interface ProblemDao {
-	//获取对应user的problem
-	List<Problem> queryProblemByUser(@Param("problem")Problem problem);
-	
+	//获取对应user的problem,按照时间进行排序
+	List<Problem> queryProblemByUser(@Param("problem")Problem problem,
+			@Param("rowIndex")int rowIndex,@Param("pageSize")int pageSize);
+	int queryProblemByUserCount(@Param("problem")Problem problem);
 	//添加problem
 	int insertProblem(Problem problem);
 	
