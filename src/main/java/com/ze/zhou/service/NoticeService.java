@@ -12,9 +12,13 @@ import com.ze.zhou.entity.Notice;
 */
 public interface NoticeService {
 	//获取notice
-	List<Notice> getQueryNotice();
+	NoticeExecution getQueryNotice(int pageIndex,int PageSize);
+	//获取notice总数
+	int getQueryNoticeCount();
 	//添加notice
 	NoticeExecution addNotice(Notice notice);
 	//更新notice
 	NoticeExecution changeNotice(Notice notice);
+	//获取可用notice
+	List<Notice> getQueryNoticeEnable();
 }

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ze.zhou.dto.NoticeExecution;
 import com.ze.zhou.dto.ProblemExecution;
 import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Notice;
@@ -167,8 +168,8 @@ public class PhoneController {
 	@ResponseBody
 	private Map<String,Object> getNoticeList(){
 		Map<String,Object> modelMap=new HashMap<>();
-		List<Notice> noticeList=noticeService.getQueryNotice();
-		if(noticeList.size()>0&&noticeList!=null) {
+		List<Notice> noticeList=noticeService.getQueryNoticeEnable();
+		if(noticeList!=null&&noticeList.size()>0) {
 			modelMap.put("noticeList", noticeList);
 			modelMap.put("success", true);
 		}else {

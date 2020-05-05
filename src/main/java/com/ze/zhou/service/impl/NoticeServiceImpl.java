@@ -11,6 +11,7 @@ import com.ze.zhou.dto.NoticeExecution;
 import com.ze.zhou.entity.Notice;
 import com.ze.zhou.enums.NoticeStateEnum;
 import com.ze.zhou.service.NoticeService;
+import com.ze.zhou.util.PageCalculator;
 
 /*
 	author:zhouze
@@ -24,8 +25,16 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeDao noticeDao;
 	
 	@Override
-	public List<Notice> getQueryNotice() {
-		return noticeDao.queryNotice();
+	public NoticeExecution getQueryNotice(int pageIndex,int pageSize) {
+		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<Notice> noticeList=noticeDao.queryNotice(rowIndex, pageSize);
+		int count=noticeDao.queryNoticeCount();
+		NoticeExecution ne=new NoticeExecution();
+		if(noticeList!=null&&noticeList.size()>0&&count>0) {
+			ne.setNoticeList(noticeList);
+			ne.setCount(count);
+		}
+		return ne;
 	}
 
 	@Override
@@ -54,11 +63,23 @@ public class NoticeServiceImpl implements NoticeService{
 			int effectNum=noticeDao.updateNotice(notice);
 			if(effectNum>0) {
 				ne.setState(NoticeStateEnum.SUCCESS.getState());
+			}else {
+				ne.setState(NoticeStateEnum.INNER_ERROR.getState());
 			}
 		}else {
 			ne.setState(NoticeStateEnum.NULL_NOTICE.getState());
 			ne.setStateInfo("empty notice");
 		}
 		return ne;
+	}
+
+	@Override
+	public int getQueryNoticeCount() {
+		return noticeDao.queryNoticeCount();
+	}
+
+	@Override
+	public List<Notice> getQueryNoticeEnable() {
+		return noticeDao.queryNoticeEnable();
 	}
 }

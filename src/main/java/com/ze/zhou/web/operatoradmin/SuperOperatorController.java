@@ -15,13 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.AreaExecution;
 import com.ze.zhou.dto.CoordinateExecution;
+import com.ze.zhou.dto.NoticeExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Coordinate;
+import com.ze.zhou.entity.Notice;
 import com.ze.zhou.entity.Operator;
 import com.ze.zhou.enums.AreaStateEnum;
 import com.ze.zhou.enums.CoordinateStateEnum;
+import com.ze.zhou.enums.NoticeStateEnum;
 import com.ze.zhou.service.AreaService;
 import com.ze.zhou.service.CoordinateService;
+import com.ze.zhou.service.NoticeService;
 import com.ze.zhou.service.OperatorService;
 import com.ze.zhou.util.CodeUtil;
 import com.ze.zhou.util.HttpServletRequestUtil;
@@ -40,7 +44,33 @@ public class SuperOperatorController {
 	private OperatorService operatorService;
 	@Autowired
 	private CoordinateService coordinateService;
+	@Autowired
+	private NoticeService noticeService;
 	
+	//更改公告信息状态
+	@RequestMapping(value="/modifynoticestate",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyNoticeState(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int noticeEnableStatus=HttpServletRequestUtil.getInt(request, "enableStatus");
+		int noticeId=HttpServletRequestUtil.getInt(request, "noticeId");
+		if(noticeId>0) {
+			Notice notice=new Notice();
+			notice.setNoticeId(noticeId);
+			notice.setNoticeEnableStatus(noticeEnableStatus);
+			NoticeExecution ne=noticeService.changeNotice(notice);
+			if(ne.getState()==NoticeStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+			}else {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", ne.getStateInfo());
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty noticeId");
+		}
+		return modelMap;
+	}
 	
 	
 	//更新站点信息状态

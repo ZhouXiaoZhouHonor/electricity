@@ -14,8 +14,32 @@
      	last_edit_time
      	FROM
      	tb_notice
+     	ORDER BY
+     	notice_priority
+     	LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<select id="queryNoticeCount" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		tb_notice
+	</select>
+	<select id="queryNoticeEnable">
+		SELECT
+		notice_id,
+    	notice_name,
+     	notice_link,
+     	create_time,
+     	notice_priority,
+     	notice_enable_status,
+     	notice_img,
+     	last_edit_time
+     	FROM
+     	tb_notice
      	WHERE
      	notice_enable_status=1
+     	ORDER BY
+     	notice_priority
 	</select>
 	<insert id="insertNotice" useGeneratedKeys="true" 
 	keyColumn="notice_id" keyProperty="noticeId">

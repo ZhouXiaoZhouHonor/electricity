@@ -47,7 +47,8 @@ public class NoticeDaoTest extends BaseTest{
 	@Test
 	@Ignore
 	public void queryNoticeTest() {
-		List<Notice> noticeList=noticeDao.queryNotice();
+		int pageSize=noticeDao.queryNoticeCount();
+		List<Notice> noticeList=noticeDao.queryNotice(0,pageSize);
 		System.out.println(noticeList.size());
 	}
 	

@@ -25,8 +25,18 @@ layui.use(['jquery','element','layer','table'],function(){
 	//添加站点信息
 	$('#coordinate-add').on('click',function(){
 		console.log('点击了站点添加信息');
+		window.location.href='/zhou/superpage/addcoordinate';
 	});
 	
+	//显示公告信息
+	$('#notice-message').on('click',function(){
+		//alert('点击了notice');
+		layui.noticeTable();
+	});
+	//添加公告信息
+    $('#notice-add').on('click',function(){
+    	
+    });
 });
 
 
