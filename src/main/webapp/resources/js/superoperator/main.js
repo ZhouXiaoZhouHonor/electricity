@@ -25,7 +25,7 @@ layui.use(['jquery','element','layer','table'],function(){
 	//添加站点信息
 	$('#coordinate-add').on('click',function(){
 		console.log('点击了站点添加信息');
-		window.location.href='/zhou/superpage/addcoordinate';
+		window.location.href='/zhou/pagesuper/addcoordinate';
 	});
 	
 	//显示公告信息
@@ -35,7 +35,7 @@ layui.use(['jquery','element','layer','table'],function(){
 	});
 	//添加公告信息
     $('#notice-add').on('click',function(){
-    	
+    	window.location.href='/zhou/pagesuper/addnotice';
     });
 });
 

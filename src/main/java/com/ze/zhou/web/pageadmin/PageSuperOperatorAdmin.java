@@ -27,4 +27,9 @@ public class PageSuperOperatorAdmin {
 	private String addCoordinate() {
 		return "superoperator/addcoordinate";
 	}
+	//超级管理员添加公告界面
+	@RequestMapping("/addnotice")
+	private String addNotice() {
+		return "superoperator/addnotice";
+	}
 }
