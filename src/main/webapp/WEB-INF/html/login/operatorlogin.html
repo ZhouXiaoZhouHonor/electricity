@@ -5,10 +5,62 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>登录界面</title>
     <link rel="stylesheet" href="../resources/layui/css/layui.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1748661_77uu8ti5u8c.css">
+    <link rel="stylesheet" href="../resources/css/login/operatorlogin.css">
 </head>
 <body>
-    
+	<div style="width:450px;border:1px solid black;"><!-- margin-left:800px;margin-top:200px; -->
+		<form class="layui-form" action="" lay-filter="operatorLoginForm">
+			<div class="layui-form-item layui-col-md8">
+				<label class="layui-form-label">
+					<i class="layui-icon layui-icon-username" style="font-size: 25px;"></i> 
+				</label>
+			    <div class="layui-input-block">
+			      	<input type="text" name="operatorUser" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+			    </div>
+			</div>
+	  		<div class="layui-form-item">
+	    		<label class="layui-form-label">
+	    			<i class="layui-icon layui-icon-password" style="font-size: 25px;"></i>
+	    		</label>
+	    		<div class="layui-input-inline">
+	      			<input id="ze-password" type="password" name="operatorPassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+	      			<i id="eye-password" class="iconfont layui-icon-extendyanjing1"></i>
+	   	 		</div>
+	    		<div class="layui-form-mid layui-word-aux">请填写8-12位密码</div>
+	  		</div>
+	  		<div class="layui-row">
+		    	<div class="layui-col-md8">
+		    		<div class="layui-form-item">
+		  				<label class="layui-form-label">
+		  					<i class="layui-icon layui-icon-vercode" style="font-size: 25px;"></i>
+		  				</label>
+		  				<div class="layui-input-block ze-width">
+		    				<input type="text" name="pileKaptcha" required lay-verify="required" 
+		    					placeholder="请输入验证码" autocomplete="off" class="layui-input" 
+		    						lay-filter="kaptcha" id="pile-kaptcha">
+		  				</div>
+		  			</div>
+		    	</div>
+		    	<div class="layui-col-md2">
+		  		<!-- 验证码 -->
+					<img id="kaptcha_img" alt="点击更换"  title="点击更换"  
+						onclick="changeVerifyCode(this)" 
+						src="../Kaptcha"><!-- 资源是放在web.xml下的servlet中 -->
+		    	</div>
+  			</div>
+	  		<div class="layui-form-item">
+	    		<div class="layui-input-block">
+	      			<button type="reset" class="layui-btn layui-btn-radius layui-btn-primary">重置</button>
+	      			<button class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="operatorLogin">登陆</button>
+	    		</div>
+	  		</div>
+		</form>
+	</div>
 </body>
 <script src="../resources/layui/layui.js"></script>
 <script src="../resources/layui/layui.all.js"></script>
+<script src="../resources/js/common/common.js"></script>
+<script src="../resources/js/common/md5.js"></script>
+<script src="../resources/js/operator/operatorlogin.js"></script>
 </html>
