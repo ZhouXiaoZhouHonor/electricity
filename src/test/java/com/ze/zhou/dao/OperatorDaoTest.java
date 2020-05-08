@@ -19,7 +19,17 @@ public class OperatorDaoTest extends BaseTest{
 	private OperatorDao operatorDao;
 	
 	@Test
-	//@Ignore
+	@Ignore
+	public void selectOperatorByNumber() {
+		/*
+		 * Operator operator=new Operator(); operator.setOperatorAccountNumber("110");
+		 */
+		Operator op=operatorDao.selectOperatorByNumber("110");
+		System.out.println(op.toString());
+	}
+	
+	@Test
+	@Ignore
 	public void queryOperatorTest() {
 		List<Operator> operatorList=operatorDao.queryOperator();
 		System.out.println(operatorList.size());

@@ -16,12 +16,13 @@ layui.use(['jquery','element','layer','form'],function(){
 		var operatorData=form.val('operatorLoginForm');
 		operator.operatorAccountNumber=operatorData.operatorUser;
 		var password=operatorData.operatorPassword;
-		//对账号进行md5加密
-		operator.operatorPassword=hex_md5(password);
-		console.log('账号:'+operatorData.operatorUser+'密码:'+operator.operatorPassword);
+		//MD5是单向不可逆的，所以在验证账号的时候，就直接向后台提交真正的密码并进行比对即可
+		//之后在手机用户注册过程中，会先加密然后进行提交
+		operator.operatorPassword=password;
 		
+		console.log('账号:'+operatorData.operatorUser+'密码:'+operator.operatorPassword);
 		var formData=new FormData();
-		formData.append('operatorStr',operator);
+		formData.append('operatorStr',JSON.stringify(operator));
 		formData.append("verifyCodeActual",verifyCodeActual);
 		
 		$.ajax({
@@ -33,7 +34,9 @@ layui.use(['jquery','element','layer','form'],function(){
 			cache:false,//是否启用cache缓存
 			success:function(data){
 				if(data.success){
-					
+					//账号验证成功，需要跳转到主页面
+					console.log('登陆成功');
+					window.location.href='/zhou/page/main';
 				}else{
 					
 				}

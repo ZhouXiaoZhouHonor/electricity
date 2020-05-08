@@ -2,6 +2,8 @@ package com.ze.zhou.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ze.zhou.entity.Operator;
 
 /*
@@ -12,4 +14,7 @@ import com.ze.zhou.entity.Operator;
 public interface OperatorDao {
 	//获取表中所有的操作员信息
 	List<Operator> queryOperator();
+	
+	//通过账号查找操作员
+	Operator selectOperatorByNumber(@Param("operatorAccountNumber")String operatorAccountNumber);
 }

@@ -58,9 +58,10 @@ public class OperatorController {
 	private Map<String,Object> getPileList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
 		//TODO 从session中获取operatorId
+		Operator operator=(Operator) request.getSession().getAttribute("operatorCurrent");
 		//先使用设值注入的方法
-		Operator operator=new Operator();
-		operator.setOperatorId(1);
+		//Operator operator=new Operator();
+		//operator.setOperatorId(1);
 		//设置充电桩的传值对象
 		Pile pileCondition=new Pile();
 		pileCondition.setOperator(operator);
@@ -124,9 +125,10 @@ public class OperatorController {
 	private Map<String,Object> getAreaList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
 		//TODO 从session中获取area
+		Operator operator=(Operator) request.getSession().getAttribute("operatorCurrent");
 		//目前使用设值注入的方式，将operatorId写死
-		Operator operator=new Operator();
-		operator.setOperatorId(1);
+		//Operator operator=new Operator();
+		//operator.setOperatorId(1);
 		Area areaCondition=new Area();
 		areaCondition.setOperator(operator);
 		//获取所有的区域信息

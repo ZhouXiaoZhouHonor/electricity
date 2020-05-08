@@ -11,4 +11,25 @@
     	WHERE
     	operator_enable_status=1
 	</select>
+	<select id="selectOperatorByNumber" 
+		resultType="com.ze.zhou.entity.Operator">
+		SELECT
+		operator_id,
+		operator_name,
+		operator_img,
+		operator_account_number,
+		operator_password,
+		operator_enable_status,
+		create_time,
+		last_edit_time
+    	FROM 
+    	tb_operator
+    	<where>
+    		operator_enable_status=1
+    		<if test="operatorAccountNumber!=null and 
+    			operatorAccountNumber!='' ">
+    			and operator_account_number=#{operatorAccountNumber}
+    		</if>
+    	</where>
+	</select>
 </mapper>

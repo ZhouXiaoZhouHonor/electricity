@@ -254,3 +254,32 @@ function binl2b64(binarray)
   }
   return str;
 }
+
+//生成16位随机数
+function rando() {
+	var num = '';
+	for(var i = 0; i < 16; i++) {
+		var val = parseInt(Math.random()*10, 10);
+		if(i === 0 && val === 0) {
+			i--;
+			continue;
+		}
+		num+= val;
+	}
+	return num;
+}
+
+//获取加盐的密码
+function getSaltMD5(password){
+	var salt=rando();
+	var saltPassword=hex_md5(password+salt);
+	//将随机数添加进来
+	var cs=new Array(48);
+    for(var i=0;i<48;i+=3) {
+        cs[i]=saltPassword.charAt(i/3*2);
+        var c=salt.charAt(i/3);
+        cs[i+1]=c;
+        cs[i+2]=saltPassword.charAt(i/3*2+1);
+    }
+    return cs.join('');
+}
