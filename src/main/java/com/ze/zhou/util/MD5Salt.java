@@ -104,8 +104,8 @@ public class MD5Salt {
      
     public static void main(String[] args) {
         // 原密码
-        String plaintext = "110";
-        String plaintext1 = "110";
+        String plaintext = "15256038842";
+        String plaintext1 = "15256038842";
         // 获取加盐后的MD5值
         String ciphertext = MD5Salt.getSaltMD5(plaintext);
         //String ciphertext1 = MD5Salt.getSaltMD5(plaintext1);

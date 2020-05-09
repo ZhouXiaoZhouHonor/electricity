@@ -79,7 +79,16 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public List<Notice> getQueryNoticeEnable() {
-		return noticeDao.queryNoticeEnable();
+	public NoticeExecution getQueryNoticeEnable() {
+		NoticeExecution ne=new NoticeExecution();
+		List<Notice> noticeList=noticeDao.queryNoticeEnable();
+		if(noticeList!=null&&noticeList.size()>0) {
+			ne.setNoticeList(noticeList);
+			ne.setState(NoticeStateEnum.SUCCESS.getState());
+		}else {
+			ne.setState(NoticeStateEnum.NULL_NOTICE.getState());
+		}
+		return ne;
 	}
 }
+

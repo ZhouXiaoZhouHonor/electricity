@@ -1,21 +1,11 @@
-2020-05-08 16:12:33.515[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number=?, 
-2020-05-08 16:12:33.570[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 110(String)
-2020-05-08 16:13:05.668[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number=? 
-2020-05-08 16:13:05.732[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 110(String)
-2020-05-08 16:16:38.056[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number='%110%' 
-2020-05-08 16:16:38.106[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 
-2020-05-08 16:17:16.529[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number='?' 
-2020-05-08 16:17:51.770[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number LIKE '110' 
-2020-05-08 16:17:51.811[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 
-2020-05-08 16:18:31.654[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number LIKE '%110%' 
-2020-05-08 16:18:31.730[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 
-2020-05-08 16:20:46.395[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number=? 
-2020-05-08 16:20:46.463[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 110(String)
-2020-05-08 16:22:31.877[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1, and operator_account_number=? 
-2020-05-08 16:22:31.921[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 110(String)
-2020-05-08 16:23:10.780[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1 and operator_account_number=? 
-2020-05-08 16:23:10.845[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 110(String)
-2020-05-08 16:23:10.872[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - <==      Total: 2
-2020-05-08 16:25:02.364[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==>  Preparing: SELECT operator_id, operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time FROM tb_operator WHERE operator_enable_status=1 and operator_account_number=? 
-2020-05-08 16:25:02.442[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - ==> Parameters: 110(String)
-2020-05-08 16:25:02.479[main]DEBUG com.ze.zhou.dao.OperatorDao.selectOperatorByNumber - <==      Total: 1
+2020-05-09 10:23:09.492[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==>  Preparing: SELECT notice_id, notice_name, notice_link, create_time, notice_priority, notice_enable_status, notice_img, last_edit_time FROM tb_notice WHERE notice_enable_status=1 ORDER BY notice_priority 
+2020-05-09 10:23:09.526[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==> Parameters: 
+2020-05-09 10:24:05.383[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==>  Preparing: SELECT notice_id, notice_name, notice_link, create_time, notice_priority, notice_enable_status, notice_img, last_edit_time FROM tb_notice WHERE notice_enable_status=1 ORDER BY notice_priority 
+2020-05-09 10:24:05.444[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==> Parameters: 
+2020-05-09 10:24:05.466[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - <==      Total: 4
+2020-05-09 20:36:39.105[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==>  Preparing: SELECT user_id, user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time FROM tb_phone_user WHERE user_account_number=? 
+2020-05-09 20:36:39.138[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==> Parameters: 15256038842(String)
+2020-05-09 20:36:39.171[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - <==      Total: 1
+2020-05-09 20:36:55.865[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==>  Preparing: SELECT user_id, user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time FROM tb_phone_user WHERE user_account_number=? 
+2020-05-09 20:36:55.915[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==> Parameters: 15256038842(String)
+2020-05-09 20:36:55.935[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - <==      Total: 1

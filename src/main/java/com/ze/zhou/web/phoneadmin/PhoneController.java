@@ -18,21 +18,24 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.NoticeExecution;
+import com.ze.zhou.dto.PhoneUserExecution;
 import com.ze.zhou.dto.ProblemExecution;
 import com.ze.zhou.entity.Coordinate;
-import com.ze.zhou.entity.Notice;
 import com.ze.zhou.entity.PhoneUser;
 import com.ze.zhou.entity.Problem;
+import com.ze.zhou.enums.NoticeStateEnum;
+import com.ze.zhou.enums.PhoneUserStateEnum;
 import com.ze.zhou.enums.ProblemStateEnum;
 import com.ze.zhou.service.CoordinateService;
 import com.ze.zhou.service.NoticeService;
-import com.ze.zhou.service.PileService;
+import com.ze.zhou.service.PhoneUserService;
 import com.ze.zhou.service.ProblemService;
+import com.ze.zhou.util.CodeUtil;
 import com.ze.zhou.util.HttpServletRequestUtil;
 import com.ze.zhou.util.ImageHolder;
-import com.ze.zhou.web.superadmin.AreaSuperadminController;
 
 import ch.qos.logback.classic.Logger;
 
@@ -51,6 +54,42 @@ public class PhoneController {
 	private CoordinateService coordinateService;
 	@Autowired
 	private ProblemService problemService;
+	@Autowired
+	private PhoneUserService phoneUserService;
+	
+	//登录验证
+	@RequestMapping(value="/checkphonelogin",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> checkPhoneLogin(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//判断验证码输入是否正确
+		if(!CodeUtil.checkVerifyCode(request)) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "验证码输入错误");
+			return modelMap;
+		}
+		logger.debug("验证码通过");
+		String phoneUserStr=HttpServletRequestUtil.getString(request, "phoneUser");
+		logger.debug("对象字符串:"+phoneUserStr);
+		ObjectMapper mapper=new ObjectMapper();
+		PhoneUser phoneUser=null;
+		try {
+			phoneUser=mapper.readValue(phoneUserStr, PhoneUser.class);
+		} catch (Exception e) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", e.getMessage());
+			return modelMap;
+		}
+		logger.debug("获取的账号以及密码:"+phoneUser.getUserAccountNumber()+"/"+phoneUser.getUserAccountPassword());
+		PhoneUserExecution pue=phoneUserService.checkPhoneUser(phoneUser);
+		if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
+			modelMap.put("success", true);
+		}else {
+			modelMap.put("success", false);
+		}
+		return modelMap;
+	}
+	
 
 	//获取问题列表，根据userId
 	@RequestMapping(value="/getproblemlist",method=RequestMethod.GET)
@@ -168,9 +207,10 @@ public class PhoneController {
 	@ResponseBody
 	private Map<String,Object> getNoticeList(){
 		Map<String,Object> modelMap=new HashMap<>();
-		List<Notice> noticeList=noticeService.getQueryNoticeEnable();
-		if(noticeList!=null&&noticeList.size()>0) {
-			modelMap.put("noticeList", noticeList);
+		NoticeExecution ne=noticeService.getQueryNoticeEnable();
+		
+		if(ne.getState()==NoticeStateEnum.SUCCESS.getState()) {
+			modelMap.put("noticeList", ne.getNoticeList());
 			modelMap.put("success", true);
 		}else {
 			modelMap.put("errMsg", "empty noticeList");

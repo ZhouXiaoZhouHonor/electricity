@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.PhoneUserDao">
+	<select id="selectPhoneUserByAccount" 
+		resultType="com.ze.zhou.entity.PhoneUser">
+		SELECT
+		user_id,
+		user_name,
+		user_account_number,
+		user_account_password,
+		user_img,
+		create_time,
+		last_edit_time
+		FROM
+		tb_phone_user
+		<where>
+			<if test="phoneUserAccount!=null">
+				user_account_number=#{phoneUserAccount}
+			</if>
+		</where>
+	</select>
+</mapper>

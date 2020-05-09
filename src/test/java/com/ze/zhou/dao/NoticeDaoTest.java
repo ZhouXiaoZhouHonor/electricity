@@ -22,6 +22,13 @@ public class NoticeDaoTest extends BaseTest{
 	
 	@Test
 	@Ignore
+	public void queryNoticeEnableTest() {
+		List<Notice> noticeList=noticeDao.queryNoticeEnable();
+		System.out.println(noticeList.size());
+	}
+	
+	@Test
+	@Ignore
 	public void updateNoticeTest() {
 		Notice notice=new Notice();
 		notice.setNoticeId(4);

@@ -20,5 +20,5 @@ public interface NoticeService {
 	//更新notice
 	NoticeExecution changeNotice(Notice notice);
 	//获取可用notice
-	List<Notice> getQueryNoticeEnable();
+	NoticeExecution getQueryNoticeEnable();
 }

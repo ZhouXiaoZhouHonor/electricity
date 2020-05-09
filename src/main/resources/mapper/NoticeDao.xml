@@ -24,7 +24,7 @@
 		FROM
 		tb_notice
 	</select>
-	<select id="queryNoticeEnable">
+	<select id="queryNoticeEnable" resultType="com.ze.zhou.entity.Notice">
 		SELECT
 		notice_id,
     	notice_name,
@@ -42,7 +42,7 @@
      	notice_priority
 	</select>
 	<insert id="insertNotice" useGeneratedKeys="true" 
-	keyColumn="notice_id" keyProperty="noticeId">
+		keyColumn="notice_id" keyProperty="noticeId">
 	INSERT INTO
 	tb_notice
 	(

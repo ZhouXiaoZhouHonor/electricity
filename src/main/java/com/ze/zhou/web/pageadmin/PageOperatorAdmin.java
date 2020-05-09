@@ -28,7 +28,4 @@ public class PageOperatorAdmin {
 	private String pileElectricity() {
 		return "operator/pileelectricity";
 	}
-	
-	
-	
 }

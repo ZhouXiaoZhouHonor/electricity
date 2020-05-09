@@ -57,7 +57,26 @@ public class OperatorController {
 	@ResponseBody
 	private Map<String,Object> getPileList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
-		//TODO 从session中获取operatorId
+		//从路径中取出参数:coordinateId
+		int coordinateId=HttpServletRequestUtil.getInt(request, "coordinateId");
+		//从路径中获取页码和条数
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
+		
+		/*1、首先从session获取pileList，若session中的pileList不为空，则获取
+		 * 2、session中的pileList为空则从后台数据库中获取*/
+		@SuppressWarnings("unchecked")
+		List<Pile> pileList=(List<Pile>) request.getSession().getAttribute("pileList");
+		//不用于分页显示且session中有pileList
+		if(pileList!=null&&pileList.size()>0&&pageSize<=0&&pageIndex<0) {
+			modelMap.put("success", true);
+			modelMap.put("pileList",pileList);
+			return modelMap;
+		}
+		
+/*当第一次从数据库中获取pileList后，将其放入session中*/
+		
+		//从session中获取operator
 		Operator operator=(Operator) request.getSession().getAttribute("operatorCurrent");
 		//先使用设值注入的方法
 		//Operator operator=new Operator();
@@ -65,11 +84,6 @@ public class OperatorController {
 		//设置充电桩的传值对象
 		Pile pileCondition=new Pile();
 		pileCondition.setOperator(operator);
-		//从路径中取出参数:coordinateId
-		int coordinateId=HttpServletRequestUtil.getInt(request, "coordinateId");
-		//从路径中获取页码和条数
-		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
-		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
 		
 		//如果分页需要的参数没有传递过来，那么需要先获取该管理员下有多少充电桩的数量,防止分页无法获得，造成sql查询失败
 		if(pageIndex<0&&pageSize<0) {
@@ -90,6 +104,10 @@ public class OperatorController {
 			area.setAreaId(areaId);
 			pileCondition.setArea(area);
 			PileExecution pe=pileService.getPileList(pileCondition,pageIndex,pageSize);
+			//当session中没有pile时，将pile放入session存储。该逻辑中还包含分页查询，不能将分页查询的结果放入session中
+			if(pileList==null||pileList.size()==0) {
+				request.getSession().setAttribute("pileList", pe.getPileList());
+			}
 			logger.info("获取pileList成功");
 			modelMap.put("success", true);
 			modelMap.put("pileList", pe.getPileList());
@@ -124,7 +142,7 @@ public class OperatorController {
 	@ResponseBody
 	private Map<String,Object> getAreaList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
-		//TODO 从session中获取area
+		//从session中获取operator
 		Operator operator=(Operator) request.getSession().getAttribute("operatorCurrent");
 		//目前使用设值注入的方式，将operatorId写死
 		//Operator operator=new Operator();
@@ -133,8 +151,13 @@ public class OperatorController {
 		areaCondition.setOperator(operator);
 		//获取所有的区域信息
 		List<Area> areaList=areaService.getQueryAreaByOperator(areaCondition);
-		modelMap.put("success", true);
-		modelMap.put("areaList", areaList);
+		if(areaList!=null&&areaList.size()>0) {
+			modelMap.put("success", true);
+			modelMap.put("areaList", areaList);
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty areaList");
+		}
 		return modelMap;
 	}
 	
@@ -196,13 +219,11 @@ public class OperatorController {
 		//注册充电桩
 		if(pile!=null&&pileImg!=null) {
 			//通过session获取operator对象
-			//session TODO
-			//Operator operator=(Operator)request.getSession().getAttribute("currentOperator");
+			Operator operator=(Operator)request.getSession().getAttribute("operatorCurrent");
 			//暂时使用set进行默认指定
-			Operator operator=new Operator();
-			operator.setOperatorId(1);
+			//Operator operator=new Operator();
+			//operator.setOperatorId(1);
 			pile.setOperator(operator);
-			
 			PileExecution pe=null;
 			try {
 				ImageHolder imageHolder=new ImageHolder(pileImg.getOriginalFilename(),pileImg.getInputStream());
