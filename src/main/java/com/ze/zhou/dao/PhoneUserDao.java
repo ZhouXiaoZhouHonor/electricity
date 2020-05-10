@@ -15,6 +15,7 @@ public interface PhoneUserDao {
 	//根据手机用户的账号查找用户
 	PhoneUser selectPhoneUserByAccount(@Param("phoneUserAccount")String phoneUserAccount);
 	//添加手机用户
-	
+	int insertPhoneUser(PhoneUser phoneUser);
 	//更新手机用户状态
+	int updatePhoneUser(PhoneUser phoneUser);
 }

@@ -1,5 +1,7 @@
 package com.ze.zhou.dao;
 
+import java.util.Date;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,18 @@ import com.ze.zhou.entity.PhoneUser;
 public class PhoneUserDaoTest extends BaseTest{
 	@Autowired
 	private PhoneUserDao phoneUserDao;
+	
+	@Test
+	public void insertPhoneUser() {
+		PhoneUser phoneUser=new PhoneUser();
+		phoneUser.setCreateTime(new Date());
+		phoneUser.setLastEditTime(new Date());
+		phoneUser.setUserAccountNumber("13865066757");
+		phoneUser.setUserAccountPassword("123456");
+		phoneUser.setUserName("周周");
+		int effectNum=phoneUserDao.insertPhoneUser(phoneUser);
+		System.out.println(effectNum);
+	}
 	
 	@Test
 	@Ignore

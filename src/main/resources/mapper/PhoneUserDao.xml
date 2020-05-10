@@ -20,4 +20,28 @@
 			</if>
 		</where>
 	</select>
+	<insert id="insertPhoneUser" useGeneratedKeys="true"
+		keyColumn="user_id" keyProperty="userId">
+		INSERT INTO
+		tb_phone_user
+		(
+		user_name,
+		user_account_number,
+		user_account_password,
+		create_time,
+		last_edit_time
+		)
+		VALUES
+		(
+		#{userName},
+		#{userAccountNumber},
+		#{userAccountPassword},
+		#{createTime},
+		#{lastEditTime}
+		)
+	</insert>
+	<update id="updatePhoneUser">
+		
+	</update>
 </mapper>
+

@@ -63,13 +63,17 @@ public class PhoneController {
 	private Map<String,Object> checkAccountExist(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
 		String phoneUserAccount=HttpServletRequestUtil.getString(request, "phoneUserAccount");
-		if(phoneUserAccount!=null&&"".equals(phoneUserAccount)) {
+		logger.debug("phoneUserAccount:"+phoneUserAccount);
+		if(phoneUserAccount!=null&&!("".equals(phoneUserAccount))) {
+			logger.debug("进来了");
 			PhoneUserExecution pue=phoneUserService.checkPhoneUserAccount(phoneUserAccount);
+			logger.debug(pue.getState()+"");
 			if(pue.getState()==PhoneUserStateEnum.FAILURE.getState()) {
 				modelMap.put("success", true);
 			}else if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
 				modelMap.put("success", false);
 			}
+			logger.debug("result："+pue.getState());
 		}else {
 			modelMap.put("success", false);
 			modelMap.put("errMsg", "empty phoneUserAccount");

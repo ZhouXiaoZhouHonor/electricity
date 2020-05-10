@@ -1,5 +1,6 @@
 package com.ze.zhou.service.impl;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,9 @@ import com.ze.zhou.entity.PhoneUser;
 import com.ze.zhou.enums.PhoneUserStateEnum;
 import com.ze.zhou.service.PhoneUserService;
 import com.ze.zhou.util.MD5Salt;
+import com.ze.zhou.web.phoneadmin.PhoneController;
+
+import ch.qos.logback.classic.Logger;
 
 /*
 	author:zhouze
@@ -18,6 +22,7 @@ import com.ze.zhou.util.MD5Salt;
 @Service
 public class PhoneUserServiceImpl implements PhoneUserService{
 
+	Logger logger=(Logger) LoggerFactory.getLogger(PhoneUserServiceImpl.class);
 	@Autowired
 	private PhoneUserDao phoneUserDao;
 	
@@ -44,14 +49,19 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 		return pue;
 	}
 
+	/* @SuppressWarnings("unused") */
+	@SuppressWarnings("unused")
 	@Override
 	public PhoneUserExecution checkPhoneUserAccount(String phoneUserAccount) {
 		PhoneUserExecution pue=new PhoneUserExecution();
-		if(phoneUserAccount==null&&"".equals(phoneUserAccount)) {
+		if(phoneUserAccount!=null&&!("".equals(phoneUserAccount))) {
 			PhoneUser phoneUser=phoneUserDao.selectPhoneUserByAccount(phoneUserAccount);
+			logger.debug("账号:"+phoneUser.getUserAccountNumber());
 			if(phoneUser!=null) {
+				logger.debug("phoneUser不为空");
 				pue.setState(PhoneUserStateEnum.SUCCESS.getState());
 			}else {
+				logger.debug("phoneUser为空");
 				pue.setState(PhoneUserStateEnum.FAILURE.getState());
 			}
 		}else {
