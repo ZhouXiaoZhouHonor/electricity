@@ -11,4 +11,7 @@ import com.ze.zhou.entity.PhoneUser;
 public interface PhoneUserService {
 	//验证登录账号、密码是否正确
 	PhoneUserExecution checkPhoneUser(PhoneUser phoneUser);
+	
+	//验证注册的账号是否存在
+	PhoneUserExecution checkPhoneUserAccount(String phoneUserAccount);
 }

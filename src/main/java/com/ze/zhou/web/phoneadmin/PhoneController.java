@@ -57,6 +57,26 @@ public class PhoneController {
 	@Autowired
 	private PhoneUserService phoneUserService;
 	
+	//检查将要注册的账号是否存在
+	@RequestMapping(value="/checkaccountexist",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> checkAccountExist(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		String phoneUserAccount=HttpServletRequestUtil.getString(request, "phoneUserAccount");
+		if(phoneUserAccount!=null&&"".equals(phoneUserAccount)) {
+			PhoneUserExecution pue=phoneUserService.checkPhoneUserAccount(phoneUserAccount);
+			if(pue.getState()==PhoneUserStateEnum.FAILURE.getState()) {
+				modelMap.put("success", true);
+			}else if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", false);
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty phoneUserAccount");
+		}
+		return modelMap;
+	}
+	
 	//登录验证
 	@RequestMapping(value="/checkphonelogin",method=RequestMethod.POST)
 	@ResponseBody

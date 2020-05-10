@@ -44,4 +44,20 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 		return pue;
 	}
 
+	@Override
+	public PhoneUserExecution checkPhoneUserAccount(String phoneUserAccount) {
+		PhoneUserExecution pue=new PhoneUserExecution();
+		if(phoneUserAccount==null&&"".equals(phoneUserAccount)) {
+			PhoneUser phoneUser=phoneUserDao.selectPhoneUserByAccount(phoneUserAccount);
+			if(phoneUser!=null) {
+				pue.setState(PhoneUserStateEnum.SUCCESS.getState());
+			}else {
+				pue.setState(PhoneUserStateEnum.FAILURE.getState());
+			}
+		}else {
+			pue.setState(PhoneUserStateEnum.NULL_PHONEUSERID.getState());
+		}
+		return pue;
+	}
+
 }

@@ -58,7 +58,4 @@ public class PhoneUser {
 	public void setLastEditTime(Date lastEditTime) {
 		this.lastEditTime = lastEditTime;
 	}
-	
-	
-	
 }
