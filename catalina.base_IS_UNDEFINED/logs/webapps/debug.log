@@ -1,11 +1,5 @@
-2020-05-09 10:23:09.492[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==>  Preparing: SELECT notice_id, notice_name, notice_link, create_time, notice_priority, notice_enable_status, notice_img, last_edit_time FROM tb_notice WHERE notice_enable_status=1 ORDER BY notice_priority 
-2020-05-09 10:23:09.526[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==> Parameters: 
-2020-05-09 10:24:05.383[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==>  Preparing: SELECT notice_id, notice_name, notice_link, create_time, notice_priority, notice_enable_status, notice_img, last_edit_time FROM tb_notice WHERE notice_enable_status=1 ORDER BY notice_priority 
-2020-05-09 10:24:05.444[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - ==> Parameters: 
-2020-05-09 10:24:05.466[main]DEBUG com.ze.zhou.dao.NoticeDao.queryNoticeEnable - <==      Total: 4
-2020-05-09 20:36:39.105[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==>  Preparing: SELECT user_id, user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time FROM tb_phone_user WHERE user_account_number=? 
-2020-05-09 20:36:39.138[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==> Parameters: 15256038842(String)
-2020-05-09 20:36:39.171[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - <==      Total: 1
-2020-05-09 20:36:55.865[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==>  Preparing: SELECT user_id, user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time FROM tb_phone_user WHERE user_account_number=? 
-2020-05-09 20:36:55.915[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==> Parameters: 15256038842(String)
-2020-05-09 20:36:55.935[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - <==      Total: 1
+2020-05-10 22:12:14.961[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==>  Preparing: INSERT INTO tb_phone_user ( user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-05-10 22:12:15.015[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==> Parameters: 周周(String), 13865066757(String), 123456(String), 2020-05-10 22:12:14.476(Timestamp), 2020-05-10 22:12:14.476(Timestamp)
+2020-05-10 22:13:00.778[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==>  Preparing: INSERT INTO tb_phone_user ( user_name, user_account_number, user_account_password, create_time, last_edit_time ) VALUES ( ?, ?, ?, ?, ? ) 
+2020-05-10 22:13:00.828[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==> Parameters: 周周(String), 13865066757(String), 123456(String), 2020-05-10 22:13:00.39(Timestamp), 2020-05-10 22:13:00.39(Timestamp)
+2020-05-10 22:13:00.835[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - <==    Updates: 1
