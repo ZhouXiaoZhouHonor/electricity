@@ -14,4 +14,7 @@ public interface PhoneUserService {
 	
 	//验证注册的账号是否存在
 	PhoneUserExecution checkPhoneUserAccount(String phoneUserAccount);
+	
+	//添加手机用户
+	PhoneUserExecution addPhoneUser(PhoneUser phoneUser);
 }

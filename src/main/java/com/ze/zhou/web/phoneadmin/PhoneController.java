@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +20,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.NoticeExecution;
 import com.ze.zhou.dto.PhoneUserExecution;
@@ -57,6 +60,41 @@ public class PhoneController {
 	@Autowired
 	private PhoneUserService phoneUserService;
 	
+	//账号注册，添加账号
+	@RequestMapping(value="/registeruser",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> registerUser(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//判断验证码输入是否正确
+		if(!CodeUtil.checkVerifyCode(request)) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "验证码输入错误");
+			return modelMap;
+		}
+		//获取json字符串
+		String phoneUserStr=HttpServletRequestUtil.getString(request, "phoneUserStr");
+		logger.debug("json字符串为:"+phoneUserStr);
+		ObjectMapper mapper=new ObjectMapper();
+		PhoneUser phoneUser=null;
+		try {
+			phoneUser=mapper.readValue(phoneUserStr, PhoneUser.class);
+		} catch (Exception e) {
+			logger.debug("捕捉到了异常");
+			modelMap.put("success", true);
+			modelMap.put("errMsg", e.getMessage());
+			return modelMap;
+		}
+		PhoneUserExecution pue=phoneUserService.addPhoneUser(phoneUser);
+		if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
+			logger.debug("添加账号成功");
+			modelMap.put("success", true);
+		}else {
+			logger.debug("添加账号失败");
+			modelMap.put("success", false);
+		}
+		return modelMap;
+	}
+	
 	//检查将要注册的账号是否存在
 	@RequestMapping(value="/checkaccountexist",method=RequestMethod.POST)
 	@ResponseBody
@@ -84,7 +122,7 @@ public class PhoneController {
 	//登录验证
 	@RequestMapping(value="/checkphonelogin",method=RequestMethod.POST)
 	@ResponseBody
-	private Map<String,Object> checkPhoneLogin(HttpServletRequest request){
+	private Map<String,Object> checkPhoneLogin(HttpServletRequest request,HttpServletResponse response){
 		Map<String,Object> modelMap=new HashMap<>();
 		//判断验证码输入是否正确
 		if(!CodeUtil.checkVerifyCode(request)) {
@@ -108,13 +146,13 @@ public class PhoneController {
 		PhoneUserExecution pue=phoneUserService.checkPhoneUser(phoneUser);
 		if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
 			modelMap.put("success", true);
+			modelMap.put("phoneUserLogin", pue.getPhoneUser());
 		}else {
 			modelMap.put("success", false);
 		}
 		return modelMap;
 	}
 	
-
 	//获取问题列表，根据userId
 	@RequestMapping(value="/getproblemlist",method=RequestMethod.GET)
 	@ResponseBody
