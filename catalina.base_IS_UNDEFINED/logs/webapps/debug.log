@@ -1,5 +1,14 @@
-2020-05-10 22:12:14.961[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==>  Preparing: INSERT INTO tb_phone_user ( user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time ) VALUES ( ?, ?, ?, ?, ? ) 
-2020-05-10 22:12:15.015[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==> Parameters: 周周(String), 13865066757(String), 123456(String), 2020-05-10 22:12:14.476(Timestamp), 2020-05-10 22:12:14.476(Timestamp)
-2020-05-10 22:13:00.778[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==>  Preparing: INSERT INTO tb_phone_user ( user_name, user_account_number, user_account_password, create_time, last_edit_time ) VALUES ( ?, ?, ?, ?, ? ) 
-2020-05-10 22:13:00.828[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - ==> Parameters: 周周(String), 13865066757(String), 123456(String), 2020-05-10 22:13:00.39(Timestamp), 2020-05-10 22:13:00.39(Timestamp)
-2020-05-10 22:13:00.835[main]DEBUG com.ze.zhou.dao.PhoneUserDao.insertPhoneUser - <==    Updates: 1
+2020-05-12 08:56:31.119[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - ==>  Preparing: UPDATE tb_phone_user SET user_account_password=?, user_img=?, last_edit_time=? WHERE user_id=? 
+2020-05-12 08:56:31.172[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - ==> Parameters: 123456(String), qweasd(String), 2020-05-12 08:56:30.507(Timestamp), 3(Integer)
+2020-05-12 08:56:31.179[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - <==    Updates: 1
+2020-05-12 08:57:08.302[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - ==>  Preparing: UPDATE tb_phone_user SET user_account_password=?, user_name=?, user_img=?, last_edit_time=? WHERE user_id=? 
+2020-05-12 08:57:08.340[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - ==> Parameters: 123456(String), zxc(String), qweasd(String), 2020-05-12 08:57:07.881(Timestamp), 3(Integer)
+2020-05-12 08:57:08.346[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - <==    Updates: 1
+2020-05-12 09:52:03.802[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==>  Preparing: SELECT user_id, user_name, user_account_number, user_account_password, user_img, create_time, last_edit_time FROM tb_phone_user WHERE user_account_number=? 
+2020-05-12 09:52:04.250[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - ==> Parameters: 13865066757(String)
+2020-05-12 09:52:04.475[main]DEBUG c.z.zhou.dao.PhoneUserDao.selectPhoneUserByAccount - <==      Total: 1
+2020-05-12 09:52:35.247[main]DEBUG com.ze.zhou.util.ImageUtil - current relativeAddr is:/electricity_upload/phoneuser3/2020051209523580808.jpg
+2020-05-12 09:52:35.253[main]DEBUG com.ze.zhou.util.ImageUtil - current complete addr is:E:/Users/electricity_image/electricity_upload/phoneuser3/2020051209523580808.jpg
+2020-05-12 09:53:22.086[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - ==>  Preparing: UPDATE tb_phone_user SET user_img=?, last_edit_time=? WHERE user_id=? 
+2020-05-12 09:53:22.115[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - ==> Parameters: /electricity_upload/phoneuser3/2020051209523580808.jpg(String), 2020-05-12 09:53:20.989(Timestamp), 3(Integer)
+2020-05-12 09:53:22.129[main]DEBUG com.ze.zhou.dao.PhoneUserDao.updatePhoneUser - <==    Updates: 1

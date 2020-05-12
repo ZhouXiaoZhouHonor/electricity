@@ -60,6 +60,61 @@ public class PhoneController {
 	@Autowired
 	private PhoneUserService phoneUserService;
 	
+	//更新账号信息
+	@RequestMapping(value="/modifyuser",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyUser(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		logger.debug("进入更新controller");
+		String userAccountNumber=HttpServletRequestUtil.getString(request, "userAccountNumber");
+		String userName=HttpServletRequestUtil.getString(request, "userName");
+		String userAccountPassword=HttpServletRequestUtil.getString(request, "userAccountPassword");
+		PhoneUser phoneUser=new PhoneUser();
+		phoneUser.setUserAccountNumber(userAccountNumber);
+		phoneUser.setUserName(userName);
+		phoneUser.setUserAccountPassword(userAccountPassword);
+		//获取头像数据流
+		logger.debug("即将开始图片的获取");
+		CommonsMultipartFile userImg=null;
+		ImageHolder imageHolder=null;
+		CommonsMultipartResolver commonsMultipartResolver=new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		if(commonsMultipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multipartHttpServletRequest=
+					(MultipartHttpServletRequest)request;
+			userImg=(CommonsMultipartFile)multipartHttpServletRequest.getFile("userImg");
+			logger.debug("获取图片成功");
+		}else {
+			logger.debug("获取图片失败");
+			modelMap.put("success", false);
+			modelMap.put("errMsg","上传图片不能为空");
+			return modelMap;
+		}
+		if(userImg!=null) {
+			try {
+				imageHolder=new ImageHolder(userImg.getOriginalFilename(),userImg.getInputStream());
+				logger.debug("生成imageHolder对象");
+			} catch (IOException e) {
+				logger.debug("imgholder失败");
+				modelMap.put("success", false);
+				modelMap.put("errMsg", e.getMessage());
+				return modelMap;
+			}
+		}
+		logger.debug("imgholder成功");
+		PhoneUserExecution pue=phoneUserService.changePhoneUser(phoneUser, imageHolder);
+		if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
+			//将更新后的内容查出来并返回到前端显示
+			logger.debug("更新成功");
+			modelMap.put("success", true);
+			modelMap.put("phoneUserChange", pue.getPhoneUser());
+		}else {
+			logger.debug("更新失败");
+			modelMap.put("success", false);
+		}
+		return modelMap;
+	}
+	
 	//账号注册，添加账号
 	@RequestMapping(value="/registeruser",method=RequestMethod.POST)
 	@ResponseBody
@@ -158,15 +213,28 @@ public class PhoneController {
 	@ResponseBody
 	private Map<String,Object> getProblemList(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
-		//TODO 从session中获取userId
+		//TODO 从前端中获取账号，通过账号获取对应的userId
+		String userAccountNumber=HttpServletRequestUtil.getString(request, "userAccountNumber");
+		logger.debug("获取的账号为:"+userAccountNumber);
+		if(userAccountNumber==null) {
+			modelMap.put("success", false);
+			return modelMap;
+		}
+		PhoneUserExecution pue=phoneUserService.getPhoneUser(userAccountNumber);
+		if(pue.getState()==PhoneUserStateEnum.FAILURE.getState()||
+				pue.getState()==PhoneUserStateEnum.NULL_PHONEUSERID.getState()) {
+			modelMap.put("success", false);
+			return modelMap;
+		}
 		//先写死
-		PhoneUser pu=new PhoneUser();
-		pu.setUserId(1);
+		/*
+		 * PhoneUser pu=new PhoneUser(); pu.setUserId(1);
+		 */
 		//获取分页用的数值
 		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
 		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
 		Problem problem=new Problem();
-		problem.setUser(pu);
+		problem.setUser(pue.getPhoneUser());
 		ProblemExecution pec=problemService.getQueryProblem(problem, pageIndex, pageSize);
 		if(pec.getState()==ProblemStateEnum.SUCCESS.getState()) {
 			modelMap.put("success", true);
@@ -189,6 +257,17 @@ public class PhoneController {
 		Map<String,Object> modelMap=new HashMap<>();
 		/*获取前端传过来的json字符串*/
 		String problemStr=HttpServletRequestUtil.getString(request, "problemStr");
+		String userAccountNumber=HttpServletRequestUtil.getString(request, "userAccountNumber");
+		if(userAccountNumber==null) {
+			modelMap.put("success", false);
+			return modelMap;
+		}
+		PhoneUserExecution pue=phoneUserService.getPhoneUser(userAccountNumber);
+		if(pue.getState()==PhoneUserStateEnum.FAILURE.getState()||
+				pue.getState()==PhoneUserStateEnum.NULL_PHONEUSERID.getState()) {
+			modelMap.put("success", false);
+			return modelMap;
+		}
 		/*将json字符串转换成对象*/
 		ObjectMapper mapper=new ObjectMapper();
 		Problem problem=null;
@@ -233,11 +312,11 @@ public class PhoneController {
 		}
 		//不为空，有图片，则执行添加操作
 		if(problem!=null&&problemImgList!=null&&problemImgList.size()>0) {
-			/*TODO 从session中获取userId*/
 			//目前用手动设置代替
-			PhoneUser pu=new PhoneUser();
-			pu.setUserId(1);
-			problem.setUser(pu);
+			/*
+			 * PhoneUser pu=new PhoneUser(); pu.setUserId(1);
+			 */
+			problem.setUser(pue.getPhoneUser());
 			ProblemExecution pec=problemService.addProblem(problem, problemImgList);
 			if(pec.getState()==ProblemStateEnum.SUCCESS.getState()) {
 				modelMap.put("success", true);

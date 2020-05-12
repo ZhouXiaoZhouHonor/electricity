@@ -2,6 +2,7 @@ package com.ze.zhou.service;
 
 import com.ze.zhou.dto.PhoneUserExecution;
 import com.ze.zhou.entity.PhoneUser;
+import com.ze.zhou.util.ImageHolder;
 
 /*
 	author:zhouze
@@ -17,4 +18,10 @@ public interface PhoneUserService {
 	
 	//添加手机用户
 	PhoneUserExecution addPhoneUser(PhoneUser phoneUser);
+	
+	//更新手机用户
+	PhoneUserExecution changePhoneUser(PhoneUser phoneUser,ImageHolder imageHolder);
+	
+	//获取对应账号的对象
+	PhoneUserExecution getPhoneUser(String phoneUserAccount);
 }

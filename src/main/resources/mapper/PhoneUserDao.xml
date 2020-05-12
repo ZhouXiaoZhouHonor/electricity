@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ze.zhou.dao.PhoneUserDao">
+<!-- 通过账号查找用户 -->
 	<select id="selectPhoneUserByAccount" 
 		resultType="com.ze.zhou.entity.PhoneUser">
 		SELECT
@@ -20,6 +21,7 @@
 			</if>
 		</where>
 	</select>
+<!-- 添加用户 -->
 	<insert id="insertPhoneUser" useGeneratedKeys="true"
 		keyColumn="user_id" keyProperty="userId">
 		INSERT INTO
@@ -40,8 +42,24 @@
 		#{lastEditTime}
 		)
 	</insert>
+<!-- 更新用户 -->
 	<update id="updatePhoneUser">
-		
+		UPDATE tb_phone_user
+		<set>
+			<if test="userAccountPassword!=null and 
+				userAccountPassword!=''">
+				user_account_password=#{userAccountPassword},
+			</if>
+			<if test="userName!=null and userName!=''">
+				user_name=#{userName},
+			</if>
+			<if test="userImg!=null and userImg!=''">
+				user_img=#{userImg},
+			</if>
+			last_edit_time=#{lastEditTime}
+		</set>
+		WHERE
+		user_id=#{userId}
 	</update>
 </mapper>
 

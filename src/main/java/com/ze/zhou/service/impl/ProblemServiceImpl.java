@@ -62,6 +62,7 @@ public class ProblemServiceImpl implements ProblemService{
 			problem.setCreateTime(new Date());
 			problem.setLastEditTime(new Date());
 			problem.setProblemEnableStatus(0);
+			problem.setProblemTitle("问题");
 			int effectNum=problemDao.insertProblem(problem);
 			if(effectNum>0) {
 				peu.setState(ProblemStateEnum.SUCCESS.getState());

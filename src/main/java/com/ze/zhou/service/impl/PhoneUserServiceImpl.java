@@ -11,7 +11,11 @@ import com.ze.zhou.dto.PhoneUserExecution;
 import com.ze.zhou.entity.PhoneUser;
 import com.ze.zhou.enums.PhoneUserStateEnum;
 import com.ze.zhou.service.PhoneUserService;
+import com.ze.zhou.util.ImageHolder;
+import com.ze.zhou.util.ImageSize;
+import com.ze.zhou.util.ImageUtil;
 import com.ze.zhou.util.MD5Salt;
+import com.ze.zhou.util.PathUtil;
 import com.ze.zhou.web.phoneadmin.PhoneController;
 
 import ch.qos.logback.classic.Logger;
@@ -54,8 +58,7 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 		}
 		return pue;
 	}
-
-	/* @SuppressWarnings("unused") */
+	
 	@SuppressWarnings("unused")
 	@Override
 	public PhoneUserExecution checkPhoneUserAccount(String phoneUserAccount) {
@@ -96,6 +99,70 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 		}else {
 			logger.debug("对象为空");
 			pue.setState(PhoneUserStateEnum.NULL_PHONEUSER.getState());
+		}
+		return pue;
+	}
+
+	@Override
+	public PhoneUserExecution changePhoneUser(PhoneUser phoneUser,ImageHolder imageHolder) {
+		PhoneUserExecution pue=new PhoneUserExecution();
+		logger.debug("s进入service层");
+		if(phoneUser!=null&&phoneUser.getUserAccountNumber()!=null) {
+			//向数据库查找该账号的Id
+			logger.debug("s对象参数都有");
+			PhoneUser phoneUserReal=phoneUserDao.selectPhoneUserByAccount(
+					phoneUser.getUserAccountNumber());
+			if(phoneUserReal!=null) {//查找到该账号信息
+				logger.debug("s查找到对应账号");
+				String imgPath="";
+				//判断是否需要更新图片
+				if(imageHolder!=null) {
+					logger.debug("s需要更改图片");
+					String dest=PathUtil.getPhoneUserImagePath(
+							phoneUserReal.getUserId());
+					imgPath=ImageUtil.generateThumbnail(
+							imageHolder, dest, ImageSize.IMAGE_USER);
+					phoneUser.setUserImg(imgPath);
+					logger.debug("s更改图片成功");
+				}
+				logger.debug("s即将更新操作");
+				phoneUser.setUserId(phoneUserReal.getUserId());
+				phoneUser.setLastEditTime(new Date());
+				int effectNum=phoneUserDao.updatePhoneUser(phoneUser);
+				if(effectNum>0) {
+					logger.debug("s更新成功");
+					pue.setState(PhoneUserStateEnum.SUCCESS.getState());
+					//将更新完的新的数据一并返回
+					pue.setPhoneUser(phoneUserDao.selectPhoneUserByAccount(
+							phoneUser.getUserAccountNumber()));
+				}else {
+					logger.debug("s更新失败");
+					pue.setState(PhoneUserStateEnum.FAILURE.getState());
+				}
+			}else {
+				logger.debug("s没有找到对应的账号");
+				pue.setState(PhoneUserStateEnum.NULL_PHONEUSER.getState());
+			}
+		}else {
+			logger.debug("s参数为空");
+			pue.setState(PhoneUserStateEnum.NULL_PHONEUSERID.getState());
+		}
+		return pue;
+	}
+
+	@Override
+	public PhoneUserExecution getPhoneUser(String phoneUserAccount) {
+		PhoneUserExecution pue=new PhoneUserExecution();
+		if(phoneUserAccount!=null&&!("".equals(phoneUserAccount))) {
+			PhoneUser result=phoneUserDao.selectPhoneUserByAccount(phoneUserAccount);
+			if(result!=null) {
+				pue.setState(PhoneUserStateEnum.SUCCESS.getState());
+				pue.setPhoneUser(result);
+			}else {
+				pue.setState(PhoneUserStateEnum.FAILURE.getState());
+			}
+		}else {
+			pue.setState(PhoneUserStateEnum.NULL_PHONEUSERID.getState());
 		}
 		return pue;
 	}

@@ -53,10 +53,12 @@ public class ImageUtil {
 		try {/*.watermark(Positions.BOTTOM_CENTER,ImageIO.read(new File(basePath+"timg.jpg")).outputQuality(0.8f),0.25f)不打水印了*/
 			Thumbnails.of(thumbnail.getImage())
 			.size(imageSize.getWidth(), imageSize.getHeight())
+			.keepAspectRatio(false)
 			.toFile(dest);
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+		logger.debug("图片的宽度:"+imageSize.getWidth()+"/高度:"+imageSize.getHeight());
 		return relativeAddr;//返回图片的路径，因为shop中的有一个字段用来存放图片地址。返回的是相对路径，适配不同的系统上
 	}
 	
