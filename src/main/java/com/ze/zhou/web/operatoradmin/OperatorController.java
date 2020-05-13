@@ -18,11 +18,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ze.zhou.dto.CoordinateExecution;
 import com.ze.zhou.dto.PileExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Operator;
 import com.ze.zhou.entity.Pile;
+import com.ze.zhou.enums.CoordinateStateEnum;
 import com.ze.zhou.enums.PileStateEnum;
 import com.ze.zhou.service.AreaService;
 import com.ze.zhou.service.CoordinateService;
@@ -51,6 +53,27 @@ public class OperatorController {
 	
 	@Autowired
 	private CoordinateService coordinateService;
+	
+	//获取coordinate
+	@RequestMapping(value="/getcoordinate",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getCoordinate(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int coordinateId=HttpServletRequestUtil.getInt(request, "coordinateId");
+		if(coordinateId>0) {
+			CoordinateExecution ce=coordinateService.getCoordinate(coordinateId);
+			if(ce.getState()==CoordinateStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+				modelMap.put("coordinate", ce.getCoordinate());
+			}else {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", "empty coordinate");
+			}
+		}else {
+			modelMap.put("success", false);
+		}
+		return modelMap;
+	}
 	
 	//获取pileList
 	@RequestMapping(value="/getpilelist",method=RequestMethod.GET)

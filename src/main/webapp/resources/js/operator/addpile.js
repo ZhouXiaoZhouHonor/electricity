@@ -64,7 +64,13 @@ layui.use(['form','layer','jquery','element'],function(){
 		$.getJSON(coordinateNumberUrl,function(data){
 			if(data.success){//向充电站插入选位置的html进行选择
 				pileList=data.pileList;
-				pileNumberInit(pileList);
+				//如果该站点是全新的站点，则直接从获取站点信息
+				if(pileList==null||pileList==undefined||pileList==""){
+					pileNullNumberInit(coordinateId);
+				}else{
+					pileNumberInit(pileList);
+				}
+				
 			}else{
 				layer.msg(data.errMsg);
 			}
@@ -78,6 +84,38 @@ layui.use(['form','layer','jquery','element'],function(){
 		}
 		pileNumberInit(pileList);
 	});
+	//如果该站点是全新的站点，则不能从充电桩中获取站点桩数信息
+	function pileNullNumberInit(coordinateId1){
+		var coordinateId=coordinateId1;
+		var getCoordinateUrl='/zhou/operator/getcoordinate?coordinateId='+coordinateId;
+		$.getJSON(getCoordinateUrl,function(data){
+			if(data.success){
+				var pileNumber=data.coordinate.coordinatePileNumber;
+				var pileNumberHtml='';
+				for(var i=1;i<=pileNumber;i++){
+					if(i<10){
+						pileNumberHtml+='<button type="button" '+
+							'class="layui-btn layui-btn-normal pile-number" '+
+								'value="'+i+'">0'+i+'</button> ';
+					}else{
+						pileNumberHtml+='<button type="button" '+
+							'class="layui-btn layui-btn-normal pile-number" '+
+							'value="'+i+'">'+i+'</button> ';
+					}
+				}
+				var html='<div class="layui-btn-container">'+
+				pileNumberHtml+'</div>';
+				pileNumberIndex=layer.open({
+					type: 1, 
+					title:'请选择充电桩位置',
+					anim: 5,//显示样式-渐显
+					content:html//这里content是一个普通的String
+					});
+			}else{
+				layer.msg(data.errMsg);
+			}
+		});
+	}
 	
 	//初始化站点信息的位置
 	function pileNumberInit(piles){

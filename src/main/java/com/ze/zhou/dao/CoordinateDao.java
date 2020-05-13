@@ -26,4 +26,6 @@ public interface CoordinateDao {
 	
 	//手机用户查询电站即可,只要能用就需要查出来
 	List<Coordinate> queryAllCoordinate();
+	//通过Id获取对应coordinate
+	Coordinate queryCoordinateById(@Param("coordinateId")int coordinateId);
 }

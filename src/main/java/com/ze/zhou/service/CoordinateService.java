@@ -21,4 +21,6 @@ public interface CoordinateService {
 	CoordinateExecution getCoordinateList(int pageIndex,int pageSize);
 	//手机用户获取站点数据
 	List<Coordinate> getAllCoordinateList();
+	//获取对应Id的coordinate
+	CoordinateExecution getCoordinate(int coordinateId);
 }

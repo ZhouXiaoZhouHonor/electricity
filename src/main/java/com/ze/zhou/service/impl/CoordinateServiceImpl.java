@@ -114,4 +114,17 @@ public class CoordinateServiceImpl implements CoordinateService{
 	public List<Coordinate> getAllCoordinateList() {
 		return coordinateDao.queryAllCoordinate();
 	}
+	
+	@Override
+	public CoordinateExecution getCoordinate(int coordinateId) {
+		CoordinateExecution ce=new CoordinateExecution();
+		Coordinate coordinate=coordinateDao.queryCoordinateById(coordinateId);
+		if(coordinate!=null) {
+			ce.setCoordinate(coordinate);
+			ce.setState(CoordinateStateEnum.SUCCESS.getState());
+		}else {
+			ce.setState(CoordinateStateEnum.NULL_Coordinate.getState());
+		}
+		return ce;
+	}
 }

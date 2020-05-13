@@ -40,7 +40,7 @@ public class LoginController {
 	@Autowired
 	private OperatorService operatorService;
 	
-	@RequestMapping(value="operatorlogin",method=RequestMethod.GET)
+	@RequestMapping(value="/operatorlogin",method=RequestMethod.GET)
 	private String operatorLogin() {
 		return "login/operatorlogin";
 	}
