@@ -38,7 +38,9 @@ layui.use(['jquery','element','layer','form'],function(){
 					console.log('登陆成功');
 					window.location.href='/zhou/page/main';
 				}else{
-					
+					$('#login-reset').click();//清空内容
+					$('#kaptcha_img').click();//刷新验证码图片
+					layer.msg('账号或密码不正确，请重新输入登录');
 				}
 			}
 		});

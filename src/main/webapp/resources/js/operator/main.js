@@ -8,6 +8,11 @@ layui.use(['element','jquery','layer'], function(){
   var myJquery=layui.jquery;
   var layer=layui.layer;
   
+  //首页管理，点击首页显示刚进入网站的页面
+  $('#main-operator').on('click',function(){
+	  window.location.href='/zhou/page/main';
+  });
+  
   //充电桩管理
   $('#pile-message').on('click',function(){
 	  //console.log('点击了充电桩详情标签');

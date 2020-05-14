@@ -229,4 +229,8 @@ layui.use(['form','layer','jquery','element'],function(){
 		});
 		return false;//一定要加上，不然会直接进行页面刷新，传递的验证码就会不一致。
 	});
+	//监听取消按钮，一旦取消则返回到主页面
+	$('#cancel-add').on('click',function(){
+		window.location.href='/zhou/page/main';
+	});
 });
