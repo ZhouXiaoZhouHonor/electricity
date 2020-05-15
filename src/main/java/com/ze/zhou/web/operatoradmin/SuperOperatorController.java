@@ -1,16 +1,21 @@
 package com.ze.zhou.web.operatoradmin;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.AreaExecution;
@@ -29,6 +34,10 @@ import com.ze.zhou.service.NoticeService;
 import com.ze.zhou.service.OperatorService;
 import com.ze.zhou.util.CodeUtil;
 import com.ze.zhou.util.HttpServletRequestUtil;
+import com.ze.zhou.util.ImageHolder;
+import com.ze.zhou.web.superadmin.AreaSuperadminController;
+
+import ch.qos.logback.classic.Logger;
 
 /*
 	author:zhouze
@@ -38,6 +47,8 @@ import com.ze.zhou.util.HttpServletRequestUtil;
 @Controller
 @RequestMapping("/superoperator")
 public class SuperOperatorController {
+	Logger logger=(Logger) LoggerFactory.getLogger(SuperOperatorController.class);
+	
 	@Autowired
 	private AreaService areaService;
 	@Autowired
@@ -46,6 +57,70 @@ public class SuperOperatorController {
 	private CoordinateService coordinateService;
 	@Autowired
 	private NoticeService noticeService;
+	
+	//添加公告信息
+	@RequestMapping(value="/registernotice",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> registerNotice(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//判断验证码输入是否正确
+		if(!CodeUtil.checkVerifyCode(request)) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "验证码输入错误");
+			return modelMap;
+		}
+		//获取json字符串
+		Notice notice=null;
+		ObjectMapper mapper=new ObjectMapper();
+		String noticeStr=HttpServletRequestUtil.getString(request, "noticeStr");
+		if(noticeStr!=null) {
+			try {
+				notice=mapper.readValue(noticeStr, Notice.class);
+			}catch(Exception e) {
+				modelMap.put("success", true);
+				modelMap.put("errMsg", e.getMessage());
+				return modelMap;
+			}
+		}
+		//处理图片的逻辑
+		//使用Spring自带的CommonsMultipartFile
+		CommonsMultipartFile noticeImg=null;
+		CommonsMultipartFile noticeLink=null;
+		CommonsMultipartResolver commonsMultipartResolver=new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		if(commonsMultipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multipartHttpServletRequest=
+					(MultipartHttpServletRequest)request;
+			noticeImg=(CommonsMultipartFile)multipartHttpServletRequest.getFile("noticeImg");
+			noticeLink=(CommonsMultipartFile)multipartHttpServletRequest.getFile("noticeLink");
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg","上传图片不能为空");
+			return modelMap;
+		}
+		ImageHolder imageHolder1=null;
+		ImageHolder imageHolder2=null;
+		if(notice!=null) {
+			try {
+				imageHolder1=new ImageHolder(noticeImg.getOriginalFilename(),noticeImg.getInputStream());
+				imageHolder2=new ImageHolder(noticeLink.getOriginalFilename(),noticeLink.getInputStream());
+				logger.debug("图片1:"+imageHolder1.getImageName()+"/"+imageHolder1.getImage());
+				logger.debug("图片2:"+imageHolder2.getImageName()+"/"+imageHolder2.getImage());
+			} catch (IOException e) {
+				modelMap.put("success", false);
+				modelMap.put("errMsg","上传图片不能为空");
+				return modelMap;
+			}
+		}
+		NoticeExecution ne=noticeService.addNotice(notice, imageHolder1, imageHolder2);
+		if(ne.getState()==NoticeStateEnum.SUCCESS.getState()) {
+			modelMap.put("success", true);
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "添加公告信息失败");
+		}
+		return modelMap;
+	}
 	
 	//更改公告信息状态
 	@RequestMapping(value="/modifynoticestate",method=RequestMethod.POST)

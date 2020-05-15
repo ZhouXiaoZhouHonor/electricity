@@ -61,4 +61,9 @@ layui.use(['jquery','layer','element','form'],function(){
 		});
 		return false;
 	});
+	
+	/*点击取消添加，返回到主页面*/
+	$('#cancel-super-add-coordinate').on('click',function(){
+		window.location.href='/zhou/pagesuper/main';
+	});
 });

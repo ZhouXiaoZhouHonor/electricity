@@ -11,7 +11,11 @@ import com.ze.zhou.dto.NoticeExecution;
 import com.ze.zhou.entity.Notice;
 import com.ze.zhou.enums.NoticeStateEnum;
 import com.ze.zhou.service.NoticeService;
+import com.ze.zhou.util.ImageHolder;
+import com.ze.zhou.util.ImageSize;
+import com.ze.zhou.util.ImageUtil;
 import com.ze.zhou.util.PageCalculator;
+import com.ze.zhou.util.PathUtil;
 
 /*
 	author:zhouze
@@ -38,7 +42,7 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public NoticeExecution addNotice(Notice notice) {
+	public NoticeExecution addNotice(Notice notice,ImageHolder imageHolder1,ImageHolder imageHolder2) {
 		NoticeExecution ne=new NoticeExecution();
 		if(notice!=null) {
 			notice.setCreateTime(new Date());
@@ -46,7 +50,20 @@ public class NoticeServiceImpl implements NoticeService{
 			notice.setNoticeEnableStatus(1);
 			int effectNum=noticeDao.insertNotice(notice);
 			if(effectNum>0) {
-				ne.setState(NoticeStateEnum.SUCCESS.getState());
+				//更新图片
+				String dest=PathUtil.getNoticeImagePath(notice.getNoticeId());
+				String noticeImg=ImageUtil.generateThumbnail(imageHolder1, dest, ImageSize.IMAGE_NOTICE);
+				String noticeLink=ImageUtil.generateThumbnail(imageHolder2, dest, ImageSize.IMAGE_NOTICE_LINK);
+				notice.setNoticeImg(noticeImg);
+				notice.setNoticeLink(noticeLink);
+				int result=noticeDao.updateNotice(notice);
+				if(result>0) {
+					ne.setState(NoticeStateEnum.SUCCESS.getState());
+				}else {
+					ne.setState(NoticeStateEnum.NULL_NOTICEID.getState());
+				}
+			}else {
+				ne.setState(NoticeStateEnum.INNER_ERROR.getState());
 			}
 		}else {
 			ne.setState(NoticeStateEnum.NULL_NOTICE.getState());

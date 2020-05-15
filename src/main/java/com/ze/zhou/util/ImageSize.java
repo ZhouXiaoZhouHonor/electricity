@@ -9,7 +9,8 @@ public enum ImageSize {
 	IMAGE_OPERATOR(200,200),
 	IMAGE_USER(80,80),
 	IMAGE_PROBLEM(200,200),
-	IMAGE_NOTICE(200,200);
+	IMAGE_NOTICE_LINK(300,600),
+	IMAGE_NOTICE(300,200);
 	private int width;
 	private int height;
 	

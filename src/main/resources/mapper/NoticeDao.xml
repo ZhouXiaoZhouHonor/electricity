@@ -46,6 +46,7 @@
 	INSERT INTO
 	tb_notice
 	(
+	notice_name,
     notice_link,
     create_time,
     notice_priority,
@@ -55,6 +56,7 @@
 	)
 	VALUES
 	(
+	#{noticeName},
 	#{noticeLink},
 	#{createTime},
 	#{noticePriority},
@@ -66,6 +68,14 @@
 	<update id="updateNotice">
 		UPDATE tb_notice
 		<set>
+			<if test="noticeImg!=null 
+				and !('').equals(noticeImg)">
+				notice_img=#{noticeImg},
+			</if>
+			<if test="noticeLink!=null
+				 and !('').equals(noticeLink)">
+				notice_link=#{noticeLink},
+			</if>
 			<if test="noticeEnableStatus!=null and noticeEnableStatus>=0">
 				notice_enable_status=#{noticeEnableStatus},
 			</if>

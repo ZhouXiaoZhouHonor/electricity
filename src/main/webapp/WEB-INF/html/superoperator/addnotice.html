@@ -10,7 +10,7 @@
 <body>
 <div class="ze-operator-div">
 	<div class="layui-fluid"><!-- layui-container -->
-	<form id="add-area-form" class="layui-form" action="" lay-filter="addAreaForm" method="post" enctype="multipart/form-data" >
+	<form id="add-notice-form" class="layui-form" action="" lay-filter="addNoticeForm" method="post" enctype="multipart/form-data" >
 	<!-- 区域信息 -->
 	<div class="layui-row">
   		<div class="layui-form-item">
@@ -20,7 +20,15 @@
     		</div>
   		</div>
   	</div>
-  	
+  	<!-- 公告展示所需的图片 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		 <label class="layui-form-label">公告图片</label>
+    		<div class="layui-input-block">
+      			<input type="file" id="noticeImg">
+    		</div>
+  		</div>
+  	</div>
   	<!-- 优先级 -->
   	<div class="layui-row">
   		<div class="layui-form-item">
@@ -45,9 +53,9 @@
     		<div class="layui-form-item">
   				<label class="layui-form-label">验证码</label>
   				<div class="layui-input-block ze-width">
-    				<input type="text" name="pileKaptcha" required lay-verify="required" 
+    				<input type="text" name="noticeKaptcha" required lay-verify="required" 
     					placeholder="请输入验证码" autocomplete="off" class="layui-input" 
-    						lay-filter="kaptcha" id="area-kaptcha">
+    						lay-filter="kaptcha" id="notice-kaptcha">
   				</div>
   			</div>
     	</div>
@@ -64,6 +72,7 @@
     		<div class="layui-input-block">
       			<button class="layui-btn" lay-submit lay-filter="addNoticeSubmit">立即提交</button>
       			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      			<button id="cancel-super-add-notice" type="reset" class="layui-btn layui-btn-danger">取消添加</button>
     		</div>
   		</div>
   	</div>
@@ -73,4 +82,5 @@
 </body>
 <script src="../resources/layui/layui.js"></script>
 <script src="../resources/js/common/common.js"></script>
+<script src="../resources/js/superoperator/addnotice.js"></script>
 </html>

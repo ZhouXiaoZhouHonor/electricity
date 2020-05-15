@@ -57,4 +57,8 @@ layui.use(['layer','jquery','form','element'],function(){
 		});
 		return false;
 	});
+	/*点击取消按钮时，返回到area页面*/
+	$('#cancel-super-add').on('click',function(){
+		window.location.href='/zhou/pagesuper/main';
+	});
 });
