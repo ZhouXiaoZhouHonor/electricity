@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<link rel="stylesheet" href="../resources/layui/css/layui.css">
+<link rel="stylesheet" href="../resources/css/common/common.css">
+<link rel="stylesheet" href="../resources/css/map/addpile.css">
+<body>
+<div class="ze-operator-div">
+	<div class="layui-fluid"><!-- layui-container -->
+	<form id="add-operator-form" class="layui-form" action="" lay-filter="addOperatorForm" method="post" enctype="multipart/form-data" >
+	<!-- 管理员名称 -->
+	<div class="layui-row">
+  		<div class="layui-form-item">
+    		 <label class="layui-form-label">管理员昵称</label>
+    		<div class="layui-input-block">
+      			<input type="text" name="operatorName" required  lay-verify="required" placeholder="请输入管理员昵称" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  	</div>
+  	
+  	<!-- 管理员账号 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		 <label class="layui-form-label">管理员账号</label>
+    		<div class="layui-input-block">
+      			<input type="text" name="operatorAccountNumber" required  lay-verify="required" placeholder="输入账号" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  	</div>
+  	
+  		<!-- 管理员密码 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		 <label class="layui-form-label">管理员密码</label>
+    		<div class="layui-input-block">
+      			<input type="password" name="operatorPassword" required  lay-verify="required" placeholder="输入密码" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  	</div>
+  		<!-- 管理员头像 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		 <label class="layui-form-label">管理员头像</label>
+    		<div class="layui-input-block">
+      			<input id="operatorImg" type="file" required  lay-verify="required" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+  	</div>
+  <!-- 验证码 -->
+  	<div class="layui-row">
+    	<div class="layui-col-md8">
+    		<div class="layui-form-item">
+  				<label class="layui-form-label">验证码</label>
+  				<div class="layui-input-block ze-width">
+    				<input type="text" name="pileKaptcha" required lay-verify="required" 
+    					placeholder="请输入验证码" autocomplete="off" class="layui-input" 
+    						lay-filter="kaptcha" id="operator-kaptcha">
+  				</div>
+  			</div>
+    	</div>
+    	<div class="layui-col-md2">
+  		<!-- 验证码 -->
+			<img id="kaptcha_img" alt="点击更换"  title="点击更换"  
+				onclick="changeVerifyCode(this)" 
+				src="../Kaptcha"><!-- 资源是放在web.xml下的servlet中 -->
+    	</div>
+  	</div>
+  <!-- 提交按钮 -->
+  	<div class="layui-row">
+  		<div class="layui-form-item">
+    		<div class="layui-input-block">
+      			<button class="layui-btn" lay-submit lay-filter="addOperatorSubmit">立即提交</button>
+      			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+      			<button id="cancel-super-add-operator" type="reset" class="layui-btn layui-btn-danger">取消添加</button>
+    		</div>
+  		</div>
+  	</div>
+</form>
+</div>
+</div>
+
+</body>
+<script src="../resources/layui/layui.js"></script>
+<script src="../resources/js/common/common.js"></script>
+<script src="../resources/js/common/md5.js"></script>
+<script src="../resources/js/superoperator/addoperator.js"></script>
+</html>

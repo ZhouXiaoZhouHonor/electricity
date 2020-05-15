@@ -37,6 +37,14 @@ layui.use(['jquery','element','layer','table'],function(){
     $('#notice-add').on('click',function(){
     	window.location.href='/zhou/pagesuper/addnotice';
     });
+    //显示管理员信息
+    $('#operator-message').on('click',function(){
+    	layui.operatorTable();
+    });
+    //添加管理员信息
+    $('#add-operator').on('click',function(){
+    	window.location.href='/zhou/pagesuper/addoperator';
+    });
 });
 
 

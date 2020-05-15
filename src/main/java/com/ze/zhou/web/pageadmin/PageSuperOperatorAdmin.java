@@ -32,4 +32,9 @@ public class PageSuperOperatorAdmin {
 	private String addNotice() {
 		return "superoperator/addnotice";
 	}
+	//超级管理员添加管理员界面
+	@RequestMapping("/addoperator")
+	private String addOperator() {
+		return "superoperator/addoperator";
+	}
 }

@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ze.zhou.dao.OperatorDao">
+	<select id="queryOperatorByPage" 
+		resultType="com.ze.zhou.entity.Operator">
+		SELECT
+		operator_id,
+		operator_name,
+		operator_account_number,
+		operator_enable_status
+    	FROM 
+    	tb_operator
+    	LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<select id="queryCount" resultType="int">
+		SELECT
+		count(1)
+    	FROM 
+    	tb_operator
+	</select>
 	<select id="queryOperator" resultType="com.ze.zhou.entity.Operator">
 		SELECT
 		operator_id,
@@ -32,4 +49,47 @@
     		</if>
     	</where>
 	</select>
+	<!-- 添加管理员账号 -->
+	<insert id="insertOperator" useGeneratedKeys="true"
+		keyColumn="operator_id" keyProperty="operatorId">
+		INSERT INTO
+		tb_operator
+		(
+		operator_name,
+		operator_img,
+		operator_account_number,
+		operator_password,
+		operator_enable_status,
+		create_time,
+		last_edit_time
+		)
+		VALUES
+		(
+		#{operatorName},
+		#{operatorImg},
+		#{operatorAccountNumber},
+		#{operatorPassword},
+		#{operatorEnableStatus},
+		#{createTime},
+		#{lastEditTime}
+		)
+	</insert>
+	<!-- 只更新该状态即可,其他不需要更新(暂时) -->
+	<update id="updateOperator">
+		UPDATE tb_operator
+		<set>
+			<if test="operatorEnableStatus!=null">
+				operator_enable_status=#{operatorEnableStatus},
+			</if>
+			<if test="operatorImg!=null 
+				and !('').equals(operatorImg)">
+				operator_img=#{operatorImg},
+			</if>
+			<if test="lastEditTime!=null">
+				last_edit_time=#{lastEditTime}
+			</if>
+		</set>
+		WHERE
+		operator_id=#{operatorId}
+	</update>
 </mapper>

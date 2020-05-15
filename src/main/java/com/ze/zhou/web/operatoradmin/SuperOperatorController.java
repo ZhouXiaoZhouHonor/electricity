@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.AreaExecution;
 import com.ze.zhou.dto.CoordinateExecution;
 import com.ze.zhou.dto.NoticeExecution;
+import com.ze.zhou.dto.OperatorExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Notice;
@@ -28,6 +29,7 @@ import com.ze.zhou.entity.Operator;
 import com.ze.zhou.enums.AreaStateEnum;
 import com.ze.zhou.enums.CoordinateStateEnum;
 import com.ze.zhou.enums.NoticeStateEnum;
+import com.ze.zhou.enums.OperatorStateEnum;
 import com.ze.zhou.service.AreaService;
 import com.ze.zhou.service.CoordinateService;
 import com.ze.zhou.service.NoticeService;
@@ -57,6 +59,93 @@ public class SuperOperatorController {
 	private CoordinateService coordinateService;
 	@Autowired
 	private NoticeService noticeService;
+	
+	//更新管理员信息
+	@RequestMapping(value="/modifyoperator",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyOperator(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int operatorId=HttpServletRequestUtil.getInt(request, "operatorId");
+		int enableStatus=HttpServletRequestUtil.getInt(request, "enableStatus");
+		if(operatorId>0&&enableStatus>=0) {
+			Operator operator=new Operator();
+			operator.setOperatorId(operatorId);
+			operator.setOperatorEnableStatus(enableStatus);
+			OperatorExecution oe=operatorService.changeOperator(operator);
+			if(oe.getState()==OperatorStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+			}else {
+				modelMap.put("success", false);
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty data");
+		}
+		return modelMap;
+	}
+	
+	//添加管理员信息
+	@RequestMapping(value="/registeroperator",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> registerOperator(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//判断验证码输入是否正确
+		if(!CodeUtil.checkVerifyCode(request)) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "验证码输入错误");
+			return modelMap;
+		}
+		String operatorStr=HttpServletRequestUtil.getString(request, "operatorStr");
+		Operator operator=null;
+		ObjectMapper mapper=new ObjectMapper();
+		if(operatorStr!=null&&!("".equals(operatorStr))) {
+			try {
+				operator=mapper.readValue(operatorStr, Operator.class);
+			}catch(Exception e) {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", e.getMessage());
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty operatorStr");
+		}
+		//获取图片
+		//使用Spring自带的CommonsMultipartFile
+		CommonsMultipartFile operatorImg=null;
+		CommonsMultipartResolver commonsMultipartResolver=new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		if(commonsMultipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multipartHttpServletRequest=
+					(MultipartHttpServletRequest)request;
+			operatorImg=(CommonsMultipartFile)multipartHttpServletRequest.getFile("operatorImg");
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg","上传图片不能为空");
+			return modelMap;
+		}
+		ImageHolder imageHolder=null;
+		if(operator!=null) {
+			try {
+				imageHolder=new ImageHolder(operatorImg.getOriginalFilename(),operatorImg.getInputStream());
+			} catch (IOException e) {
+				modelMap.put("success", false);
+				modelMap.put("errMsg",e.getMessage());
+				return modelMap;
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg","empty transfer operator");
+			return modelMap;
+		}
+		OperatorExecution oe=operatorService.addOperator(operator, imageHolder);
+		if(oe.getState()==OperatorStateEnum.SUCCESS.getState()) {
+			modelMap.put("success", true);
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", oe.getStateInfo());
+		}
+		return modelMap;
+	}
 	
 	//添加公告信息
 	@RequestMapping(value="/registernotice",method=RequestMethod.POST)
@@ -111,6 +200,9 @@ public class SuperOperatorController {
 				modelMap.put("errMsg","上传图片不能为空");
 				return modelMap;
 			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty notice");
 		}
 		NoticeExecution ne=noticeService.addNotice(notice, imageHolder1, imageHolder2);
 		if(ne.getState()==NoticeStateEnum.SUCCESS.getState()) {
@@ -195,6 +287,30 @@ public class SuperOperatorController {
 			modelMap.put("success", false);
 			modelMap.put("errMsg", "empty coordinate");
 		}
+		return modelMap;
+	}
+	
+	//获取分页形式的管理员信息
+	@RequestMapping(value="/getoperatorlistpage",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getOperatorListPage(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
+		if(pageIndex>=0&&pageSize>0) {
+			OperatorExecution oe=operatorService.getQueryOperatorByPage(pageIndex, pageSize);
+			if(oe.getState()==OperatorStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+				modelMap.put("operatorList", oe.getOperatorList());
+				modelMap.put("count", oe.getCount());
+			}else {
+				modelMap.put("success", false);
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty pageIndex or pageSize");
+		}
+		
 		return modelMap;
 	}
 	

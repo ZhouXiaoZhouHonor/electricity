@@ -6,7 +6,7 @@ package com.ze.zhou.util;
 */
 public enum ImageSize {
 	IMAGE_PILE(200,200),
-	IMAGE_OPERATOR(200,200),
+	IMAGE_OPERATOR(80,80),
 	IMAGE_USER(80,80),
 	IMAGE_PROBLEM(200,200),
 	IMAGE_NOTICE_LINK(300,600),

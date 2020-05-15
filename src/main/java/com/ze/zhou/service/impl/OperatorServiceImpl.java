@@ -1,5 +1,6 @@
 package com.ze.zhou.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,12 @@ import com.ze.zhou.dto.OperatorExecution;
 import com.ze.zhou.entity.Operator;
 import com.ze.zhou.enums.OperatorStateEnum;
 import com.ze.zhou.service.OperatorService;
+import com.ze.zhou.util.ImageHolder;
+import com.ze.zhou.util.ImageSize;
+import com.ze.zhou.util.ImageUtil;
 import com.ze.zhou.util.MD5Salt;
+import com.ze.zhou.util.PageCalculator;
+import com.ze.zhou.util.PathUtil;
 import com.ze.zhou.web.pageadmin.LoginController;
 
 import ch.qos.logback.classic.Logger;
@@ -55,6 +61,67 @@ public class OperatorServiceImpl implements OperatorService{
 			}else {
 				oe.setState(OperatorStateEnum.NULL_OPERATOR.getState());
 			}
+		}else {
+			oe.setState(OperatorStateEnum.NULL_OPERATOR.getState());
+		}
+		return oe;
+	}
+
+	@Override
+	public OperatorExecution addOperator(Operator operator,ImageHolder imageHolder) {
+		OperatorExecution oe=new OperatorExecution();
+		if(operator!=null) {
+			operator.setCreateTime(new Date());
+			operator.setLastEditTime(new Date());
+			operator.setOperatorImg(imageHolder.getImageName());
+			operator.setOperatorEnableStatus(1);
+			int effectNum=operatorDao.insertOperator(operator);
+			if(effectNum>0) {
+				String dest=PathUtil.getOperatorImagePath(operator.getOperatorId());
+				String operatorImg=ImageUtil.generateThumbnail(imageHolder, dest, ImageSize.IMAGE_OPERATOR);
+				operator.setOperatorImg(operatorImg);
+				int result=operatorDao.updateOperator(operator);
+				if(result>0) {
+					oe.setState(OperatorStateEnum.SUCCESS.getState());
+				}else {
+					oe.setState(OperatorStateEnum.OFFLINE.getState());
+				}
+			}else {
+				oe.setState(OperatorStateEnum.INNER_ERROR.getState());
+			}
+		}else {
+			oe.setState(OperatorStateEnum.NULL_OPERATOR.getState());
+		}
+		return oe;
+	}
+
+	@Override
+	public OperatorExecution changeOperator(Operator operator) {
+		OperatorExecution oe=new OperatorExecution();
+		if(operator!=null) {
+			operator.setLastEditTime(new Date());
+			int result=operatorDao.updateOperator(operator);
+			if(result>0) {
+				oe.setState(OperatorStateEnum.SUCCESS.getState());
+			}else {
+				oe.setState(OperatorStateEnum.OFFLINE.getState());
+			}
+		}else {
+			oe.setState(OperatorStateEnum.NULL_OPERATOR.getState());
+		}
+		return oe;
+	}
+
+	@Override
+	public OperatorExecution getQueryOperatorByPage(int pageIndex, int pageSize) {
+		OperatorExecution oe=new OperatorExecution();
+		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<Operator> operatorList=operatorDao.queryOperatorByPage(rowIndex, pageSize);
+		int count=operatorDao.queryCount();
+		if(operatorList!=null&&operatorList.size()>0) {
+			oe.setCount(count);
+			oe.setOperatorList(operatorList);
+			oe.setState(OperatorStateEnum.SUCCESS.getState());
 		}else {
 			oe.setState(OperatorStateEnum.NULL_OPERATOR.getState());
 		}
