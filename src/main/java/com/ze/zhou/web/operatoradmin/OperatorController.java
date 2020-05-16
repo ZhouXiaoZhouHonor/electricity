@@ -19,15 +19,18 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ze.zhou.dto.CoordinateExecution;
+import com.ze.zhou.dto.PhoneUserExecution;
 import com.ze.zhou.dto.PileExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Operator;
 import com.ze.zhou.entity.Pile;
 import com.ze.zhou.enums.CoordinateStateEnum;
+import com.ze.zhou.enums.PhoneUserStateEnum;
 import com.ze.zhou.enums.PileStateEnum;
 import com.ze.zhou.service.AreaService;
 import com.ze.zhou.service.CoordinateService;
+import com.ze.zhou.service.PhoneUserService;
 import com.ze.zhou.service.PileService;
 import com.ze.zhou.util.CodeUtil;
 import com.ze.zhou.util.HttpServletRequestUtil;
@@ -53,6 +56,25 @@ public class OperatorController {
 	
 	@Autowired
 	private CoordinateService coordinateService;
+	
+	@Autowired
+	private PhoneUserService phoneUserService;
+	
+	//获取用户数量
+	@RequestMapping(value="/getusernumber",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getUserNumber(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int userOnline=HttpServletRequestUtil.getInt(request, "userOnline");
+		PhoneUserExecution pue=phoneUserService.getCountUser(userOnline);
+		if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
+			modelMap.put("success", true);
+			modelMap.put("count", pue.getCount());
+		}else {
+			modelMap.put("success", false);
+		}
+		return modelMap;
+	}
 	
 	//获取coordinate
 	@RequestMapping(value="/getcoordinate",method=RequestMethod.GET)

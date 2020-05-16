@@ -21,7 +21,7 @@ public class PhoneUserDaoTest extends BaseTest{
 	@Test
 	@Ignore
 	public void countUserOnline() {
-		int result=phoneUserDao.countUserOnline();
+		int result=phoneUserDao.countUserOnline(1);
 		System.out.println(result);
 	}
 	

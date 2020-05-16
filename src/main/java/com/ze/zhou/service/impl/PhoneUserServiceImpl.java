@@ -178,4 +178,17 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 		}
 		return pue;
 	}
+
+	@Override
+	public PhoneUserExecution getCountUser(int userOnline) {
+		PhoneUserExecution pue=new PhoneUserExecution();
+		int result=phoneUserDao.countUserOnline(userOnline);
+		if(result>0) {
+			pue.setState(PhoneUserStateEnum.SUCCESS.getState());
+			pue.setCount(result);
+		}else {
+			pue.setState(PhoneUserStateEnum.FAILURE.getState());
+		}
+		return pue;
+	}
 }

@@ -62,7 +62,7 @@ layui.use(['jquery','table','layer','element'],function(){
 			pileListTable(table,operatorPileUrl);
 			//对操作栏的按钮进行事件监听
 			watchPileList(table,layer);
-			//TODO 对搜索框进行监听，主要是监听按照名称查询的模糊查询信息
+			//对搜索框进行监听，主要是监听按照名称查询的模糊查询信息
 			watchPileListInput(table);
 		});
 	});

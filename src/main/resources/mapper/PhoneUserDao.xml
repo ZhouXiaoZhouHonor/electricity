@@ -8,8 +8,11 @@
 		count(1)
 		FROM
 		tb_phone_user
-		WHERE
-		user_online=1
+		<where>
+			<if test="userOnline!=null and userOnline>0">
+				user_online=#{userOnline}
+			</if>
+		</where>
 	</select>
 <!-- 通过账号查找用户 -->
 	<select id="selectPhoneUserByAccount" 

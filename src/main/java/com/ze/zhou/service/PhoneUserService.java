@@ -25,4 +25,6 @@ public interface PhoneUserService {
 	//获取对应账号的对象
 	PhoneUserExecution getPhoneUser(String phoneUserAccount);
 	
+	//获取用户数量
+	PhoneUserExecution getCountUser(int userOnline);
 }
