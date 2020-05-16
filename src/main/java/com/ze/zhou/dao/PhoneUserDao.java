@@ -18,4 +18,6 @@ public interface PhoneUserDao {
 	int insertPhoneUser(PhoneUser phoneUser);
 	//更新手机用户状态
 	int updatePhoneUser(PhoneUser phoneUser);
+	//统计用户在线人数
+	int countUserOnline();
 }

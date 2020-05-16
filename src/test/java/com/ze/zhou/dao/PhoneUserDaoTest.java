@@ -20,13 +20,21 @@ public class PhoneUserDaoTest extends BaseTest{
 	
 	@Test
 	@Ignore
+	public void countUserOnline() {
+		int result=phoneUserDao.countUserOnline();
+		System.out.println(result);
+	}
+	
+	@Test
+	@Ignore
 	public void updatePhoneUser() {
 		PhoneUser pu=new PhoneUser();
 		pu.setUserId(3);
 		pu.setLastEditTime(new Date());
-		pu.setUserAccountPassword("123456");
-		pu.setUserImg("qweasd");
-		pu.setUserName("zxc");
+		//pu.setUserAccountPassword("123456");
+		//pu.setUserImg("qweasd");
+		//pu.setUserName("zxc");
+		
 		int effectNum=phoneUserDao.updatePhoneUser(pu);
 		System.out.println(effectNum);
 	}

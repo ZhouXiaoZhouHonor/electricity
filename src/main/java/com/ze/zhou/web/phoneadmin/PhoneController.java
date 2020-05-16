@@ -60,6 +60,34 @@ public class PhoneController {
 	@Autowired
 	private PhoneUserService phoneUserService;
 	
+	//当账号退出是将账号状态进行更改
+	@RequestMapping(value="/modifyuserstate",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyUserState(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		logger.debug("进入账号注销阶段");
+		String userAccount=HttpServletRequestUtil.getString(request, "userAccount");
+		int online=HttpServletRequestUtil.getInt(request, "online");
+		if(userAccount!=null&&!("".equals(userAccount))&&online>=0) {
+			logger.debug("开始生成对象");
+			PhoneUser phoneUser=new PhoneUser();
+			phoneUser.setUserAccountNumber(userAccount);
+			phoneUser.setUserOnline(online);
+			logger.debug("开始调用service");
+			PhoneUserExecution pue=phoneUserService.changePhoneUser(phoneUser, null);
+			if(pue.getState()==PhoneUserStateEnum.SUCCESS.getState()) {
+				logger.debug("成功");
+				modelMap.put("success", true);
+			}else {
+				modelMap.put("success", false);
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty data");
+		}
+		return modelMap;
+	}
+	
 	//更新账号信息
 	@RequestMapping(value="/modifyuser",method=RequestMethod.POST)
 	@ResponseBody

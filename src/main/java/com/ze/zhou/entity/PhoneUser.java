@@ -15,6 +15,7 @@ public class PhoneUser {
 	private String userImg;
 	private Date createTime;
 	private Date lastEditTime;
+	private Integer userOnline;
 	
 	public Integer getUserId() {
 		return userId;
@@ -57,5 +58,11 @@ public class PhoneUser {
 	}
 	public void setLastEditTime(Date lastEditTime) {
 		this.lastEditTime = lastEditTime;
+	}
+	public Integer getUserOnline() {
+		return userOnline;
+	}
+	public void setUserOnline(Integer userOnline) {
+		this.userOnline = userOnline;
 	}
 }

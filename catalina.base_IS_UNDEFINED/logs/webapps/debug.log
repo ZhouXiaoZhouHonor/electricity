@@ -1,34 +1,6 @@
-2020-05-15 16:15:14.576[main]DEBUG com.ze.zhou.dao.OperatorDao.insertOperator - ==>  Preparing: INSERT INTO tb_operator ( operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time ) VALUES ( ?, ?, ?, ?, ?, ?, ? ) 
-2020-05-15 16:15:14.656[main]DEBUG com.ze.zhou.dao.OperatorDao.insertOperator - ==> Parameters: 胡承进(String), tupian(String), 119(String), 38aa4d539461c30f63731246494e3b817631628a4e45343c(String), 1(Integer), 2020-05-15 16:15:14.057(Timestamp), 2020-05-15 16:15:14.057(Timestamp)
-2020-05-15 16:15:14.660[main]DEBUG com.ze.zhou.dao.OperatorDao.insertOperator - <==    Updates: 1
-2020-05-15 16:17:40.375[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==>  Preparing: UPDATE tb_operator SET operator_enable_status=? WHERE operator_id=? 
-2020-05-15 16:17:40.410[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==> Parameters: 0(Integer), 3(Integer)
-2020-05-15 16:17:40.414[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - <==    Updates: 1
-2020-05-15 16:18:37.890[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==>  Preparing: UPDATE tb_operator SET operator_enable_status=? WHERE operator_id=? 
-2020-05-15 16:18:37.948[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==> Parameters: 1(Integer), 3(Integer)
-2020-05-15 16:18:37.954[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - <==    Updates: 1
-2020-05-15 16:19:24.839[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==>  Preparing: UPDATE tb_operator SET operator_enable_status=?, last_edit_time=? WHERE operator_id=? 
-2020-05-15 16:19:24.882[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==> Parameters: 0(Integer), 2020-05-15 16:19:24.264(Timestamp), 3(Integer)
-2020-05-15 16:19:24.888[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - <==    Updates: 1
-2020-05-15 16:19:42.296[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==>  Preparing: UPDATE tb_operator SET operator_enable_status=?, last_edit_time=? WHERE operator_id=? 
-2020-05-15 16:19:42.337[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - ==> Parameters: 1(Integer), 2020-05-15 16:19:41.807(Timestamp), 3(Integer)
-2020-05-15 16:19:42.341[main]DEBUG com.ze.zhou.dao.OperatorDao.updateOperator - <==    Updates: 1
-2020-05-15 20:40:21.600[main]DEBUG com.ze.zhou.dao.OperatorDao.insertOperator - ==>  Preparing: INSERT INTO tb_operator ( operator_name, operator_img, operator_account_number, operator_password, operator_enable_status, create_time, last_edit_time ) VALUES ( ?, ?, ?, ?, ?, ?, ? ) 
-2020-05-15 20:40:21.658[main]DEBUG com.ze.zhou.dao.OperatorDao.insertOperator - ==> Parameters: 胡承进(String), tupian(String), 147(String), a63f4ea69c2725ce4033c11e82de6cd1879643092bb9f73f(String), 1(Integer), 2020-05-15 20:40:21.135(Timestamp), 2020-05-15 20:40:21.135(Timestamp)
-2020-05-15 20:40:21.662[main]DEBUG com.ze.zhou.dao.OperatorDao.insertOperator - <==    Updates: 1
-2020-05-15 21:55:25.702[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==>  Preparing: SELECT operator_id, operator_name, operator_account_number, operator_enable_status, FROM tb_operator LINIT ?,? 
-2020-05-15 21:55:25.741[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==> Parameters: 0(Integer), 5(Integer)
-2020-05-15 21:55:47.410[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==>  Preparing: SELECT operator_id, operator_name, operator_account_number, operator_enable_status, FROM tb_operator LIMIT ?,? 
-2020-05-15 21:55:47.498[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==> Parameters: 0(Integer), 5(Integer)
-2020-05-15 21:56:18.390[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==>  Preparing: SELECT operator_id, operator_name, operator_account_number, operator_enable_status FROM tb_operator LIMIT ?,? 
-2020-05-15 21:56:18.435[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==> Parameters: 0(Integer), 5(Integer)
-2020-05-15 21:56:18.462[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - <==      Total: 4
-2020-05-15 21:56:18.471[main]DEBUG com.ze.zhou.dao.OperatorDao.queryCount - ==>  Preparing: SELECT count(1) FROM tb_operator 
-2020-05-15 21:56:18.472[main]DEBUG com.ze.zhou.dao.OperatorDao.queryCount - ==> Parameters: 
-2020-05-15 21:56:18.473[main]DEBUG com.ze.zhou.dao.OperatorDao.queryCount - <==      Total: 1
-2020-05-15 22:18:21.094[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==>  Preparing: SELECT operator_id, operator_name, operator_account_number, operator_enable_status FROM tb_operator LIMIT ?,? 
-2020-05-15 22:18:21.169[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - ==> Parameters: 0(Integer), 5(Integer)
-2020-05-15 22:18:21.201[main]DEBUG com.ze.zhou.dao.OperatorDao.queryOperatorByPage - <==      Total: 4
-2020-05-15 22:18:21.212[main]DEBUG com.ze.zhou.dao.OperatorDao.queryCount - ==>  Preparing: SELECT count(1) FROM tb_operator 
-2020-05-15 22:18:21.212[main]DEBUG com.ze.zhou.dao.OperatorDao.queryCount - ==> Parameters: 
-2020-05-15 22:18:21.214[main]DEBUG com.ze.zhou.dao.OperatorDao.queryCount - <==      Total: 1
+2020-05-16 13:57:09.183[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==>  Preparing: SELECT count(1) FROM tb_phone_user WHERE user_online=0 
+2020-05-16 13:57:09.236[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==> Parameters: 
+2020-05-16 13:57:09.255[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - <==      Total: 1
+2020-05-16 13:57:37.565[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==>  Preparing: SELECT count(1) FROM tb_phone_user WHERE user_online=0 
+2020-05-16 13:57:37.613[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==> Parameters: 
+2020-05-16 13:57:37.646[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - <==      Total: 1

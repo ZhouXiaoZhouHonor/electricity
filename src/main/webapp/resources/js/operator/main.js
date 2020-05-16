@@ -24,6 +24,11 @@ layui.use(['element','jquery','layer'], function(){
 	  window.location.href='/zhou/page/addpile';
   });
   
+  //手机用户数量显示
+  $('#phoneUser-message').on('click',function(){
+	  layui.phoneUserList();
+  });
+  
   //初步加载高德地图,同时添加充电桩坐标点
   mainMapInit(myJquery);
 });

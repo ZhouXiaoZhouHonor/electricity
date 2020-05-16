@@ -10,7 +10,7 @@ import com.ze.zhou.util.ImageHolder;
 	@goal:
 */
 public interface PhoneUserService {
-	//验证登录账号、密码是否正确
+	//验证登录账号、密码是否正确,登录系统过程中
 	PhoneUserExecution checkPhoneUser(PhoneUser phoneUser);
 	
 	//验证注册的账号是否存在
@@ -24,4 +24,5 @@ public interface PhoneUserService {
 	
 	//获取对应账号的对象
 	PhoneUserExecution getPhoneUser(String phoneUserAccount);
+	
 }

@@ -36,17 +36,29 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 	@Override
 	public PhoneUserExecution checkPhoneUser(PhoneUser phoneUser) {
 		PhoneUserExecution pue=new PhoneUserExecution();
+		logger.debug("进入手机账号验证");
 		if(phoneUser!=null) {
 			PhoneUser pu=phoneUserDao.selectPhoneUserByAccount(phoneUser.getUserAccountNumber());
+			logger.debug("是否获取到账号");
 			if(pu!=null) {
 				Boolean result=MD5Salt.getSaltverifyMD5(
 						phoneUser.getUserAccountPassword(),pu.getUserAccountPassword());
+				logger.debug("账号验证成功");
 				if(result) {//账号密码正确
-					//将不必显示的内容全部置空
-					pu.setUserAccountPassword(null);
-					pu.setUserId(null);
-					pue.setPhoneUser(pu);
-					pue.setState(PhoneUserStateEnum.SUCCESS.getState());
+					logger.debug("开始更新状态");
+					//更新用户状态，更新为在线状态
+					pu.setUserOnline(1);
+					int result1=phoneUserDao.updatePhoneUser(pu);
+					if(result1>0) {
+						logger.debug("账号验证成功，此账号为在线状态");
+						//将不必显示的内容全部置空
+						pu.setUserAccountPassword(null);
+						pu.setUserId(null);
+						pue.setPhoneUser(pu);
+						pue.setState(PhoneUserStateEnum.SUCCESS.getState());
+					}else {
+						pue.setState(PhoneUserStateEnum.OFFLINE.getState());
+					}
 				}else {//账号密码错误
 					pue.setState(PhoneUserStateEnum.FAILURE.getState());
 				}
