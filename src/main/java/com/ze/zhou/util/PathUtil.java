@@ -63,6 +63,7 @@ public class PathUtil {
 		//return imagePath.replace("/", seperator);
 		return imagePath;//不应该用win的分隔符
 	}
+	
 	public static void main(String[]args) {
 		//System.out.println(PathUtil.seperator);
 		//System.out.println(PathUtil.getImgBasePath());

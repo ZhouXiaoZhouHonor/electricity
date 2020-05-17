@@ -157,6 +157,14 @@
 		    <version>2.3.2</version>
 		</dependency>
 		
+		<!-- freemarker包用于报表打印 -->
+		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+		<dependency>
+    		<groupId>org.freemarker</groupId>
+    		<artifactId>freemarker</artifactId>
+    		<version>2.3.23</version>
+		</dependency>
+		
 		<!-- jquery的包
 		https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
 		<!-- <dependency>
