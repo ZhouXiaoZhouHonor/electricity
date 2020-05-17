@@ -16,7 +16,6 @@ import com.ze.zhou.util.ImageSize;
 import com.ze.zhou.util.ImageUtil;
 import com.ze.zhou.util.MD5Salt;
 import com.ze.zhou.util.PathUtil;
-import com.ze.zhou.web.phoneadmin.PhoneController;
 
 import ch.qos.logback.classic.Logger;
 

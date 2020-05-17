@@ -29,6 +29,11 @@ layui.use(['element','jquery','layer'], function(){
 	  layui.phoneUserList();
   });
   
+  //点击团队，显示团队信息
+  $('#team-introduce').on('click',function(){
+	  layui.teamIntroduce();
+  });
+  
   //初步加载高德地图,同时添加充电桩坐标点
   mainMapInit(myJquery);
 });

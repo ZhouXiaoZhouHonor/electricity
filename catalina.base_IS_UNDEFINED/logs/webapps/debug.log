@@ -4,3 +4,9 @@
 2020-05-16 13:57:37.565[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==>  Preparing: SELECT count(1) FROM tb_phone_user WHERE user_online=0 
 2020-05-16 13:57:37.613[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==> Parameters: 
 2020-05-16 13:57:37.646[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - <==      Total: 1
+2020-05-16 20:27:52.276[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==>  Preparing: SELECT count(1) FROM tb_phone_user 
+2020-05-16 20:27:52.319[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==> Parameters: 
+2020-05-16 20:27:52.341[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - <==      Total: 1
+2020-05-16 20:28:05.357[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==>  Preparing: SELECT count(1) FROM tb_phone_user WHERE user_online=? 
+2020-05-16 20:28:05.398[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - ==> Parameters: 1(Integer)
+2020-05-16 20:28:05.417[main]DEBUG com.ze.zhou.dao.PhoneUserDao.countUserOnline - <==      Total: 1
