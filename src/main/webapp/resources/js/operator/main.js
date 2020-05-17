@@ -31,6 +31,7 @@ layui.use(['element','jquery','layer'], function(){
   
   //点击团队，显示团队信息
   $('#team-introduce').on('click',function(){
+	  //alert('点击了信息框');
 	  layui.teamIntroduce();
   });
   
