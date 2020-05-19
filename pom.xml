@@ -165,14 +165,6 @@
     		<version>2.3.23</version>
 		</dependency>
 		
-		<!-- jquery的包
-		https://mvnrepository.com/artifact/org.webjars.bower/jquery -->
-		<!-- <dependency>
-			<groupId>org.webjars.bower</groupId>
-			<artifactId>jquery</artifactId>
-			<version>3.2.1</version>
-		</dependency> -->
-		
 		<!-- 文件上传出来jar包 -->
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>

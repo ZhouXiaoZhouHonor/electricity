@@ -94,14 +94,14 @@ public class PileServiceImpl implements PileService{
 		//PileExecution pe=new PileExecution();
 		try {
 			//判断是否需要对图片进行更新
-			if(thumbnail.getImage()!=null&&thumbnail.getImageName()!=null&&!"".equals(thumbnail.getImageName())) {
+			if(thumbnail!=null&&thumbnail.getImage()!=null&&thumbnail.getImageName()!=null&&!"".equals(thumbnail.getImageName())) {
 				Pile tempPile=pileDao.queryPileById(pile.getPileId());
 				if(tempPile.getPileImg()!=null) {
 					ImageUtil.deleteFileOrPath(tempPile.getPileImg());
 				}
 				addPileImg(pile,thumbnail);
 			}
-			//更新店铺信息
+			//更新充电桩信息
 			pile.setLastEditTime(new Date());
 			int effectNum=pileDao.updatePile(pile);
 			if(effectNum>0) {

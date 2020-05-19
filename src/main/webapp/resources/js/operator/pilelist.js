@@ -37,7 +37,7 @@ layui.use(['jquery','table','layer','element'],function(){
 	'</div>'+
 	'<script type="text/html" id="barDemo">'+
 	'<a class="layui-btn layui-btn-xs detail" lay-event="detail">查看</a>'+
-	'<a class="layui-btn layui-btn-xs edit" lay-event="edit">编辑</a>'+
+	'<a class="layui-btn layui-btn-xs layui-btn-danger edit" lay-event="edit">注销</a>'+
 	/*'<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>'+*/
 	/*'<div class="layui-col-md3">'+
 	'<label class="layui-form-label">站点查询</label>'+
@@ -189,7 +189,7 @@ layui.use(['jquery','table','layer','element'],function(){
 						'</div>'+
 						'<div class="layui-row">'+
 							'<i class="iconfont layui-icon-extendgongzuozhuangtai"></i>'+
-							(pileList.pileEnableStatus==1?'<span style="color:green;">良好</span>':'<span style="color:red;">故障</span>')+
+							(pileList.pileEnableStatus==1?'<span style="color:green;">良好</span>':'<span style="color:red;">停用</span>')+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -228,8 +228,27 @@ layui.use(['jquery','table','layer','element'],function(){
 				});
 				break;
 			case 'edit':
-				layer.msg('点击了编辑按钮');
-				console.log('edit:'+obj.event.length);
+				var pileId=pileList.pileId;
+				var modifyPileUrl='/zhou/operator/modifypile';
+				var formData=new FormData();
+				formData.append('pileId',pileId);
+				formData.append('enableStatus',0);
+				$.ajax({
+					url:modifyPileUrl,
+					method:'POST',
+					data:formData,
+					contentType:false,
+					processData:false,
+					cache:false,//是否启用cache缓存
+					success:function(data){
+						if(data.success){
+							layer.msg('更新成功');
+						}else{
+							layer.msg('更新失败'+data.errMsg);
+						}
+						$('#pile-message').click();
+					}
+				});
 				break;
 			};
 		});

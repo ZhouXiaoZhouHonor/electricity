@@ -107,8 +107,8 @@
      	p.coordinate_id=c.coordinate_id
      	AND
      	p.owner_id=o.operator_id
-     	AND 
-     	p.pile_enable_status=1
+     	<!-- AND 
+     	p.pile_enable_status=1 -->
      	ORDER BY
      	p.pile_id
      	DESC

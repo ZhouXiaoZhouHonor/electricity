@@ -60,6 +60,31 @@ public class OperatorController {
 	@Autowired
 	private PhoneUserService phoneUserService;
 	
+	//更新充电桩状态
+	@RequestMapping(value="/modifypile",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyPile(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		long pileId=HttpServletRequestUtil.getLong(request, "pileId");
+		int enableStatus=HttpServletRequestUtil.getInt(request, "enableStatus");
+		if(pileId>0&&enableStatus>=0) {
+			Pile pile=new Pile();
+			pile.setPileId(pileId);
+			pile.setPileEnableStatus(enableStatus);
+			PileExecution pe=pileService.modifyPile(pile, null);
+			if(pe.getState()==PileStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+			}else {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", "modify pile failure");
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty pile");
+		}
+		return modelMap;
+	}
+	
 	//获取用户数量
 	@RequestMapping(value="/getusernumber",method=RequestMethod.GET)
 	@ResponseBody
