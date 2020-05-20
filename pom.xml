@@ -165,6 +165,15 @@
     		<version>2.3.23</version>
 		</dependency>
 		
+		<!-- 进制转换 -->
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency>
+		
+		
 		<!-- 文件上传出来jar包 -->
 		<!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
 		<dependency>
