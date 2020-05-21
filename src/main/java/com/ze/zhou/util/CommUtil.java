@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.TooManyListenersException;
 
+import org.apache.catalina.tribes.util.Arrays;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
@@ -25,9 +26,9 @@ public class CommUtil implements SerialPortEventListener{
 	 InputStream inputStream; // 从串口来的输入流  
 	    OutputStream outputStream;// 向串口输出的流  
 	    SerialPort serialPort; // 串口的引用  
-	    CommPortIdentifier portId;  
+	    CommPortIdentifier portId;
 	  
-	    public CommUtil(Enumeration portList, String name) {  
+	    public CommUtil(Enumeration portList, String name) { 
 	        while (portList.hasMoreElements()) {  
 	            CommPortIdentifier temp = (CommPortIdentifier) portList.nextElement();  
 	            if (temp.getPortType() == CommPortIdentifier.PORT_SERIAL) {// 判断如果端口类型是串口  
@@ -39,27 +40,39 @@ public class CommUtil implements SerialPortEventListener{
 	        try {  
 	            serialPort = (SerialPort) portId.open("COM5",2000);  
 	        } catch (PortInUseException e) {  
-	  
-	        }  
-	        try {  
-	            inputStream = serialPort.getInputStream();  
-	            outputStream = serialPort.getOutputStream();  
-	        } catch (IOException e) {  
-	        }  
-	        try {  
-	            serialPort.addEventListener(this); // 给当前串口天加一个监听器  
-	        } catch (TooManyListenersException e) {  
-	        }  
-	        serialPort.notifyOnDataAvailable(true); // 当有数据时通知  
+	        	System.out.println("出错了");
+	        } 
+	        
 	        try {  
 	            serialPort.setSerialPortParams(115200, SerialPort.DATABITS_8, // 设置串口读写参数  
-	                    SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);  
+	                    SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+	            System.out.println("设置端口参数");
 	        } catch (UnsupportedCommOperationException e) { 
-	        	
+	        	System.out.println("设置端口参数失败");
+	        }
+	        
+	        try {  
+	            inputStream = serialPort.getInputStream();  
+	            outputStream = serialPort.getOutputStream();
+	            System.out.println("创建了数据流");
+	        } catch (IOException e) {
+	        	System.out.println("创建数据流失败");
 	        }  
+	        try {  
+	            serialPort.addEventListener(this); //给当前串口天加一个监听器  
+	        } catch (TooManyListenersException e){
+	        }  
+	        serialPort.notifyOnDataAvailable(true); //当有数据时通知  
+	        try {
+	        	serialPort.enableReceiveTimeout(2000);
+			} catch (UnsupportedCommOperationException e) {
+				System.out.println("设置接收时间");
+				e.printStackTrace();
+			}
 	    }  
 	  
-	    public void serialEvent(SerialPortEvent event) {  
+	    public void serialEvent(SerialPortEvent event) {
+	    	System.out.println("时间值为:"+event.getEventType());
 	        switch (event.getEventType()) {  
 	        case SerialPortEvent.BI: System.out.println("接收数据成功1"); break;  
 	        case SerialPortEvent.OE: System.out.println("接收数据成功2"); break;  
@@ -71,7 +84,7 @@ public class CommUtil implements SerialPortEventListener{
 	        case SerialPortEvent.RI: System.out.println("接收数据成功8"); break;  
 	        case SerialPortEvent.OUTPUT_BUFFER_EMPTY: System.out.println("接收数据成功"); break;  
 	        case SerialPortEvent.DATA_AVAILABLE:// 当有可用数据时读取数据,并且给串口返回数据  
-	            byte[] readBuffer = new byte[20];
+	            byte[] readBuffer = new byte[100];
 	            System.out.println("接收数据成功");
 	            try {  
 	                while (inputStream.available() > 0) {  
@@ -87,27 +100,17 @@ public class CommUtil implements SerialPortEventListener{
 	        }  
 	    }  
 	    
-	    
-	    public void send(String content){
-	    	byte[] bytes = null;
-			try {
-				bytes = Hex.decodeHex(content.replace(" ", "").toCharArray());
-			} catch (DecoderException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-	    	System.out.println("字节长度："+bytes.length);
-	    	for(int i=0;i<10;i++) {
-	    		System.out.println("内容:"+bytes[i]);
-	    	}
-	    	
+	    public void send(String content) throws DecoderException{
 	        try {  
-	            outputStream.write(bytes);  
+	        	outputStream.write(hex2byte(content));  
+	            outputStream.flush();
+	            System.out.println(outputStream.toString());
+	            System.out.println("数据写入成功");
 	        } catch (IOException e) {  
 	            e.printStackTrace();  
 	        }  
 	    }  
-	     
+	    
 	    private byte[] hex2byte(String hex) { 
 	    	 String digital = "0123456789ABCDEF"; 
 	    	 String hex1 = hex.replace(" ", "");
@@ -120,24 +123,37 @@ public class CommUtil implements SerialPortEventListener{
 	    		 bytes[p] = (byte) (temp & 0xff);
 	    		 } 
 	    	 return bytes; 
-	    } 
+	    	 }
 	    
-	    
-	    public void ClosePort() {  
-	        if (serialPort != null) {  
-	          serialPort.close();  
+	    public void ClosePort() {
+	    	try {
+	    		if(inputStream!=null) {
+		    		inputStream.close();
+		    	}
+		    	if(outputStream!=null) {
+		    		outputStream.close();
+		    	}
+		    	System.out.println("关闭数据流成功");
+	    	}catch(Exception e) {
+	    		System.out.println("关闭数据流没有成功");
+	    		e.printStackTrace();
+	    	}
+	        if (serialPort != null){  
+	          serialPort.close(); 
+	          System.out.println("关闭se成功");
 	        }  
-	      } 
-	    public static void main(String[] args) throws InterruptedException {
+	    } 
+	    public static void main(String[] args) throws InterruptedException,DecoderException {
 	    	Enumeration portList = CommPortIdentifier.getPortIdentifiers(); //得到当前连接上的端口  
 	        System.out.println("开始");
-	        CommUtil comm3 = new CommUtil(portList,"COM5"); 
+	        CommUtil comm3 = new CommUtil(portList,"COM5");
 	        System.out.println("中间");
 	        int i = 0;  
 	        while(i<1)  
 	        {  
 	            Thread.sleep(3000);  
-	            comm3.send("fa fa 01 03 00 00 00 01 84 0a");  
+	            System.out.println("即将发送报文");
+	            comm3.send("fa fa 09 04 00 00 00 01 30 82");  
 	            i++;
 	        }  
 	        comm3.ClosePort();  
