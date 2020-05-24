@@ -231,7 +231,7 @@ public class SerialView extends JFrame {
      * @param hex
      * @return
      */ 
-     private byte[] hex2byte(String hex) { 
+     private static byte[] hex2byte(String hex) { 
     	 String digital = "0123456789ABCDEF"; 
     	 String hex1 = hex.replace(" ", "");
     	 char[] hex2char = hex1.toCharArray();
@@ -248,7 +248,7 @@ public class SerialView extends JFrame {
      * @param b
      * @return
      */ 
-     private String printHexString(byte[] b) { 
+     private static String printHexString(byte[] b) { 
     	 StringBuffer sbf=new StringBuffer(); 
     	 for (int i = 0; i < b.length; i++) { 
     		 String hex = Integer.toHexString(b[i] & 0xFF); 

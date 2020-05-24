@@ -182,7 +182,7 @@ public class PhoneUserServiceImpl implements PhoneUserService{
 	public PhoneUserExecution getCountUser(int userOnline) {
 		PhoneUserExecution pue=new PhoneUserExecution();
 		int result=phoneUserDao.countUserOnline(userOnline);
-		if(result>0) {
+		if(result>=0) {//有可能不在线，人数为0的情况
 			pue.setState(PhoneUserStateEnum.SUCCESS.getState());
 			pue.setCount(result);
 		}else {

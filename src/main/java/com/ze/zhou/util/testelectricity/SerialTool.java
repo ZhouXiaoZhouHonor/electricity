@@ -40,7 +40,7 @@ public class SerialTool {
      * 查找所有可用端口
      * @return 可用端口名称列表
      */
-	 public static final List<String> findPort() { 
+	 public static List<String> findPort() { 
     	 //获得当前所有可用串口 
     	 @SuppressWarnings("unchecked") 
     	 Enumeration<CommPortIdentifier> portList = CommPortIdentifier.getPortIdentifiers(); 
@@ -61,7 +61,7 @@ public class SerialTool {
      * @throws PortInUseException
      * @throws NoSuchPortException
      */ 
-	 public static final SerialPort openPort(String portName, int baudrate) throws 
+	 public static SerialPort openPort(String portName, int baudrate) throws 
 	 	UnsupportedCommOperationException, PortInUseException, NoSuchPortException {
 		 //通过端口名识别端口 
     	 CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName); 

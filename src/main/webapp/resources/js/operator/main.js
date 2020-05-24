@@ -35,6 +35,11 @@ layui.use(['element','jquery','layer'], function(){
 	  layui.teamIntroduce();
   });
   
+  //点击充电桩监测
+  $('#watch-pile').on('click',function(){
+	  layui.watchPile();
+  });
+  
   //初步加载高德地图,同时添加充电桩坐标点
   mainMapInit(myJquery);
 });
