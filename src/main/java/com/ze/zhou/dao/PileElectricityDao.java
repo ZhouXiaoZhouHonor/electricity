@@ -17,4 +17,6 @@ public interface PileElectricityDao {
 	List<PileElectricity> queryPileElectricityListByPileIdAndDate(
 			@Param("pileId")int pileId,
 			@Param("firstTime")Date firstTime,@Param("endTime")Date endTime);
+	//添加电力数据信息集合(每一次都是固定的20条数据)
+	int insertPileElectricity(List<PileElectricity> pileElectricityList);
 }

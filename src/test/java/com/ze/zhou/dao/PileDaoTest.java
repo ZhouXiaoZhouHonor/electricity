@@ -22,7 +22,6 @@ import com.ze.zhou.entity.Pile;
 public class PileDaoTest extends BaseTest{
 	@Autowired
 	private PileDao pileDao;
-	
 	@Test
 	@Ignore
 	public void queryPileListTest() {

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ze.zhou.dao.PileElectricityDao;
+import com.ze.zhou.dto.PileElectricityExecution;
 import com.ze.zhou.entity.PileElectricity;
+import com.ze.zhou.enums.PileElectricityStateEnum;
 import com.ze.zhou.service.PileElectricityService;
 
 /*
@@ -29,5 +31,22 @@ public class PileElectricityServiceImpl implements PileElectricityService{
 		// TODO Auto-generated method stub
 		return pileElectricityDao.queryPileElectricityListByPileIdAndDate(pileId, 
 				firstTime, endTime);
+	}
+
+	@Override
+	public PileElectricityExecution addPileElectricity(List<PileElectricity> pileElectricityList) {
+		PileElectricityExecution pee=new PileElectricityExecution();
+		//每次添加都是20条数据同时添加
+		if(pileElectricityList!=null&&pileElectricityList.size()==20) {
+			int result=pileElectricityDao.insertPileElectricity(pileElectricityList);
+			if(result>0) {
+				pee.setState(PileElectricityStateEnum.SUCCESS.getState());
+			}else {
+				pee.setState(PileElectricityStateEnum.FAILURE.getState());
+			}
+		}else {
+			pee.setState(PileElectricityStateEnum.NULL_PILEELECTRICITY.getState());
+		}
+		return pee;
 	}
 }

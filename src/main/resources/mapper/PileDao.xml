@@ -190,7 +190,8 @@
 		keyColumn="pile_id" keyProperty="pileId">
 		INSERT INTO
 		tb_pile
-		(pile_name,
+		(
+		pile_name,
      	pile_longitude,
      	pile_latitude,
     	pile_img,
@@ -205,7 +206,8 @@
      	pile_number
      	)
      	VALUES
-     	(#{pileName},
+     	(
+     	#{pileName},
      	#{pileLongitude},
      	#{pileLatitude},
      	#{pileImg},

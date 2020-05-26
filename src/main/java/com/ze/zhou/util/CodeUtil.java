@@ -14,7 +14,8 @@ public class CodeUtil {
 		String verifyCodeExpected=(String)req.getSession().getAttribute(
 				com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY);
 		//获取文本框中输入的验证码
-		String verifyCodeActual=HttpServletRequestUtil.getString(req,"verifyCodeActual");//传入的应该是request和需要获取文本框值中的name
+		String verifyCodeActual=HttpServletRequestUtil.getString(req,"verifyCodeActual");
+		//传入的应该是request和需要获取文本框值中的name
 		System.out.println(verifyCodeActual+"$&&"+verifyCodeExpected);
 		//若二者不一致则返回false
 		if(verifyCodeActual==null||!verifyCodeExpected.equals(verifyCodeActual)) {

@@ -60,4 +60,60 @@
      	<!-- ORDER BY
      	pe.pile_electricity_time -->
 	</select>
+	
+	<!-- mybatis 批量插入后未正常获取批量的主键id问题分析
+	1.dao中不要出现@param注解，集合变量名请使用list
+	2.collection对应的值请使用list
+	解释：当我们传递一个 List 实例或者数组作为参数对象传给 MyBatis。MyBatis 会自动将它包装在一个 Map 中,名称为key。List 实例将会以“list” 作为key 而数组实例将会以“array”作为value。所以，当我们传递的是一个List集合时，mybatis会自动把我们的list集合包装成以list为Key值的map。如1要求不使用指定key的话，我们需要指定默认值 collection=“list”
+	3.数据库版本要求3.3以上版本 
+	-->
+	<!-- 添加充电桩工作信息数据信息 -->
+	<insert id="insertPileElectricity" parameterType="java.util.List" 
+		useGeneratedKeys="true" keyColumn="pile_electricity_id" 
+		keyProperty="pileElectricityId">
+		INSERT INTO 
+		tb_pile_electricity
+		(
+    	pile_electricity_time,
+    	pile_electricity_v,
+     	pile_electricity_i,
+     	pile_electricity_hz,
+     	pile_electricity_active_power,
+     	pile_electricity_active_energy,
+     	pile_electricity_reactive_energy,
+     	electricity_v,
+     	electricity_i,
+     	electricity_hz,
+     	electricity_active_power,
+     	electricity_active_energy,
+     	electricity_reactive_energy,
+     	pile_id
+		)
+		VALUES
+		<foreach collection="list" item="pel" 
+			index="index" separator=",">
+			(
+			#{pel.pileElectricityTime},
+			#{pel.pileElectricityV},
+			#{pel.pileElectricityI},
+			#{pel.pileElectricityHz},
+			#{pel.pileElectricityActivePower},
+			#{pel.pileElectricityActiveEnergy},
+			#{pel.pileElectricityReactiveEnergy},
+			#{pel.electricityV},
+			#{pel.electricityI},
+			#{pel.electricityHz},
+			#{pel.electricityActivePower},
+			#{pel.electricityActiveEnergy},
+			#{pel.electricityReactiveEnergy},
+			#{pel.pile.pileId}
+			)
+		</foreach>
+	</insert>
 </mapper>
+
+
+
+
+
+
