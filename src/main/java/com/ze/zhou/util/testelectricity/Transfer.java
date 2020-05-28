@@ -74,4 +74,8 @@ public class Transfer {
 		 
 	 }
 
+	 public static void main(String[] args) {
+		 int a=Integer.parseUnsignedInt("00005D3B", 16);//16进制字符串转化为10进制整数
+		 System.out.println(a);
+	 }
 }

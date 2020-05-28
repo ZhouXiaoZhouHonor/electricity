@@ -2,7 +2,10 @@ package com.ze.zhou.util;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TooManyListenersException;
@@ -26,13 +29,11 @@ import gnu.io.UnsupportedCommOperationException;
 */
 public class PileMachine {
 	private static SerialPort serialPort;
-	//检查串口是否存在,并返回串口名称
-	/*
-	 * public static Boolean checkPort() {
-	 * 
-	 * return true; }
-	 */
-	public static void A() throws UnsupportedCommOperationException, PortInUseException, NoSuchPortException, TooManyListenersException, IOException {
+	private static List<String> list=new ArrayList<>();
+	private static Runnable runnable;
+	private static void getElectricityData() throws 
+		UnsupportedCommOperationException, PortInUseException, 
+		NoSuchPortException, TooManyListenersException, IOException {
 		//获取端口,获取第一个端口号
 		String portName=SerialTool.findPort().get(0);
 		System.out.println("串口名称为:"+portName);
@@ -46,36 +47,62 @@ public class PileMachine {
 		if(serialPort==null) {
 			return;
 		}
-		//设置定时器，每隔2秒发送一次指令，发送10次
-		TimerTask timerTask=new TimerTask() {
-			int count;
+		runnable=new Runnable() {
 			public void run() {
-				try {
-					SerialTool.sendToPort(serialPort, hex2byte("fa fa 09 04 00 00 00 01 30 82"));
-					count++;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				//拿到10次数据后，定时弃停止调度，但串口仍然连接着
-				if(count==10) {
-					this.cancel();
+				while(true) {
+					try {
+						SerialTool.sendToPort(serialPort, hex2byte("fa fa 09 04 00 00 00 01 30 82"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					try {
+						Thread.sleep(2000);//休息两秒钟
+					}catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					if(list.size()==10) {
+						SerialTool.closePort(serialPort);
+						break;
+					}
 				}
 			}
 		};
-		
-		Timer timer=new Timer();
-		timer.schedule(timerTask, 0, 3000);
-	}
-	
-	public static void main(String[] args) {
+		Thread thread=new Thread(runnable);
+		thread.start();
 		try {
-			A();
-		} catch (UnsupportedCommOperationException | PortInUseException | NoSuchPortException
-				| TooManyListenersException | IOException e) {
-			// TODO Auto-generated catch block
+			thread.join();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<Map<String,Integer>> getElectricityResult() throws UnsupportedCommOperationException, PortInUseException, NoSuchPortException, TooManyListenersException, IOException {
+		getElectricityData();
+		//分析电压、电流、频率
+		List<Map<String,Integer>> resultList=new ArrayList<>();
+		for(String pileResult:list) {
+			Map<String,Integer> resultMap=new HashMap<>();
+			int electricityV=Integer.parseInt(rev(pileResult.substring(8, 16)), 16);
+			int electricityHz=Integer.parseInt(rev(pileResult.substring(16, 24)), 16);
+			int electricityA=Integer.parseInt(rev(pileResult.substring(24, 32)), 16);
+			int pileV=Integer.parseInt(rev(pileResult.substring(64, 72)), 16);
+			int pileHz=Integer.parseInt(rev(pileResult.substring(72, 80)), 16);
+			int pileA=Integer.parseInt(rev(pileResult.substring(80,88)), 16);
+			resultMap.put("electricityV", electricityV);
+			resultMap.put("electricityHz", electricityHz);
+			resultMap.put("electricityA", electricityA);
+			resultMap.put("pileV", pileV);
+			resultMap.put("pileHz", pileHz);
+			resultMap.put("pileA", pileA);
+			resultList.add(resultMap);
+			//System.out.println(electricityV+"/"+electricityHz+"/"+electricityA+"/"+pileV+"/"+pileHz+"/"+pileA);
+		}
+		return resultList;
+	}
+	
+	public static void main(String[] args) throws UnsupportedCommOperationException, PortInUseException, NoSuchPortException, TooManyListenersException, IOException {
+		List<Map<String,Integer>> list=getElectricityResult();
+		System.out.println("zcxzc:"+list.get(0).get("electricityV"));
 	}
 	
 	/**字符串转16进制
@@ -94,7 +121,20 @@ public class PileMachine {
     		 bytes[p] = (byte) (temp & 0xff);
     	 } 
     	 return bytes; 
-    } 
+    }
+     //16进制高低位转换
+	@SuppressWarnings("null")
+	private static String rev(String ox){
+		//System.out.println("转换前的值:"+ox);
+		String[] data=new String[4];
+		data[0]=ox.substring(6,8);
+		data[1]=ox.substring(4,6);
+		data[2]=ox.substring(2,4);
+		data[3]=ox.substring(0,2);
+		ox=data[0]+data[1]+data[2]+data[3];
+		//System.out.println("转换后的值:"+ox);
+		return ox; 
+	}
      /**字节数组转16进制
      * @param b
      * @return
@@ -124,10 +164,9 @@ public class PileMachine {
 	
 	//创建监听内部类
 	static class SerialListener implements SerialPortEventListener { 
-   	 /**
-        * 处理监控到的串口事件
-        */ 
+   	 /*处理监控到的串口事件*/ 
    	 public void serialEvent(SerialPortEvent serialPortEvent) {
+   		
    		 switch (serialPortEvent.getEventType()) { 
    		 case SerialPortEvent.BI: 
    			 // 10 通讯中断 
@@ -157,15 +196,20 @@ public class PileMachine {
    					String test=printHexString(data);
    					//去除空格
    					String test1=test.replace(" ", "");
+   					list.add(test1);
    					System.out.println(test1);
    					
    				} catch (IOException e) { 
    					e.printStackTrace();
    			} 
    				break;
-   			default: break; 
+   			default: 
+   				break; 
    		}  
    	 } 
+   	 public static List<String> getResult(){
+   		 return list;
+   	 }
    }
 }
 

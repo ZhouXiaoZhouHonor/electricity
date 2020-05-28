@@ -15,6 +15,7 @@ public interface PileElectricityService {
 	//获取List<PileElectricity>
 	List<PileElectricity> getPileElectricityByPileIdAndDate(int pileId,
 			Date firstTime,Date endTime);
+	
 	//添加pileElectricity
 	PileElectricityExecution addPileElectricity(List<PileElectricity> pileElectricityList);
 }

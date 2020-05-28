@@ -52,4 +52,15 @@ public class WatchPileElectricity {
 		}
 		return modelMap;
 	}
+	//根据数据信息动态将数据添加至数据库中
+	@RequestMapping(value="/watchpile",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> watchPile(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		
+		//通过上位机拿到数据(数据为10条)
+		
+		
+		return modelMap;
+	}
 }
