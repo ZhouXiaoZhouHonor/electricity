@@ -213,7 +213,7 @@ layui.use(['form','layer','jquery','element'],function(){
 						content:'添加充电桩成功，是否继续添加?',
 						btn:['取消','继续添加'],
 						yes:function(index,layero){//按钮一(取消按钮)
-							//点击取消按钮，跳转到展示页面 TODO
+							window.location.href='/zhou/page/main';
 						},
 						btn2:function(index,layero){//按钮二(继续添加按钮)
 							//刷新本页面，继续添加

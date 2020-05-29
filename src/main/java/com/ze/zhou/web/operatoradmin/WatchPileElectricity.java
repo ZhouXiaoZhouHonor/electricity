@@ -1,9 +1,11 @@
 package com.ze.zhou.web.operatoradmin;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TooManyListenersException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,6 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ze.zhou.entity.PileElectricity;
 import com.ze.zhou.service.PileElectricityService;
 import com.ze.zhou.util.HttpServletRequestUtil;
+import com.ze.zhou.util.PileMachine;
+
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
 
 /*
 	author:zhouze
@@ -52,15 +59,26 @@ public class WatchPileElectricity {
 		}
 		return modelMap;
 	}
+	
 	//根据数据信息动态将数据添加至数据库中
 	@RequestMapping(value="/watchpile",method=RequestMethod.GET)
 	@ResponseBody
 	private Map<String,Object> watchPile(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
-		
 		//通过上位机拿到数据(数据为10条)
-		
-		
+		try {
+			List<Map<String,Float>> resultList=PileMachine.getElectricityResult();
+			if(resultList!=null&&resultList.size()>=1) {
+				modelMap.put("success", true);
+				modelMap.put("resultList", resultList);
+			}else {
+				modelMap.put("success", false);
+			}
+		} catch (Exception e) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", e.getMessage());
+			return modelMap;
+		}
 		return modelMap;
 	}
 }

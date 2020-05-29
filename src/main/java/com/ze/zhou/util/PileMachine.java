@@ -47,6 +47,14 @@ public class PileMachine {
 		if(serialPort==null) {
 			return;
 		}
+		try {
+			SerialTool.sendToPort(serialPort, hex2byte("fa fa 09 04 00 00 00 01 30 82"));
+		} catch (IOException e) {
+			//出现异常关闭串口
+			SerialTool.closePort(serialPort);
+			e.printStackTrace();
+		}
+		
 		runnable=new Runnable() {
 			public void run() {
 				while(true) {
@@ -56,17 +64,19 @@ public class PileMachine {
 						e.printStackTrace();
 					}
 					try {
-						Thread.sleep(2000);//休息两秒钟
+						Thread.sleep(200);//休息200ms
 					}catch(InterruptedException e) {
 						e.printStackTrace();
 					}
-					if(list.size()==10) {
+					if(list.size()==1) {
 						SerialTool.closePort(serialPort);
 						break;
 					}
 				}
 			}
 		};
+		
+		
 		Thread thread=new Thread(runnable);
 		thread.start();
 		try {
@@ -74,34 +84,38 @@ public class PileMachine {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
-	public static List<Map<String,Integer>> getElectricityResult() throws UnsupportedCommOperationException, PortInUseException, NoSuchPortException, TooManyListenersException, IOException {
+	public static List<Map<String,Float>> getElectricityResult() throws UnsupportedCommOperationException, PortInUseException, NoSuchPortException, TooManyListenersException, IOException {
+		list=new ArrayList<>();
 		getElectricityData();
 		//分析电压、电流、频率
-		List<Map<String,Integer>> resultList=new ArrayList<>();
+		List<Map<String,Float>> resultList=new ArrayList<>();
 		for(String pileResult:list) {
-			Map<String,Integer> resultMap=new HashMap<>();
-			int electricityV=Integer.parseInt(rev(pileResult.substring(8, 16)), 16);
-			int electricityHz=Integer.parseInt(rev(pileResult.substring(16, 24)), 16);
-			int electricityA=Integer.parseInt(rev(pileResult.substring(24, 32)), 16);
-			int pileV=Integer.parseInt(rev(pileResult.substring(64, 72)), 16);
-			int pileHz=Integer.parseInt(rev(pileResult.substring(72, 80)), 16);
-			int pileA=Integer.parseInt(rev(pileResult.substring(80,88)), 16);
-			resultMap.put("electricityV", electricityV);
-			resultMap.put("electricityHz", electricityHz);
-			resultMap.put("electricityA", electricityA);
-			resultMap.put("pileV", pileV);
-			resultMap.put("pileHz", pileHz);
-			resultMap.put("pileA", pileA);
+			Map<String,Float> resultMap=new HashMap<>();
+			float electricityV=Integer.parseInt(rev(pileResult.substring(8, 16)), 16);
+			float electricityHz=Integer.parseInt(rev(pileResult.substring(16, 24)), 16);
+			float electricityA=Integer.parseInt(rev(pileResult.substring(24, 32)), 16);
+			float pileV=Integer.parseInt(rev(pileResult.substring(64, 72)), 16);
+			float pileHz=Integer.parseInt(rev(pileResult.substring(72, 80)), 16);
+			float pileA=Integer.parseInt(rev(pileResult.substring(80,88)), 16);
+			resultMap.put("electricityV", electricityV/100);
+			resultMap.put("electricityHz", electricityHz/100);
+			resultMap.put("electricityA", electricityA/100);
+			resultMap.put("pileV", pileV/100);
+			resultMap.put("pileHz", pileHz/100);
+			resultMap.put("pileA", pileA/100);
 			resultList.add(resultMap);
 			//System.out.println(electricityV+"/"+electricityHz+"/"+electricityA+"/"+pileV+"/"+pileHz+"/"+pileA);
 		}
+		//关闭串口
+		SerialTool.closePort(serialPort);
 		return resultList;
 	}
 	
 	public static void main(String[] args) throws UnsupportedCommOperationException, PortInUseException, NoSuchPortException, TooManyListenersException, IOException {
-		List<Map<String,Integer>> list=getElectricityResult();
+		List<Map<String,Float>> list=getElectricityResult();
 		System.out.println("zcxzc:"+list.get(0).get("electricityV"));
 	}
 	
