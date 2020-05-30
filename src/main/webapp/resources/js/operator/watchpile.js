@@ -10,13 +10,27 @@ layui.use(['jquery','table','layer','element'],function(){
 	var html=''+
 		'<div id="phoneUserInfo" class="layui-container">'+
 			'<div class="layui-row">'+
-				'<div style="width:900px;height:400px;border:1px solid black;" id="pile-watch-hz" class="layui-col-md12">'+
+				'<div class="layui-col-md3" style="height:40px;">'+
+					'<div style="float:left;"><i style="font-size:40px;" class="layui-icon layui-icon-date"></i></div>'+
+					'<div id="watch-pile-date" style="text-align:center;font-size:25px;float:left;height:40px;width:120px;line-height:45px;"></div>'+
 				'</div>'+
-				'<div style="width:900px;height:400px;border:1px solid black;" id="pile-watch-v" class="layui-col-md12">'+
+				'<div class="layui-col-md9">'+
+		      		/*'你的内容 3/12'+*/
+		      	'</div>'+
+			'</div>'+
+			'<div class="layui-row" style="height:400px;overflow:auto;">'+
+				'<div style="width:1100px;height:400px;" id="pile-watch-hz" class="layui-col-md12">'+
 				'</div>'+
-				'<div style="width:900px;height:400px;border:1px solid black;" id="pile-watch-a" class="layui-col-md12">'+
+				'<div style="width:1100px;height:400px;" id="pile-watch-v" class="layui-col-md12">'+
 				'</div>'+
-			'</div>';
+				'<div style="width:1100px;height:400px;" id="pile-watch-a" class="layui-col-md12">'+
+				'</div>'+
+			'</div>'+
+		'</div>'+
+		'<div class="layui-row">'+
+			'<div class="layui-col-md12">'+
+				'<button type="button" class="layui-btn layui-btn-fluid layui-btn-normal">打印报表</button>'+
+			'</div>'+
 		'</div>';
 	//定义函数
 	layui.define(['table','layer'],function(exports){
@@ -25,6 +39,13 @@ layui.use(['jquery','table','layer','element'],function(){
 		exports('watchPile',function(){
 			//将布局样式先插入
 			$('#container').html(html);
+			layui.use('laydate', function(){
+				var laydate = layui.laydate;
+				//执行一个laydate实例
+				laydate.render({
+				    elem: '#watch-pile-date' //指定元素
+				});
+			});
 			//将电压，电流等数据同时在三个图表上进行显示
 			setPileChart();
 		});
@@ -46,11 +67,13 @@ layui.use(['jquery','table','layer','element'],function(){
 	var pileChartA;
 	//定义折线图
 	function setPileChart(){
+		//设置今天日期，仅仅显示年月日
+		$('#watch-pile-date').html(getDate());
 		pileChartHz=echarts.init($('#pile-watch-hz')[0]);
 		pileChartV=echarts.init($('#pile-watch-v')[0]);
 		pileChartA=echarts.init($('#pile-watch-a')[0]);
 		//设置定时获取数据，每隔2秒钟执行一次
-		setInterval(function(){getResult()},2000);
+		//setInterval(function(){getResult()},2000);
 	}
 	
 	function getResult(){
@@ -74,7 +97,7 @@ layui.use(['jquery','table','layer','element'],function(){
 					//电流
 					electricityA.push(result[0].electricityA);
 					pileA.push(result[0].pileA);
-					time.push(getDate());
+					time.push(getTime());
 					console.log('频率数组长度:'+electricityHz.length);
 					var a='';
 					for(var i=0;i<electricityHz.length;i++){
@@ -189,15 +212,22 @@ layui.use(['jquery','table','layer','element'],function(){
 		});
 	}
 	
-	//定义时间格式
-	function getDate() {
+	//定义时间格式,在坐标轴上只显示时分秒就可以了
+	function getTime() {
 		var myDate = new Date();
-		var year=myDate.getYear();    // 获取当前年份(2位)
-		var month=myDate.getMonth();    // 获取当前月份(0-11,0代表1月)
-		var day=myDate.getDate();    // 获取当前日(1-31)
 		var hour=myDate.getHours();    // 获取当前小时数(0-23)
 		var minute=myDate.getMinutes();   // 获取当前分钟数(0-59)
 		var second=myDate.getSeconds();   // 获取当前秒数(0-59)
-		return year+"-"+month+"-"+day+"/"+hour+":"+minute+":"+second;
+		return hour+":"+minute+":"+second;
     };
+    //获取年月日
+    function getDate(){
+    	var myDate = new Date();
+		var year=myDate.getFullYear();    // 获取当前年份(2位)
+		var month=myDate.getMonth()+1;    // 获取当前月份(0-11,0代表1月)
+		var day=myDate.getDate();    // 获取当前日(1-31)
+		return year+'-'+month+'-'+day;
+    }
 });
+
+
