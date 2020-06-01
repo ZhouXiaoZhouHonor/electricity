@@ -2,6 +2,8 @@ package com.ze.zhou.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /*
 	author:zhouze
 	@createTime:2020年4月15日
@@ -9,6 +11,7 @@ import java.util.Date;
 */
 public class PileElectricity {
 	private Integer pileElectricityId;
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
 	private Date pileElectricityTime;
 	private Float pileElectricityV;
 	private Float pileElectricityI;

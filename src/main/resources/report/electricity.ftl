@@ -6982,7 +6982,7 @@
 </w:p>
 </w:tc>
 </w:tr>
-<#list list as listKey>
+<#list electricityList as listKey>
 <w:tr>
 <w:tblPrEx>
 <w:tblBorders>
@@ -7029,7 +7029,7 @@
 <w:rFonts w:hint="eastAsia"/>
 <w:szCs w:val="21"/>
 </w:rPr>
-<w:t>${v}</w:t>
+<w:t>${listKey.v}</w:t>
 </w:r>
 </w:p>
 </w:tc>
@@ -7058,7 +7058,7 @@
 <w:rFonts w:hint="eastAsia"/>
 <w:szCs w:val="21"/>
 </w:rPr>
-<w:t>${a}</w:t>
+<w:t>${listKey.a}</w:t>
 </w:r>
 </w:p>
 </w:tc>
@@ -7087,7 +7087,7 @@
 <w:rFonts w:hint="eastAsia"/>
 <w:szCs w:val="21"/>
 </w:rPr>
-<w:t>${workingErrorResult}</w:t>
+<w:t>${listKey.errorResult}</w:t>
 </w:r>
 </w:p>
 </w:tc>

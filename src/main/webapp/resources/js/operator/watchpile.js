@@ -28,7 +28,7 @@ layui.use(['jquery','table','layer','element'],function(){
 			'</div>'+
 		'</div>'+
 		'<div class="layui-row">'+
-			'<div class="layui-col-md12">'+
+			'<div id="create-pile-report" class="layui-col-md12">'+
 				'<button type="button" class="layui-btn layui-btn-fluid layui-btn-normal">打印报表</button>'+
 			'</div>'+
 		'</div>';
@@ -88,6 +88,15 @@ layui.use(['jquery','table','layer','element'],function(){
 					console.log(result[0].electricityHz);
 					console.log(result[0].pileHz);
 					console.log('时间:'+getDate());
+					if(time.length==20){//当时间数组为20时，需要将首部内容去掉
+						time.shift();
+						electricityHz.shift();
+						pileHz.shift();
+						electricityV.shift();
+						pileV.shift();
+						electricityA.shift();
+						pileA.shift();
+					}
 					//频率
 					electricityHz.push(result[0].electricityHz);
 					pileHz.push(result[0].pileHz);
@@ -98,6 +107,7 @@ layui.use(['jquery','table','layer','element'],function(){
 					electricityA.push(result[0].electricityA);
 					pileA.push(result[0].pileA);
 					time.push(getTime());
+					
 					console.log('频率数组长度:'+electricityHz.length);
 					var a='';
 					for(var i=0;i<electricityHz.length;i++){
@@ -211,8 +221,46 @@ layui.use(['jquery','table','layer','element'],function(){
 			}
 		});
 	}
-	
-	//定义时间格式,在坐标轴上只显示时分秒就可以了
+    
+    //监测打印报表按钮
+    $(document).on('click','#create-pile-report',function(){
+    	//var data={};
+    	var dataList=[];
+    	//console.log('点击了打印报表按钮');
+    	for(var i=0;i<20;i++){
+    		var electricity={};
+    		electricity.pileElectricityHz=1.0;
+    		electricity.electricityHz=1.0;
+    		electricity.pileElectricityV=1.0;
+    		electricity.electricityV=1.0;
+    		electricity.pileElectricityI=1.0;
+    		electricity.electricityI=1.0;
+    		electricity.pileElectricityTime=getDate()+' '+getTime();
+    		dataList.push(electricity);
+    	}
+    	//data.list=dataList;
+    	//将数据打包，返回后台生成报表
+    	var formData=new FormData();
+    	formData.append('electricityData',JSON.stringify(dataList));
+    	var addElectricityDataUrl='/zhou/watchpileelectricity/registerpiledata';
+    	$.ajax({
+    		url:addElectricityDataUrl,
+    		type:'POST',
+    		data:formData,
+    		contentType:false,
+			processData:false,
+			cache:false,
+			success:function(data){
+				if(data.success){
+					layer.msg('生成电力数据成功');
+				}else{
+					layer.msg('生成数据失败');
+				}
+			}
+    	});
+    });
+    
+  //定义时间格式,在坐标轴上只显示时分秒就可以了
 	function getTime() {
 		var myDate = new Date();
 		var hour=myDate.getHours();    // 获取当前小时数(0-23)

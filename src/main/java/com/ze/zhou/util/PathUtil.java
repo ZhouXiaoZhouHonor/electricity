@@ -64,6 +64,14 @@ public class PathUtil {
 		return imagePath;//不应该用win的分隔符
 	}
 	
+	/*
+	 * @return 依据不同的业务项目需要，返回报表的子路径*/
+	public static String getElectricityReportPath(long pileId) {//获取店铺图片路径
+		String imagePath="/electricity_upload/report"+pileId+"/";
+		//return imagePath.replace("/", seperator);
+		return imagePath;//不应该用win的分隔符
+	}
+	
 	public static void main(String[]args) {
 		//System.out.println(PathUtil.seperator);
 		//System.out.println(PathUtil.getImgBasePath());

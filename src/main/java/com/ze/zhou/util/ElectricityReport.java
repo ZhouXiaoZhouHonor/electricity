@@ -6,12 +6,17 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.LoggerFactory;
 
+import com.ze.zhou.entity.Pile;
 import com.ze.zhou.entity.PileElectricity;
+import com.ze.zhou.entity.VAError;
 
+import ch.qos.logback.classic.Logger;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.Version;
@@ -22,9 +27,18 @@ import freemarker.template.Version;
 	@goal:打印报表
 */
 public class ElectricityReport {
-	
+	Logger logger=(Logger) LoggerFactory.getLogger(ElectricityReport.class);
 	private static Configuration configuration;
 	public static void main(String[]args) {
+		List<PileElectricity> list=new ArrayList<>();
+		Pile pile=new Pile();
+		pile.setPileId(23L);
+		PileElectricity pe=new PileElectricity();
+		pe.setPile(pile);
+		list.add(pe);
+		String name=createPileReport(list);
+		System.out.println("文件名称为:"+name);
+		/*
 		ElectricityReport d=new ElectricityReport();
 		List<Float> list=new ArrayList<Float>();
 		//电的显示误差
@@ -39,6 +53,112 @@ public class ElectricityReport {
 		list.add((float)14);
 		//电压，电流，工作误差
 		d.test(list);
+		*/
+	}
+	//将报表生成，存入指定硬盘中并返回存储文件路径
+	public static String createPileReport(List<PileElectricity> pileElectricityList) {
+		Calendar now = Calendar.getInstance();  
+		String dest="";
+		Map<String,Object> dataMap = new HashMap<String, Object>();//数据类型在不知道的情况下，使用Object进行代替；用H进行HashMap进行存储
+		int year=now.get(Calendar.YEAR);
+		dataMap.put("year", year);
+		int month=now.get(Calendar.MONTH)+1;
+		dataMap.put("month", month);
+		int day=now.get(Calendar.DAY_OF_MONTH);
+		dataMap.put("day", day);
+		String reportNumber=""+year+month+day;
+		dataMap.put("certificateNumber", reportNumber);
+		/*
+		String v="";
+		dataMap.put("v", "@");
+		String a="";
+		dataMap.put("a", "@");
+		String vAError="";
+		dataMap.put("vAError", "@");
+		*/
+		String workingError="";
+		dataMap.put("workingError", "@");
+		
+		List<VAError> EList=new ArrayList<VAError>();
+    	for(int i=0;i<pileElectricityList.size();i++) {
+    		VAError elec=new VAError();
+    		elec.setV(pileElectricityList.get(i).getElectricityV());
+    		elec.setA(pileElectricityList.get(i).getElectricityI());
+			elec.setErrorResult(0.03f);
+    		EList.add(elec);
+    	}
+    	dataMap.put("electricityList", EList);
+		
+		String viewError="";
+		dataMap.put("viewError", viewError+"@");
+		String eBefore="";
+		String eAfter="";
+		String eResult="";
+		String eStand="";
+		String eError="";
+		dataMap.put("eBefore", "@");
+		dataMap.put("eAfter", "@");
+		dataMap.put("eResult", "@");
+		dataMap.put("eStand", "@");
+		dataMap.put("eError", "@");
+		
+		String moneyError="";
+		String viewMoney="";
+		String energy="";
+		String price="";
+		String money="";
+		String moneyErrors="";
+		dataMap.put("moneyError", "@");
+		dataMap.put("viewMoney", "@");
+		dataMap.put("energy", "@");
+		dataMap.put("price", "@");
+		dataMap.put("money", "@");
+		dataMap.put("moneyErrors", "@");
+		
+		String timeError="";
+		String time="";
+		String timeStand="";
+		String timeErrorResult;
+		dataMap.put("timeError", "@");
+		dataMap.put("time", "@");
+		dataMap.put("timeStand", "@");
+		dataMap.put("timeErrorResult", "@");
+		
+		//Configuration 用于读取ftl文件
+        configuration = new Configuration(new Version("2.3.23"));
+        configuration.setDefaultEncoding("utf-8");
+		
+        //指定路径的第二种方式，我的路径是C：/a.ftl
+        try {
+			configuration.setDirectoryForTemplateLoading(new File("E:/Users/16078/eclipse-workspace/zhou/src/main/resources/report"));
+			//输出文档路径及名称
+			String path=PathUtil.getImgBasePath();
+			dest=PathUtil.getElectricityReportPath(pileElectricityList.get(0).getPile().getPileId());
+			String filePath=path+dest+ImageUtil.getRandomFileName()+".doc";
+			//System.out.println("替换前:"+filePath);
+			String filePath1=filePath.replaceAll("/", "\\\\");
+			//System.out.println("替换后:"+filePath1);
+            File outFile = new File(filePath1);
+            //首先创建文件夹
+            if(!outFile.getParentFile().exists()) {
+            	outFile.getParentFile().mkdirs();
+            }
+            //创建文件
+            if(!outFile.exists()) {//如果文件不存在则创建该文件
+            	outFile.createNewFile();
+            }
+            //以utf-8的编码读取ftl文件
+            Template template = configuration.getTemplate("electricity.ftl", "utf-8");
+            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), "utf-8"));
+            
+            template.process(dataMap, out);//将数据写入报告中
+            out.flush();
+            out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        //返回绝对路径名称
+		return dest+ImageUtil.getRandomFileName()+".doc";
 	}
 	
 	public void test(List<Float> list){
