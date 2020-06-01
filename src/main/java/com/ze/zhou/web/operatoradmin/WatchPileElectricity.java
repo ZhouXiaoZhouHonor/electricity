@@ -118,8 +118,8 @@ public class WatchPileElectricity {
 					modelMap.put("errMsg","add pileElectricity failure");
 					return modelMap;
 				}
-				//TODO 生成数据表并返回表的数据流进行显示
-				ElectricityReport.createPileReport(pileElectricityList);
+				//生成数据表并返回表的数据流进行显示
+				String reportDest=ElectricityReport.createPileReport(pileElectricityList);
 				logger.debug("长度:"+pileElectricityList.size());
 				logger.debug("频率内容"+((PileElectricity)pileElectricityList.get(0)).getElectricityHz());
 			} catch (Exception e) {
