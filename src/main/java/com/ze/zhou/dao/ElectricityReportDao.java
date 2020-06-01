@@ -11,7 +11,7 @@ import com.ze.zhou.entity.ElectricityReport;
 */
 public interface ElectricityReportDao {
 	//添加报表信息
-	int insertReport();
+	int insertReport(ElectricityReport electricityReport);
 	//获取某充电桩的所有报表信息
 	List<ElectricityReport> queryReportById();
 	

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ze.zhou.dao.ElectricityReportDao">
+	<insert id="insertReport" useGeneratedKeys="true" 
+		keyColumn="electricity_report_id" keyProperty="electricityReportId">
+		INSERT INTO tb_electricity_report
+		(	
+		electricity_report_name,
+		electricity_report_link,
+		electricity_report_enable_status,
+		create_time,
+		pile_id
+		)
+		VALUES
+		(
+		#{electricityReportName},
+		#{electricityReportLink},
+		#{electricityReportEnableStatus},
+		#{createTime},
+		#{pile.pileId}
+		)
+	</insert>
+</mapper>
