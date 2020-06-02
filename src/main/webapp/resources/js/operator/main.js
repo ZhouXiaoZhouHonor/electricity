@@ -37,7 +37,17 @@ layui.use(['element','jquery','layer'], function(){
   
   //点击充电桩监测
   $('#watch-pile').on('click',function(){
-	  layui.watchPile();
+	  layer.msg('请在监测地图中选择需要监测的充电桩');
+	  //layui.watchPile();
+  });
+  
+  //点击监测按钮
+  $(document).on('click','#main-watch-pile',function(){
+		//layer.msg('点击了信息体中的按钮');
+		var pileId=$('#main-watch-pile').val();//获取该充电桩的Id
+		//layer.msg('获取充电桩的id:'+pileId);
+		//传值，跳转到监测页面
+		layui.watchPile(pileId);
   });
   
   //初步加载高德地图,同时添加充电桩坐标点
@@ -107,7 +117,7 @@ function makeInfoWindow(pile,map){
 			'地址:'+pile.pileAddr+
 		'</div>'+
 		'<div class="layui-row infowindow-font" >'+
-			'<button type="button" class="layui-btn layui-btn-radius layui-btn-normal">'+
+			'<button value="'+pile.pileId+'" id="main-watch-pile" type="button" class="layui-btn layui-btn-radius layui-btn-normal">'+
 				'<i class="iconfont layui-icon-extendshishijiance-copy-copy"></i>'+
 			'</button>'+
 		'</div>'+

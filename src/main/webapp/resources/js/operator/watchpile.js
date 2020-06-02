@@ -36,7 +36,8 @@ layui.use(['jquery','table','layer','element'],function(){
 	layui.define(['table','layer'],function(exports){
 		var table=layui.table;
 		var layer=layui.layer;
-		exports('watchPile',function(){
+		exports('watchPile',function(pileId){
+			//layer.msg('跳转成功，id为:'+pileId);
 			//将布局样式先插入
 			$('#container').html(html);
 			layui.use('laydate', function(){
@@ -47,7 +48,9 @@ layui.use(['jquery','table','layer','element'],function(){
 				});
 			});
 			//将电压，电流等数据同时在三个图表上进行显示
-			setPileChart();
+			//setPileChart();
+			//报表打印
+			createReport(pileId);
 		});
 	});
 	
@@ -73,7 +76,7 @@ layui.use(['jquery','table','layer','element'],function(){
 		pileChartV=echarts.init($('#pile-watch-v')[0]);
 		pileChartA=echarts.init($('#pile-watch-a')[0]);
 		//设置定时获取数据，每隔2秒钟执行一次
-		//setInterval(function(){getResult()},2000);
+		setInterval(function(){getResult()},2000);
 	}
 	
 	function getResult(){
@@ -221,20 +224,21 @@ layui.use(['jquery','table','layer','element'],function(){
 			}
 		});
 	}
-    
+function createReport(pileId){
+	layer.msg('进入打印报表按钮'+pileId);
     //监测打印报表按钮
     $(document).on('click','#create-pile-report',function(){
     	//var data={};
     	var dataList=[];
     	//console.log('点击了打印报表按钮');
-    	for(var i=0;i<20;i++){
+    	for(var i=0;i<electricityHz.length;i++){
     		var electricity={};
-    		electricity.pileElectricityHz=1.0;
-    		electricity.electricityHz=1.0;
-    		electricity.pileElectricityV=1.0;
-    		electricity.electricityV=1.0;
-    		electricity.pileElectricityI=1.0;
-    		electricity.electricityI=1.0;
+    		electricity.pileElectricityHz=electricityHz[i];
+    		electricity.electricityHz=pileHz[i];
+    		electricity.pileElectricityV=electricityV[i];
+    		electricity.electricityV=pileV[i];
+    		electricity.pileElectricityI=electricityA[i];
+    		electricity.electricityI=pileA[i];
     		electricity.pileElectricityTime=getDate()+' '+getTime();
     		dataList.push(electricity);
     	}
@@ -242,6 +246,7 @@ layui.use(['jquery','table','layer','element'],function(){
     	//将数据打包，返回后台生成报表
     	var formData=new FormData();
     	formData.append('electricityData',JSON.stringify(dataList));
+    	formData.append('pileId',pileId);
     	var addElectricityDataUrl='/zhou/watchpileelectricity/registerpiledata';
     	$.ajax({
     		url:addElectricityDataUrl,
@@ -253,13 +258,15 @@ layui.use(['jquery','table','layer','element'],function(){
 			success:function(data){
 				if(data.success){
 					layer.msg('生成电力数据成功');
+					//layer.msg();
 				}else{
 					layer.msg('生成数据失败');
+					layer.msg('ERROR:'+data.errMsg);
 				}
 			}
     	});
     });
-    
+}  
   //定义时间格式,在坐标轴上只显示时分秒就可以了
 	function getTime() {
 		var myDate = new Date();

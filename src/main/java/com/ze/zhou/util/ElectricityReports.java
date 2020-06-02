@@ -26,8 +26,8 @@ import freemarker.template.Version;
 	@createTime:2020年5月17日
 	@goal:打印报表
 */
-public class ElectricityReport {
-	Logger logger=(Logger) LoggerFactory.getLogger(ElectricityReport.class);
+public class ElectricityReports {
+	Logger logger=(Logger) LoggerFactory.getLogger(ElectricityReports.class);
 	private static Configuration configuration;
 	public static void main(String[]args) {
 		List<PileElectricity> list=new ArrayList<>();

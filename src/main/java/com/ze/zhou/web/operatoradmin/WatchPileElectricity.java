@@ -21,11 +21,16 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ze.zhou.dto.ElectricityReportExecution;
 import com.ze.zhou.dto.PileElectricityExecution;
+import com.ze.zhou.entity.ElectricityReport;
+import com.ze.zhou.entity.Pile;
 import com.ze.zhou.entity.PileElectricity;
+import com.ze.zhou.enums.ElectricityReportStateEnum;
 import com.ze.zhou.enums.PileElectricityStateEnum;
+import com.ze.zhou.service.ElectricityReportService;
 import com.ze.zhou.service.PileElectricityService;
-import com.ze.zhou.util.ElectricityReport;
+import com.ze.zhou.util.ElectricityReports;
 import com.ze.zhou.util.HttpServletRequestUtil;
 import com.ze.zhou.util.PileMachine;
 import com.ze.zhou.web.superadmin.AreaSuperadminController;
@@ -46,6 +51,8 @@ public class WatchPileElectricity {
 	Logger logger=(Logger) LoggerFactory.getLogger(WatchPileElectricity.class);
 	@Autowired
 	private PileElectricityService pileElectricityService;
+	@Autowired
+	private ElectricityReportService electricityReportService;
 	
 	@RequestMapping(value="/getpileelectricity",method=RequestMethod.GET)
 	@ResponseBody
@@ -100,6 +107,9 @@ public class WatchPileElectricity {
 	private Map<String,Object> registerPileData(HttpServletRequest request){
 		Map<String,Object> modelMap=new HashMap<>();
 		//获取json字符串
+		//获取pileId
+		int pileId=HttpServletRequestUtil.getInt(request, "pileId");
+		logger.debug("该充电桩的值为:"+pileId);
 		String electricityData=HttpServletRequestUtil.getString(request, "electricityData");
 		logger.debug("内容是:"+electricityData);
 		if(electricityData!=null&&!"".equals(electricityData)) {
@@ -108,21 +118,37 @@ public class WatchPileElectricity {
 			try {
 				@SuppressWarnings("unchecked")
 				List pileElectricityList=(List<PileElectricity>)mapper.readValue(electricityData, new TypeReference<List<PileElectricity>>() { });
-				//PileElectricity pel=(PileElectricity) pileElectricityList.get(0);
-				//将数据插入数据库中
-				PileElectricityExecution pee=pileElectricityService.addPileElectricity(pileElectricityList);
-				if(pee.getState()==PileElectricityStateEnum.SUCCESS.getState()) {
-					modelMap.put("success", true);
-				}else {//添加失败
+				if(pileElectricityList!=null&&pileElectricityList.size()>0) {//判断转换成的数组对象有没有数据
+					//将数据插入数据库中
+					PileElectricityExecution pee=pileElectricityService.addPileElectricity(pileElectricityList,pileId);
+					if(pee.getState()==PileElectricityStateEnum.SUCCESS.getState()) {
+						modelMap.put("success", true);
+					}else {//添加失败
+						modelMap.put("success", false);
+						modelMap.put("errMsg","add pileElectricity failure");
+						return modelMap;
+					}
+					//生成数据表并返回表的路径
+					String reportDest=ElectricityReports.createPileReport(pileElectricityList);
+					logger.debug("报表路径为:"+reportDest);
+					ElectricityReport electricityReport=new ElectricityReport();
+					electricityReport.setElectricityReportLink(reportDest);
+					Pile pile=new Pile();
+					pile.setPileId(Long.valueOf(pileId));
+					electricityReport.setPile(pile);
+					ElectricityReportExecution ere=electricityReportService.addReport(electricityReport);
+					if(ere.getState()==ElectricityReportStateEnum.SUCCESS.getState()) {
+						modelMap.put("success", true);
+						//TODO 需要将返回的数据流返回给前端显示
+					}else {
+						modelMap.put("success", false);
+					}
+					logger.debug("长度:"+pileElectricityList.size());
+					logger.debug("频率内容"+((PileElectricity)pileElectricityList.get(0)).getElectricityHz());
+				}else {
 					modelMap.put("success", false);
-					modelMap.put("errMsg","add pileElectricity failure");
-					return modelMap;
+					modelMap.put("errMsg", "empty data");
 				}
-				//生成数据表并返回表的路径
-				String reportDest=ElectricityReport.createPileReport(pileElectricityList);
-				//ElectricityReport electricityReport=
-				logger.debug("长度:"+pileElectricityList.size());
-				logger.debug("频率内容"+((PileElectricity)pileElectricityList.get(0)).getElectricityHz());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 

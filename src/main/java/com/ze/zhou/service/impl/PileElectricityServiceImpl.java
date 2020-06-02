@@ -40,7 +40,8 @@ public class PileElectricityServiceImpl implements PileElectricityService{
 	}
 
 	@Override
-	public PileElectricityExecution addPileElectricity(List<PileElectricity> pileElectricityList) {
+	public PileElectricityExecution addPileElectricity(List<PileElectricity> pileElectricityList,
+			int pileId) {
 		PileElectricityExecution pee=new PileElectricityExecution();
 		//每次添加都是20条数据同时添加
 		if(pileElectricityList!=null&&pileElectricityList.size()==20) {
@@ -53,7 +54,7 @@ public class PileElectricityServiceImpl implements PileElectricityService{
 				pe.setPileElectricityActivePower(0.00f);
 				pe.setPileElectricityReactiveEnergy(0.00f);
 				Pile pile=new Pile();
-				pile.setPileId(23L);
+				pile.setPileId(Long.valueOf(pileId));
 				pe.setPile(pile);
 			}
 			int result=pileElectricityDao.insertPileElectricity(pileElectricityList);
