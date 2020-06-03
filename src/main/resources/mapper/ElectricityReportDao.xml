@@ -2,6 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ze.zhou.dao.ElectricityReportDao">
+	<resultMap type="com.ze.zhou.entity.ElectricityReport" id="reportMap">
+		<id column="electricity_report_id" property="electricityReportId"/>
+		<result column="electricity_report_name" property="electricityReportName"/>
+		<result column="electricity_report_link" property="electricityReportLink"/>
+		<result column="electricity_report_enable_status" property="electricityReportEnableStatus"/>
+		<result column="create_time" property="createTime"/>
+		<association column="pile_id" property="pile" javaType="com.ze.zhou.entity.Pile">
+			<id column="pile_id" property="pileId"/>
+			<result column="pile_name" property="pileName"/>
+		</association>
+	</resultMap>
+	<!-- 查询监测数据信息，每一个报表的首位数据将被列出  -->
+	<select id="queryReport" resultMap="reportMap">
+		SELECT
+		er.electricity_report_id,
+		er.electricity_report_name,
+		er.electricity_report_link,
+		er.electricity_report_enable_status,
+		er.create_time,
+		p.pile_id,
+		p.pile_name
+		FROM
+		tb_electricity_report er,
+		tb_pile p
+		WHERE
+		electricity_report_enable_status=1
+		AND
+		er.pile_id=p.pile_id
+		LIMIT #{rowIndex},#{pageSize}
+	</select>
+	<!-- 查询数据总数 -->
+	<select id="queryReportCount" resultType="int">
+		SELECT count(1) 
+		FROM
+		tb_electricity_report er,
+		tb_pile p
+		WHERE
+		electricity_report_enable_status=1
+		AND
+		er.pile_id=p.pile_id
+	</select>
 	<insert id="insertReport" useGeneratedKeys="true" 
 		keyColumn="electricity_report_id" keyProperty="electricityReportId">
 		INSERT INTO tb_electricity_report

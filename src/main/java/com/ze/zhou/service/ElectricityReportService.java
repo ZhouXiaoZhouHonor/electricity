@@ -11,5 +11,6 @@ import com.ze.zhou.entity.ElectricityReport;
 public interface ElectricityReportService {
 	//添加报表数据
 	ElectricityReportExecution addReport(ElectricityReport electriciityReport);
-	
+	//查询数据，分页查询
+	ElectricityReportExecution selectReport(int pageIndex,int pageSize);
 }

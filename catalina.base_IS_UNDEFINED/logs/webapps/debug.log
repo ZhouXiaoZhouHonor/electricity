@@ -1,3 +1,30 @@
-2020-06-01 15:27:50.266[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.insertReport - ==>  Preparing: INSERT INTO tb_electricity_report ( electricity_report_name, electricity_report_link, electricity_report_enable_status, create_time, pile_id ) VALUES ( ?, ?, ?, ?, ? ) 
-2020-06-01 15:27:50.326[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.insertReport - ==> Parameters: Test(String), test(String), 1(Integer), 2020-06-01 15:27:49.561(Timestamp), 23(Long)
-2020-06-01 15:27:50.332[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.insertReport - <==    Updates: 1
+2020-06-02 15:53:33.522[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT ( electricity_report_id, electricity_report_name, electricity_report_link, electricity_report_enable_status, create_time, pile_id ) FROM tb_electricity_report WHERE electricity_report_enable_status=1 
+2020-06-02 15:53:33.607[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 
+2020-06-02 15:55:59.606[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT ( er.electricity_report_id, er.electricity_report_name, er.electricity_report_link, er.electricity_report_enable_status, er.create_time, er.pile_id ) FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 15:55:59.667[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 
+2020-06-02 15:58:04.891[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT ( er.electricity_report_id, er.electricity_report_name, er.electricity_report_link, er.electricity_report_enable_status, er.create_time, p.pile_id ) FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 15:58:04.970[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 
+2020-06-02 15:59:28.035[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT er.electricity_report_id, er.electricity_report_name, er.electricity_report_link, er.electricity_report_enable_status, er.create_time, p.pile_id FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 15:59:28.102[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 
+2020-06-02 15:59:28.144[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - <==      Total: 2
+2020-06-02 15:59:28.160[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==>  Preparing: SELECT (1) FROM tb_electricity_report 
+2020-06-02 15:59:28.160[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==> Parameters: 
+2020-06-02 15:59:28.167[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - <==      Total: 2
+2020-06-02 16:00:52.182[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT er.electricity_report_id, er.electricity_report_name, er.electricity_report_link, er.electricity_report_enable_status, er.create_time, p.pile_id FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 16:00:52.248[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 
+2020-06-02 16:00:52.283[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - <==      Total: 2
+2020-06-02 16:00:52.294[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==>  Preparing: SELECT count(1) FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 16:00:52.294[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==> Parameters: 
+2020-06-02 16:00:52.296[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - <==      Total: 1
+2020-06-02 16:07:39.496[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT er.electricity_report_id, er.electricity_report_name, er.electricity_report_link, er.electricity_report_enable_status, er.create_time, p.pile_id FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id LIMIT ?,? 
+2020-06-02 16:07:39.553[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-02 16:07:39.589[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - <==      Total: 1
+2020-06-02 16:07:39.603[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==>  Preparing: SELECT count(1) FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 16:07:39.606[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==> Parameters: 
+2020-06-02 16:07:39.611[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - <==      Total: 1
+2020-06-02 16:59:37.097[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==>  Preparing: SELECT er.electricity_report_id, er.electricity_report_name, er.electricity_report_link, er.electricity_report_enable_status, er.create_time, p.pile_id, p.pile_name FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id LIMIT ?,? 
+2020-06-02 16:59:37.156[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-02 16:59:37.192[main]DEBUG com.ze.zhou.dao.ElectricityReportDao.queryReport - <==      Total: 1
+2020-06-02 16:59:37.204[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==>  Preparing: SELECT count(1) FROM tb_electricity_report er, tb_pile p WHERE electricity_report_enable_status=1 AND er.pile_id=p.pile_id 
+2020-06-02 16:59:37.204[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - ==> Parameters: 
+2020-06-02 16:59:37.206[main]DEBUG c.z.zhou.dao.ElectricityReportDao.queryReportCount - <==      Total: 1

@@ -1,6 +1,7 @@
 package com.ze.zhou.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,7 +21,17 @@ public class ElectricityReportDaoTest extends BaseTest{
 	private ElectricityReportDao electricityReportDao;
 	
 	@Test
-	//@Ignore
+	@Ignore
+	public void queryReport() {
+		List<ElectricityReport> list=electricityReportDao.queryReport(0,5);
+		System.out.println(list.size());
+		System.out.println(list.get(0).getPile().getPileName());
+		int count=electricityReportDao.queryReportCount();
+		System.out.println(count);
+	}
+	
+	@Test
+	@Ignore
 	public void insertElectrityReportTest() {
 		Pile pile=new Pile();
 		pile.setPileId(23L);

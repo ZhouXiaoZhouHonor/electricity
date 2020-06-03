@@ -1,6 +1,7 @@
 package com.ze.zhou.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.ze.zhou.dto.ElectricityReportExecution;
 import com.ze.zhou.entity.ElectricityReport;
 import com.ze.zhou.enums.ElectricityReportStateEnum;
 import com.ze.zhou.service.ElectricityReportService;
+import com.ze.zhou.util.PageCalculator;
 
 /*
 	author:zhouze
@@ -35,6 +37,22 @@ public class ElectricityReportServiceImpl implements ElectricityReportService{
 			}else {
 				ere.setState(ElectricityReportStateEnum.FAILURE.getState());
 			}
+		}else {
+			ere.setState(ElectricityReportStateEnum.NULL_ELECTRICITYREPORT.getState());
+		}
+		return ere;
+	}
+
+	@Override
+	public ElectricityReportExecution selectReport(int pageIndex, int pageSize) {
+		ElectricityReportExecution ere=new ElectricityReportExecution();
+		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<ElectricityReport> list=electricityReportDao.queryReport(rowIndex, pageSize);
+		int count=electricityReportDao.queryReportCount();
+		if(list!=null&&list.size()>0&&count>0) {
+			ere.setCount(count);
+			ere.setElectricityReportList(list);
+			ere.setState(ElectricityReportStateEnum.SUCCESS.getState());
 		}else {
 			ere.setState(ElectricityReportStateEnum.NULL_ELECTRICITYREPORT.getState());
 		}

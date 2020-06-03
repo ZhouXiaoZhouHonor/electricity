@@ -43,18 +43,23 @@ layui.use(['element','jquery','layer'], function(){
   
   //点击监测按钮
   $(document).on('click','#main-watch-pile',function(){
-		//layer.msg('点击了信息体中的按钮');
-		var pileId=$('#main-watch-pile').val();//获取该充电桩的Id
-		//layer.msg('获取充电桩的id:'+pileId);
-		//传值，跳转到监测页面
-		layui.watchPile(pileId);
+	  //layer.msg('点击了信息体中的按钮');
+	  var pileId=$('#main-watch-pile').val();//获取该充电桩的Id
+	  //layer.msg('获取充电桩的id:'+pileId);
+	  //传值，跳转到监测页面
+	  layui.watchPile(pileId);
+  });
+  //点击监测记录
+  $(document).on('click','#electricity-report',function(){
+	  //layer.msg('点击了监测记录');
+	  layui.reportTable();
   });
   
   //初步加载高德地图,同时添加充电桩坐标点
   mainMapInit(myJquery);
 });
 
-//异步方式加载高德地图，同时添加坐标点
+//加载高德地图，同时添加坐标点
 function mainMapInit(jquery){
 	var $=jquery;
 	//定义地图样式

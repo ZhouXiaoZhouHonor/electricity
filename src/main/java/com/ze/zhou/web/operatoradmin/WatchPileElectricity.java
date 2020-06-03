@@ -133,6 +133,7 @@ public class WatchPileElectricity {
 					logger.debug("报表路径为:"+reportDest);
 					ElectricityReport electricityReport=new ElectricityReport();
 					electricityReport.setElectricityReportLink(reportDest);
+					electricityReport.setElectricityReportName("数据监测表"+pileId);
 					Pile pile=new Pile();
 					pile.setPileId(Long.valueOf(pileId));
 					electricityReport.setPile(pile);
@@ -158,4 +159,29 @@ public class WatchPileElectricity {
 		}
 		return modelMap;
 	}
+	//显示打印记录
+	@RequestMapping(value="/electricityreport",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> electricityReport(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//获取分页数据
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
+		if(pageIndex>=0&&pageSize>0) {
+			ElectricityReportExecution ere=electricityReportService.selectReport(pageIndex, pageSize);
+			if(ere.getState()==ElectricityReportStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+				modelMap.put("reportList", ere.getElectricityReportList());
+				modelMap.put("count", ere.getCount());
+			}else {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", "get report failure");
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty data");
+		}
+		return modelMap;
+	}
+	
 }
