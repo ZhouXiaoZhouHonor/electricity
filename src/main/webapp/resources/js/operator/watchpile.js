@@ -37,7 +37,7 @@ layui.use(['jquery','table','layer','element'],function(){
 		var table=layui.table;
 		var layer=layui.layer;
 		exports('watchPile',function(pileId){
-			layer.msg('跳转成功，id为:'+pileId);
+			//layer.msg('跳转成功，id为:'+pileId);
 			//将布局样式先插入
 			$('#container').html(html);
 			layui.use('laydate', function(){

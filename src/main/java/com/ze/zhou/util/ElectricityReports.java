@@ -55,7 +55,7 @@ public class ElectricityReports {
 		d.test(list);
 		*/
 	}
-	//将报表生成，存入指定硬盘中并返回存储文件路径
+	//将报表生成，存入指定硬盘中并返回存储文件路径。先生成doc文件，然后生成pdf文件，最后将文件在前端显示
 	public static String createPileReport(List<PileElectricity> pileElectricityList) {
 		Calendar now = Calendar.getInstance();  
 		String dest="";
@@ -128,6 +128,7 @@ public class ElectricityReports {
         configuration = new Configuration(new Version("2.3.23"));
         configuration.setDefaultEncoding("utf-8");
 		
+        String filePath1="";
         //指定路径的第二种方式，我的路径是C：/a.ftl
         try {
 			configuration.setDirectoryForTemplateLoading(new File("E:/Users/16078/eclipse-workspace/zhou/src/main/resources/report"));
@@ -136,7 +137,7 @@ public class ElectricityReports {
 			dest=PathUtil.getElectricityReportPath(pileElectricityList.get(0).getPile().getPileId());
 			String filePath=path+dest+ImageUtil.getRandomFileName()+".doc";
 			//System.out.println("替换前:"+filePath);
-			String filePath1=filePath.replaceAll("/", "\\\\");
+			filePath1=filePath.replaceAll("/", "\\\\");
 			//System.out.println("替换后:"+filePath1);
             File outFile = new File(filePath1);
             //首先创建文件夹
@@ -157,6 +158,8 @@ public class ElectricityReports {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        
+        DocToPdf.doc2pdf(filePath1);
         //返回绝对路径名称
 		return dest+ImageUtil.getRandomFileName()+".doc";
 	}
@@ -231,7 +234,7 @@ public class ElectricityReports {
             template.process(dataMap, out);//将数据写入报告中
             out.flush();
             out.close();
-            System.out.println("success!!!");
+            //System.out.println("success!!!");
         } catch (Exception e) {
             e.printStackTrace();
         }
