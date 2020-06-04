@@ -109,8 +109,20 @@ layui.use(['jquery','table','layer','element'],function(){
 			var report=obj.data;
 			switch(obj.event){
 			case'detail':
-				layer.msg('点击了，文件路径为:'+report.electricityReportLink);
-				//TODO 获取文件并展示
+				console.log('点击了，文件路径为:'+(report.electricityReportLink).replace('.doc','.pdf'));
+				var pdfUrl=(report.electricityReportLink).replace('.doc','.pdf');
+				var report=''+
+				'<div style="width:600px;height:600;overflow:auto;">'+
+				'<embed src="'+pdfUrl+'"></embed>'+
+				'</div>';
+				//获取文件并展示
+				layer.open({
+					type:1,//默认的信息框比较好
+					area:['600px','600px'],
+					anim:1,//弹出方式
+					title:'预览PDF',//跟的是充电桩的名字
+					content:report,//充电桩的详细信息，包含所有信息
+				});
 			break;
 			}
 		});
