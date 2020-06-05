@@ -68,6 +68,7 @@ layui.use(['jquery','table','layer','element'],function(){
 	var electricityA=[];
 	var pileA=[];
 	var pileChartA;
+	var setTimeOfMethod;
 	//定义折线图
 	function setPileChart(){
 		//设置今天日期，仅仅显示年月日
@@ -76,7 +77,7 @@ layui.use(['jquery','table','layer','element'],function(){
 		pileChartV=echarts.init($('#pile-watch-v')[0]);
 		pileChartA=echarts.init($('#pile-watch-a')[0]);
 		//设置定时获取数据，每隔2秒钟执行一次
-		setInterval(function(){getResult()},2000);
+		setTimeOfMethod=setInterval(function(){getResult()},2000);
 	}
 	
 	function getResult(){
@@ -220,6 +221,7 @@ layui.use(['jquery','table','layer','element'],function(){
 					});
 				}else{
 					layer.msg('系统出现异常，退出监测画面');
+					clearInterval(setTimeOfMethod);
 				}
 			}
 		});
