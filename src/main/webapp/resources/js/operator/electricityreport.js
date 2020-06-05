@@ -113,7 +113,7 @@ layui.use(['jquery','table','layer','element'],function(){
 				var pdfUrl=(report.electricityReportLink).replace('.doc','.pdf');
 				var report=''+
 				'<div style="width:600px;height:600;overflow:auto;">'+
-				'<embed src="'+pdfUrl+'"></embed>'+
+				'<embed style="width:600px;height:550px;" src="'+pdfUrl+'"></embed>'+
 				'</div>';
 				//获取文件并展示
 				layer.open({
