@@ -72,7 +72,7 @@ layui.use(['jquery','table','layer','element'],function(){
 		//按名字模糊查询
 		$('#pile-list-name').on('change',function(){
 			var pileName=$('#pile-list-name').val();//获取输入框中的信息
-			alert(pileName);
+			//alert(pileName);
 			var operatorPileByNameUrl='http://localhost:8080/zhou/operator/getpilelist?pileName='+pileName;
 			pileListTable(table,operatorPileByNameUrl);
 		});
