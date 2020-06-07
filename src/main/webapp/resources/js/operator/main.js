@@ -71,7 +71,6 @@ function mainMapInit(jquery){
 	    center:[117.254932,31.751945],//中心点坐标
 	});
 	
-	
 	//获取该管理员的所有充电桩
 	var getPileListUrl='/zhou/operator/getpilelist';
 	$.getJSON(getPileListUrl,function(data){
