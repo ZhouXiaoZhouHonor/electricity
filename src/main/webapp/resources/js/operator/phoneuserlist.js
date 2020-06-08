@@ -28,7 +28,7 @@ layui.use(['jquery','table','layer','element'],function(){
 	
 	//定义用户数量显示图表
 	// 指定图表的配置项和数据
-    var userNumberOption = {
+   /* var userNumberOption = {
         title: {
             text: '手机用户数量',
             left: 'center'
@@ -56,7 +56,7 @@ layui.use(['jquery','table','layer','element'],function(){
                 }
             }
         }]
-    };
+    };*/
 	function getPhoneUser(){
 		var allUser,onlineUser;
 		var getAllUserUrl='/zhou/operator/getusernumber';
@@ -74,14 +74,43 @@ layui.use(['jquery','table','layer','element'],function(){
 			if(data.success){
 				onlineUser=data.count;
 				console.log("在线人数:"+onlineUser);
-				var userNumberEchart=echarts.init($('#user-number').get(0));
-				userNumberEchart.setOption(userNumberOption);
+				var userNumberEchart=echarts.init($('#user-number')[0]);
 				userNumberEchart.setOption({
+			        title: {
+			            text: '手机用户数量',
+			            left: 'center'
+			        },
+			        legend: {
+			            orient: 'vertical',
+			            left: 10,
+			            data: ['总人数', '在线人数']
+			        },
+			        tooltip: {
+			            trigger: 'item',
+			            formatter: '{a} <br/>{b} : {c} ({d}%)'
+			        },
+			        series: [{
+			            name: '',
+			            type: 'pie',
+			            radius: '55%',
+			            center: ['50%', '60%'],
+			            data: [{name:'总人数',value:allUser},
+							{name:'在线人数',value:onlineUser}],
+			            emphasis: {
+			                itemStyle: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }]
+			    });
+				/*userNumberEchart.setOption({
 					series:[{
 						data:[{name:'总人数',value:allUser},
 							{name:'在线人数',value:onlineUser}]
 					}]
-				});
+				});*/
 			}else{
 				layer.msg('没有获取到数据2');
 				return;

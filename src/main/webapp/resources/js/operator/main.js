@@ -1,7 +1,6 @@
 /*
  * 
  * */
-
 layui.use(['element','jquery','layer'], function(){
   var element = layui.element;
   var $=layui.jquery;

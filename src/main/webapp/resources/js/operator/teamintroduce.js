@@ -13,9 +13,9 @@ layui.use(['jquery','table','layer','element'],function(){
 		'<img src="../resources/images/about.jpeg">'+
 		 '</div>';
 	//定义函数
-	layui.define(['table','layer'],function(exports){
-		var table=layui.table;
-		var layer=layui.layer;
+	layui.define(['jquery'],function(exports){
+		//var $=layui.jquery;
+		//var layer=layui.layer;
 		exports('teamIntroduce',function(){
 			//将布局样式先插入
 			$('#container').html(html);
