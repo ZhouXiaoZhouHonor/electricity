@@ -23,7 +23,8 @@
 	 	p.problem_title,
 	 	p.problem_enable_status,
 	 	p.create_time,
-	 	p.last_edit_time,    
+	 	p.last_edit_time,
+	 	p.problem_salve,   
 	 	p.user_id
 	 	FROM
 	 	tb_problem p,
@@ -82,6 +83,9 @@
 	<update id="updateProblem" parameterType="com.ze.zhou.entity.Problem">
 		UPDATE tb_problem
 		<set>
+			<if test="problemSalve!=null and !(''.equals(problemSalve))">
+				problem_salve=#{problemSalve},
+			</if>
 			<if test="problemEnableStatus!=null">
 				problem_enable_status=#{problemEnableStatus},
 			</if>
@@ -92,6 +96,25 @@
 		WHERE
 		problem_id=#{problemId}
 	</update>
+	
+	<!-- 查询问题 -->
+	<select id="queryProblem" resultType="com.ze.zhou.entity.Problem">
+		SELECT
+		problem_id,
+	 	problem_desc,
+	 	problem_title,
+	 	problem_enable_status,
+	 	create_time,
+	 	last_edit_time,
+	 	problem_salve 
+	 	FROM
+	 	tb_problem
+	 	ORDER BY
+	 	last_edit_time
+	 	DESC
+	 	LIMIT #{rowIndex},#{pageSize}
+	</select>
+	
 </mapper>
 
 

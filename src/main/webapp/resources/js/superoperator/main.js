@@ -45,6 +45,11 @@ layui.use(['jquery','element','layer','table'],function(){
     $('#add-operator').on('click',function(){
     	window.location.href='/zhou/pagesuper/addoperator';
     });
+    //显示问题信息表格
+    $('#problem-message').on('click',function(){
+    	//layer.msg('点击问题');
+    	layui.problemTable();
+    });
 });
 
 

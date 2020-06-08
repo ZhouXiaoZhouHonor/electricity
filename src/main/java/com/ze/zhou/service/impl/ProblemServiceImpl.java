@@ -124,7 +124,7 @@ public class ProblemServiceImpl implements ProblemService{
 		ProblemExecution peu=new ProblemExecution();
 		if(problem!=null) {
 			problem.setLastEditTime(new Date());
-			int effectNum=problemDao.insertProblem(problem);
+			int effectNum=problemDao.updateProblem(problem);
 			if(effectNum>0) {
 				peu.setState(ProblemStateEnum.SUCCESS.getState());
 			}else {
@@ -138,4 +138,22 @@ public class ProblemServiceImpl implements ProblemService{
 		return peu;
 	}
 
+	//超级管理员，获取问题所有信息
+	@Override
+	public ProblemExecution getQueryProblem(int pageIndex, int pageSize) {
+		ProblemExecution pe=new ProblemExecution();
+		int rowIndex=PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<Problem> problemList=problemDao.queryProblem(rowIndex, pageSize);
+		Problem problem=new Problem();
+		int count=problemDao.queryProblemByUserCount(problem);
+		if(problemList!=null) {
+			pe.setState(ProblemStateEnum.SUCCESS.getState());
+			pe.setProblemList(problemList);
+			pe.setCount(count);
+		}else {
+			pe.setState(ProblemStateEnum.NULL_PROBLEM.getState());
+		}
+		return pe;
+	}
+	
 }

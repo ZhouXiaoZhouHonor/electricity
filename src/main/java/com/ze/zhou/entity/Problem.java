@@ -16,6 +16,14 @@ public class Problem {
 	private Date createTime;
 	private Date lastEditTime;
 	private PhoneUser user;
+	private String problemSalve;
+	
+	public String getProblemSalve() {
+		return problemSalve;
+	}
+	public void setProblemSalve(String problemSalve) {
+		this.problemSalve = problemSalve;
+	}
 	public Integer getProblemId() {
 		return problemId;
 	}

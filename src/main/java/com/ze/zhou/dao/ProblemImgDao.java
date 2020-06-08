@@ -2,6 +2,7 @@ package com.ze.zhou.dao;
 
 import java.util.List;
 
+import com.ze.zhou.entity.Problem;
 import com.ze.zhou.entity.ProblemImg;
 
 /*
@@ -11,7 +12,7 @@ import com.ze.zhou.entity.ProblemImg;
 */
 public interface ProblemImgDao {
 	//获取img
-	List<ProblemImg> queryProblemImgByProblem(ProblemImg problemImg);
+	List<ProblemImg> queryProblemImgByProblem(Problem problem);
 	//批量添加img
 	int insertProblemImg(List<ProblemImg> problemImg);
 }

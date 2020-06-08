@@ -44,11 +44,9 @@ public class ProblemImgDaoTest extends BaseTest{
 	@Test
 	@Ignore
 	public void queryProblemImgByProblemTest() {
-		ProblemImg problemImg=new ProblemImg();
 		Problem problem=new Problem();
-		problem.setProblemId(1);
-		problemImg.setProblem(problem);
-		List<ProblemImg> problemImgList=problemImgDao.queryProblemImgByProblem(problemImg);
+		problem.setProblemId(14);
+		List<ProblemImg> problemImgList=problemImgDao.queryProblemImgByProblem(problem);
 		System.out.println(problemImgList.size());
 	}
 }

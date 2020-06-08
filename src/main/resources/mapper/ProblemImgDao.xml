@@ -23,6 +23,8 @@
 		tb_problem p
 		WHERE
 		pi.problem_id=p.problem_id
+		AND
+		p.problem_id=#{problemId}
 	</select>
 	<!-- 添加问题图片,需要进行批量插入(图片可能有多个)-->
 	<insert id="insertProblemImg" useGeneratedKeys="true"

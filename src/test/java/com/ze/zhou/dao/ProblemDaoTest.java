@@ -22,11 +22,22 @@ public class ProblemDaoTest extends BaseTest{
 	
 	@Test
 	@Ignore
+	public void getQueryProblem() {
+		List<Problem> list=problemDao.queryProblem(0, 20);
+		System.out.println(list.size());
+		Problem problem=new Problem();
+		int count=problemDao.queryProblemByUserCount(problem);
+		System.out.println(count);
+	}
+	
+	@Test
+	@Ignore
 	public void updateProblemTest() {
 		Problem problem=new Problem();
 		problem.setProblemId(3);
 		problem.setLastEditTime(new Date());
 		problem.setProblemEnableStatus(0);
+		problem.setProblemSalve("问题出现在这个地方");
 		int effectNum=problemDao.updateProblem(problem);
 		System.out.println(effectNum);
 	}

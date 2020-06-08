@@ -21,4 +21,8 @@ public interface ProblemDao {
 	
 	//更新problem
 	int updateProblem(Problem problem);
+	
+	//获取所有分页
+	List<Problem> queryProblem(@Param("rowIndex")int rowIndex,
+			@Param("pageSize")int pageSize);
 }

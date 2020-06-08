@@ -19,4 +19,7 @@ public interface ProblemService {
 	ProblemExecution addProblem(Problem problem,List<ImageHolder> problemImgList);
 	//更改问题状态
 	ProblemExecution changeProblem(Problem problem);
+	
+	//获取所有问题
+	ProblemExecution getQueryProblem(int pageIndex,int pageSize);
 }

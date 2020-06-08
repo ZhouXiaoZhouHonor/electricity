@@ -22,22 +22,28 @@ import com.ze.zhou.dto.AreaExecution;
 import com.ze.zhou.dto.CoordinateExecution;
 import com.ze.zhou.dto.NoticeExecution;
 import com.ze.zhou.dto.OperatorExecution;
+import com.ze.zhou.dto.ProblemExecution;
+import com.ze.zhou.dto.ProblemImgExecution;
 import com.ze.zhou.entity.Area;
 import com.ze.zhou.entity.Coordinate;
 import com.ze.zhou.entity.Notice;
 import com.ze.zhou.entity.Operator;
+import com.ze.zhou.entity.Problem;
 import com.ze.zhou.enums.AreaStateEnum;
 import com.ze.zhou.enums.CoordinateStateEnum;
 import com.ze.zhou.enums.NoticeStateEnum;
 import com.ze.zhou.enums.OperatorStateEnum;
+import com.ze.zhou.enums.ProblemImgStateEnum;
+import com.ze.zhou.enums.ProblemStateEnum;
 import com.ze.zhou.service.AreaService;
 import com.ze.zhou.service.CoordinateService;
 import com.ze.zhou.service.NoticeService;
 import com.ze.zhou.service.OperatorService;
+import com.ze.zhou.service.ProblemImgService;
+import com.ze.zhou.service.ProblemService;
 import com.ze.zhou.util.CodeUtil;
 import com.ze.zhou.util.HttpServletRequestUtil;
 import com.ze.zhou.util.ImageHolder;
-import com.ze.zhou.web.superadmin.AreaSuperadminController;
 
 import ch.qos.logback.classic.Logger;
 
@@ -59,6 +65,10 @@ public class SuperOperatorController {
 	private CoordinateService coordinateService;
 	@Autowired
 	private NoticeService noticeService;
+	@Autowired
+	private ProblemService problemService;
+	@Autowired
+	private ProblemImgService problemImgService;
 	
 	//更新管理员信息
 	@RequestMapping(value="/modifyoperator",method=RequestMethod.POST)
@@ -440,6 +450,51 @@ public class SuperOperatorController {
 				modelMap.put("success", false);
 				modelMap.put("errMsg", ce.getStateInfo());
 			}
+		}
+		return modelMap;
+	}
+	
+	//获取所有问题数据
+	@RequestMapping(value="/getproblemlist",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getProblemList(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
+		if(pageIndex>=0&&pageSize>0) {
+			ProblemExecution pe=problemService.getQueryProblem(pageIndex, pageSize);
+			if(pe.getState()==ProblemStateEnum.SUCCESS.getState()&&pe.getCount()>0) {
+				modelMap.put("success", true);
+				modelMap.put("problemList", pe.getProblemList());
+				modelMap.put("count", pe.getCount());
+			}else {
+				modelMap.put("success", false);
+				modelMap.put("errMsg", "empty problemList");
+			}
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", "empty page data");
+		}
+		return modelMap;
+	}
+	//获取问题对应的图片
+	@RequestMapping(value="/getproblemimglist",method=RequestMethod.GET)
+	@ResponseBody
+	private Map<String,Object> getProblemImgList(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		int problemId=HttpServletRequestUtil.getInt(request, "problemId");
+		if(problemId>0) {
+			Problem problem=new Problem();
+			problem.setProblemId(problemId);
+			ProblemImgExecution pie=problemImgService.getProblemImgByProblem(problem);
+			if(pie.getState()==ProblemImgStateEnum.SUCCESS.getState()) {
+				modelMap.put("success", true);
+				modelMap.put("problemImgList", pie.getProblemImgList());
+			}else {
+				modelMap.put("success", false);
+			}
+		}else {
+			modelMap.put("success", false);
 		}
 		return modelMap;
 	}
