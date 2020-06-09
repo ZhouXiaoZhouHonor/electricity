@@ -9,6 +9,7 @@
 		<result column="problem_enable_status" property="problemEnableStatus"/>
 		<result column="create_time" property="createTime"/>
 		<result column="last_edit_time" property="lastEditTime"/>
+		<result column="problem_salve" property="problemSalve"/>
 		<association column="user_id" property="user" 
 			javaType="com.ze.zhou.entity.PhoneUser">
 			<!-- 目前只取出一个id就可以了 -->

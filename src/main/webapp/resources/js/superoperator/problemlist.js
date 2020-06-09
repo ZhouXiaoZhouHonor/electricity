@@ -53,7 +53,7 @@ layui.use(['jquery','table','layer','element'],function(){
 				  {fixed:'left',title:'序号',align:'center',width:80,type:'numbers'},
 			      {field:'problemTitle',title:'问题名称',align:'center',width:200},
 			      {field:'problemEnableStatus',title:'状态',align:'center',width:80,templet:function(data){
-			    	  if(data.areaEnableStatus==1){
+			    	  if(data.problemEnableStatus==1){
 			    		  return '<span style="color:#1E9FFF">已审核</span>';
 			    	  }else{
 			    		  return '<span style="color:red">未审核</span>';
@@ -85,6 +85,7 @@ layui.use(['jquery','table','layer','element'],function(){
 		});
 	}
 	
+	var windowOpen;
 	//操作栏中按钮实施监听
 	function watchAreaList(table,layer){
 		table.on('tool(problemtable)',function(obj){
@@ -148,7 +149,7 @@ layui.use(['jquery','table','layer','element'],function(){
 						layer.msg("error:"+data.errMsg);
 					}
 				});
-				layer.open({
+				windowOpen=layer.open({
 					type:1,//默认的信息框比较好
 					area:['600px','600px'],
 					anim:1,//弹出方式
@@ -187,6 +188,8 @@ layui.use(['jquery','table','layer','element'],function(){
 				success:function(data){
 					if(data.success){
 						layer.msg('反馈成功');
+						layer.close(windowOpen);
+						$('#problem-message').click();
 					}else{
 						layer.msg('反馈失败'+data.errMsg);
 					}

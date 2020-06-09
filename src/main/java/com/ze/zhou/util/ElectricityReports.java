@@ -129,13 +129,15 @@ public class ElectricityReports {
         configuration.setDefaultEncoding("utf-8");
 		
         String filePath1="";
+        String link="";
         //指定路径的第二种方式，我的路径是C：/a.ftl
         try {
 			configuration.setDirectoryForTemplateLoading(new File("E:/Users/16078/eclipse-workspace/zhou/src/main/resources/report"));
 			//输出文档路径及名称
 			String path=PathUtil.getImgBasePath();
 			dest=PathUtil.getElectricityReportPath(pileElectricityList.get(0).getPile().getPileId());
-			String filePath=path+dest+ImageUtil.getRandomFileName()+".doc";
+			link=dest+ImageUtil.getRandomFileName()+".doc";
+			String filePath=path+link;
 			//System.out.println("替换前:"+filePath);
 			filePath1=filePath.replaceAll("/", "\\\\");
 			//System.out.println("替换后:"+filePath1);
@@ -161,7 +163,7 @@ public class ElectricityReports {
         
         DocToPdf.doc2pdf(filePath1);
         //返回绝对路径名称
-		return dest+ImageUtil.getRandomFileName()+".doc";
+		return link;
 	}
 	
 	public void test(List<Float> list){
