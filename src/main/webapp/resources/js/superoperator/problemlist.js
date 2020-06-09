@@ -62,6 +62,9 @@ layui.use(['jquery','table','layer','element'],function(){
 			      {field:'createTime',title:'提交时间',align:'center',width:200,templet:function(data){
 			    	  return new Date(data.createTime).Format("yyyy-MM-dd");
 			      }},
+			      {field:'createTime',title:'处理时间',align:'center',width:200,templet:function(data){
+			    	  return new Date(data.lastEditTime).Format("yyyy-MM-dd");
+			      }},
 			      {fixed: 'right',title:'操作',align:'center',toolbar:'#barDemo'}
 			    ]],
 		    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -87,15 +90,14 @@ layui.use(['jquery','table','layer','element'],function(){
 		table.on('tool(problemtable)',function(obj){
 			var problemList=obj.data;
 			var problemId=problemList.problemId;
-			var formData=new FormData();
-			formData.append('problemId',problemId);
+			
 			switch(obj.event){
 			case 'start':
 				console.log('点击了启用按钮');
 				//layer.msg('问题id为:'+problemList.problemId);
 				//显示出弹窗，为超级管理员提供填写意见文本框
 				var problem='<div style="width:590px;height:500px;">'+
-				'<form class="layui-form" action="">'+
+				'<form class="layui-form" lay-filter="updateProblemForm" method="post" enctype="multipart/form-data" action="">'+
 				  '<div class="layui-form-item layui-form-text">'+
 				    '<label class="layui-form-label">问题描述</label>'+
 				    '<div class="layui-input-block" style="width:400px;">'+
@@ -107,9 +109,7 @@ layui.use(['jquery','table','layer','element'],function(){
 				  	'<label class="layui-form-label">图片描述</label>'+
 				  	'<div class="layui-input-block" style="width:400px;">'+
 				  		'<div id="problem-images" class="layui-container">'+
-				  			'<div class="layui-row">'+
-				  				'图片'+
-				  			'</div>'+
+				  			
 				  		'</div>'+  
 				  	'</div>'+
 				  '</div>'+
@@ -117,23 +117,33 @@ layui.use(['jquery','table','layer','element'],function(){
 				  '<div class="layui-form-item layui-form-text">'+
 				    '<label class="layui-form-label">反馈</label>'+
 				    '<div class="layui-input-block">'+
-				      '<textarea name="desc" class="layui-textarea" style="width:400px;"></textarea>'+
+				      '<textarea id="problem-salve" name="problemsalvedesc" class="layui-textarea" style="width:400px;"></textarea>'+
 				    '</div>'+
 				  '</div>'+
 				  
 				  '<div class="layui-form-item">'+
 				    '<div class="layui-input-block">'+
-				      '<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>'+
+				      '<button id="update-problem" class="layui-btn" lay-submit lay-filter="updateProblem">立即提交</button>'+
 				      '<button type="reset" class="layui-btn layui-btn-primary">重置</button>'+
 				    '</div>'+
 				  '</div>'+
 				'</form>'+
 				'</div>';
-				//TODO 根据id获取问题相关图片
-				var problemImgUrl='/zhou//superoperator/getproblemimglist';
+				//根据id获取问题相关图片
+				var problemImgUrl='/zhou/superoperator/getproblemimglist?problemId='+problemId;
 				$.getJSON(problemImgUrl,function(data){
 					if(data.success){
-						
+						var problemImgList=data.problemImgList;
+						var imgHtml='';
+						problemImgList.map(function(item,index){
+							imgHtml+=''+
+							'<div class="layui-row">'+
+				  				'<img src="'+item.problemImgLink+'"/>'+
+				  			'</div>';
+						});
+						$('#problem-images').html(imgHtml);
+						console.log('地址:'+problemImgList[0].problemImgLink);
+						modifyProblemState(problemId);
 					}else{
 						layer.msg("error:"+data.errMsg);
 					}
@@ -145,17 +155,46 @@ layui.use(['jquery','table','layer','element'],function(){
 					title:'问题处理意见',//跟的是充电桩的名字
 					content:problem,//充电桩的详细信息，包含所有信息
 				});
-				formData.append('enableStatus',1);
-				modifyProblemState(formData);
+				//formData.append('enableStatus',1);
+				//
 				break;
 			}
 		});
 	}
 	
-	function modifyProblemState(formData){
-		
+	function modifyProblemState(problemId){
+		var formData=new FormData();
+		formData.append('problemId',problemId);
+		formData.append('enableStatus',1);
+		form.on('submit(updateProblem)',function(data){
+			var problem={};//定义json
+			//获取表单数据
+			var problemData=form.val('updateProblemForm');
+			var problemSalveDesc=problemData.problemsalvedesc;
+			if(problemSalveDesc==undefined||problemSalveDesc==''){
+				layer.msg('请填写反馈意见');
+				return false;
+			}
+			problem.problemSalve=problemSalveDesc;
+			formData.append('problem',JSON.stringify(problem));
+			$.ajax({
+				url:'/zhou/superoperator/modifyproblem',
+				type:'POST',
+				data:formData,
+				contentType:false,
+				processData:false,
+				cache:false,//是否启用cache缓存
+				success:function(data){
+					if(data.success){
+						layer.msg('反馈成功');
+					}else{
+						layer.msg('反馈失败'+data.errMsg);
+					}
+				}
+			});
+			return false;
+		});
 	}
-	
 });
 
 

@@ -498,4 +498,34 @@ public class SuperOperatorController {
 		}
 		return modelMap;
 	}
+	
+	//更新问题状态
+	@RequestMapping(value="/modifyproblem",method=RequestMethod.POST)
+	@ResponseBody
+	private Map<String,Object> modifyProblem(HttpServletRequest request){
+		Map<String,Object> modelMap=new HashMap<>();
+		//获取表单数据
+		int problemId=HttpServletRequestUtil.getInt(request, "problemId");
+		int enableStatus=HttpServletRequestUtil.getInt(request, "enableStatus");
+		String problemStr=HttpServletRequestUtil.getString(request, "problem");
+		Problem problem=null;
+		try {
+			ObjectMapper mapper=new ObjectMapper();
+			problem=mapper.readValue(problemStr, Problem.class);
+		}catch(Exception e) {
+			modelMap.put("success", false);
+			modelMap.put("errMsg", e.getMessage());
+			return modelMap;
+		}
+		problem.setProblemId(problemId);
+		problem.setProblemEnableStatus(enableStatus);
+		ProblemExecution pe=problemService.changeProblem(problem);
+		if(pe.getState()==ProblemStateEnum.SUCCESS.getState()) {
+			modelMap.put("success", true);
+		}else {
+			modelMap.put("success", false);
+			modelMap.put("success", pe.getStateInfo());
+		}
+		return modelMap;
+	}
 }
