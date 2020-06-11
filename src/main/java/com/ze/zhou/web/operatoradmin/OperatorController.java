@@ -182,6 +182,7 @@ public class OperatorController {
 			modelMap.put("success", true);
 			modelMap.put("pileList", pe.getPileList());
 			modelMap.put("count", pe.getCount());
+			modelMap.put("operator", operator);
 		}else {
 			modelMap.put("success", false);
 			modelMap.put("errMsg", "empty coordinateId or operatorId or pageIndex or pageSize");

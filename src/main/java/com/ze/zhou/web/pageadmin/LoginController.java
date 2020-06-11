@@ -69,6 +69,7 @@ public class LoginController {
 		OperatorExecution oe=operatorService.operatorCheck(operator);
 		if(oe.getState()==OperatorStateEnum.CHECK_SUCCESS.getState()) {
 			modelMap.put("success", true);
+			modelMap.put("operator", oe.getOperator());
 			//成功后，需要将用户放入session中保存
 			request.getSession().setAttribute("operatorCurrent", oe.getOperator());
 		}else {
