@@ -1,34 +1,17 @@
-2020-06-08 19:37:37.734[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==>  Preparing: UPDATE tb_problem SET problem_salve=? problem_enable_status=?, last_edit_time=? WHERE problem_id=? 
-2020-06-08 19:37:37.790[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==> Parameters: 问题出现在这个地方(String), 0(Integer), 2020-06-08 19:37:37.207(Timestamp), 3(Integer)
-2020-06-08 19:38:15.383[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==>  Preparing: UPDATE tb_problem SET problem_salve=?, problem_enable_status=?, last_edit_time=? WHERE problem_id=? 
-2020-06-08 19:38:15.428[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - ==> Parameters: 问题出现在这个地方(String), 0(Integer), 2020-06-08 19:38:14.888(Timestamp), 3(Integer)
-2020-06-08 19:38:15.435[main]DEBUG com.ze.zhou.dao.ProblemDao.updateProblem - <==    Updates: 1
-2020-06-08 19:56:39.275[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==>  Preparing: SELECT problem_id, problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, problem_salve, FROM tb_problem ORDER BY last_edit_time DESC LIMIT ?,? 
-2020-06-08 19:56:39.319[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==> Parameters: 0(Integer), 20(Integer)
-2020-06-08 19:58:11.694[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==>  Preparing: SELECT problem_id, problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, problem_salve FROM tb_problem ORDER BY last_edit_time DESC LIMIT ?,? 
-2020-06-08 19:58:11.733[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==> Parameters: 0(Integer), 20(Integer)
-2020-06-08 19:58:11.762[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - <==      Total: 11
-2020-06-08 20:04:48.708[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==>  Preparing: SELECT problem_id, problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, problem_salve FROM tb_problem ORDER BY last_edit_time DESC LIMIT ?,? 
-2020-06-08 20:04:48.744[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==> Parameters: 0(Integer), 20(Integer)
-2020-06-08 20:04:48.767[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - <==      Total: 11
-2020-06-08 20:07:53.758[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==>  Preparing: SELECT problem_id, problem_desc, problem_title, problem_enable_status, create_time, last_edit_time, problem_salve FROM tb_problem ORDER BY last_edit_time DESC LIMIT ?,? 
-2020-06-08 20:07:53.791[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - ==> Parameters: 0(Integer), 20(Integer)
-2020-06-08 20:07:53.818[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblem - <==      Total: 11
-2020-06-08 20:07:53.888[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUserCount - ==>  Preparing: SELECT count(1) FROM tb_problem 
-2020-06-08 20:07:53.890[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUserCount - ==> Parameters: 
-2020-06-08 20:07:53.892[main]DEBUG com.ze.zhou.dao.ProblemDao.queryProblemByUserCount - <==      Total: 1
-2020-06-08 22:15:47.348[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id 
-2020-06-08 22:15:47.400[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 
-2020-06-08 22:15:47.426[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 12
-2020-06-08 22:17:14.754[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id AND pi.problem_id=? 
-2020-06-08 22:17:14.797[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: null
-2020-06-08 22:17:14.817[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 0
-2020-06-08 22:19:15.088[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id AND p.problem_id=? 
-2020-06-08 22:19:15.127[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 1(Integer)
-2020-06-08 22:19:15.144[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 0
-2020-06-08 22:19:37.344[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id AND p.problem_id=? 
-2020-06-08 22:19:37.387[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 14(Integer)
-2020-06-08 22:19:37.412[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 2
-2020-06-08 22:27:31.240[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==>  Preparing: SELECT pi.problem_img_id, pi.problem_img_link, pi.problem_img_priority, pi.problem_id FROM tb_problem_img pi, tb_problem p WHERE pi.problem_id=p.problem_id AND p.problem_id=? 
-2020-06-08 22:27:31.329[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - ==> Parameters: 14(Integer)
-2020-06-08 22:27:31.362[main]DEBUG c.z.z.dao.ProblemImgDao.queryProblemImgByProblem - <==      Total: 2
+2020-06-11 18:22:37.651[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
+2020-06-11 18:22:37.701[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-11 18:22:37.730[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
+2020-06-11 18:26:35.143[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status, area_id FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
+2020-06-11 18:26:35.182[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-11 18:26:35.203[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
+2020-06-11 18:31:24.416[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status, area_id FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
+2020-06-11 18:31:24.499[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-11 18:31:24.567[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
+2020-06-11 18:35:13.538[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status, area_id FROM tb_coordinate c, tb_area a WHERE c.area_id=a.area_id ORDER BY priority DESC LIMIT ?,? 
+2020-06-11 18:35:13.572[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-11 18:36:02.028[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT c.coordinate_id, c.coordinate_longitude, c.coordinate_latitude, c.create_time, c.last_edit_time, c.priority, c.coordinate_name, c.coordinate_pile_number, c.coordinate_enable_status, a.area_id FROM tb_coordinate c, tb_area a WHERE c.area_id=a.area_id ORDER BY priority DESC LIMIT ?,? 
+2020-06-11 18:36:02.078[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-11 18:36:02.108[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
+2020-06-11 18:36:45.444[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT c.coordinate_id, c.coordinate_longitude, c.coordinate_latitude, c.create_time, c.last_edit_time, c.priority, c.coordinate_name, c.coordinate_pile_number, c.coordinate_enable_status, a.area_id, a.area_name FROM tb_coordinate c, tb_area a WHERE c.area_id=a.area_id ORDER BY c.priority DESC LIMIT ?,? 
+2020-06-11 18:36:45.478[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-11 18:36:45.499[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
