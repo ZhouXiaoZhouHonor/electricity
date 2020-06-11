@@ -54,6 +54,10 @@ layui.use(['element','jquery','layer'], function(){
 	  layui.reportTable();
   });
   
+  $(document).on('click','#exit-system',function(){
+	  //window.localStorage.
+  });
+  
   //初步加载高德地图,同时添加充电桩坐标点
   mainMapInit(myJquery);
 });
@@ -74,30 +78,13 @@ function mainMapInit(jquery){
 	var getPileListUrl='/zhou/operator/getpilelist';
 	$.getJSON(getPileListUrl,function(data){
 		if(data.success){
-			/*var operator;
-			if(operator==undefined){
-				operator=data.operator;
-			}*/
-			//获取操作员名字和头像
-			/*var operatorName,operatorImg;
-			if(window.localStorage.getItem('operatorName')==undefined){
-				window.localStorage.setItem('operatorName',data.operator.operatorName);
-				window.localStorage.setItem('operatorImg',data.operator.operatorImg);
-			}else{
-				operatorName=window.localStorage.getItem('operatorName');
-				operatorImg=window.localStorage.getItem('operatorImg');
-			}
-			$('#operator-name').append(operatorName);
-			$('#operator-name a').attr('src',operatorImg);
-			layer.msg(operator.operatorName);
-			$('#operator-name').append(operator.operatorName);*/
 			//添加姓名，头像
 			var operatorName=window.localStorage.getItem('operatorName');
 			var operatorImg=window.localStorage.getItem('operatorImg');
 			console.log(operatorName);
 			console.log(operatorImg);
 			$('#operator-name').append(operatorName);
-			$('#operator-name a').attr('src',operatorImg);
+			$('#operator-name img').attr('src',operatorImg);
 			//创建数据指定长度
 			var markers=[];
 			var pileList=data.pileList;
