@@ -21,16 +21,18 @@ public class CoordinateDaoTest extends BaseTest{
 	private CoordinateDao coordinateDao;
 	
 	@Test
+	@Ignore
 	public void queryAllTest() {
 		List<Coordinate> coordinateList=coordinateDao.queryAllCoordinate();
 		System.out.println(coordinateList.size());
 	}
 	
 	@Test
-	@Ignore
+	//@Ignore
 	public void queryCoordinateListTest() {
 		List<Coordinate> coordinateList=coordinateDao.queryCoordinateList(0, 5);
 		System.out.println(coordinateList.get(0).getCoordinateName());
+		System.out.println(coordinateList.get(0).getArea().getAreaName());
 	}
 	
 	@Test

@@ -15,6 +15,7 @@
 		<result property="coordinateEnableStatus" column="coordinate_enable_status"/>
 		<association property="area" column="area_id" javaType="com.ze.zhou.entity.Area">
 			<id property="areaId" column="area_id"/>
+			<result property="areaName" column="area_name"/>
 		</association>
 	</resultMap>
 	<select id="queryCoordinate" parameterType="int" resultMap="coordinateMap">
@@ -96,19 +97,24 @@
 	<!-- 分页查询站点信息 -->
 	<select id="queryCoordinateList" resultMap="coordinateMap">
 		SELECT
-		coordinate_id,  
- 		coordinate_longitude,
- 		coordinate_latitude,
- 		create_time,    
- 		last_edit_time,
- 		priority,
- 		coordinate_name,
- 		coordinate_pile_number,
- 		coordinate_enable_status
+		c.coordinate_id,  
+ 		c.coordinate_longitude,
+ 		c.coordinate_latitude,
+ 		c.create_time,    
+ 		c.last_edit_time,
+ 		c.priority,
+ 		c.coordinate_name,
+ 		c.coordinate_pile_number,
+ 		c.coordinate_enable_status,
+ 		a.area_id,
+ 		a.area_name
  		FROM
- 		tb_coordinate
+ 		tb_coordinate c,
+ 		tb_area a
+ 		WHERE
+ 		c.area_id=a.area_id
  		ORDER BY
- 		priority
+ 		c.priority
  		DESC
  		LIMIT #{rowIndex},#{pageSize}
 	</select>

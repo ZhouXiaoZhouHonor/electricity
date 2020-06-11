@@ -161,6 +161,9 @@ layui.use(['layer','jquery','element','table'],function(){
 				    		  return '<span style="color:red">禁用</span>';
 				    	  }
 				      }},
+				      {field:'areaName',title:'所属区域',align:'center',width:100,templet:function(data){
+				    	  return data.area.areaName;
+				      }},
 				      {fixed: 'right',title:'操作',align:'center',toolbar:'#barDemo'}
 				    ]],
 			    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
