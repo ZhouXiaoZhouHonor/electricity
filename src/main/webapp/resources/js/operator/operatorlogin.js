@@ -36,8 +36,8 @@ layui.use(['jquery','element','layer','form'],function(){
 				if(data.success){
 					//账号验证成功，需要跳转到主页面
 					console.log('登陆成功');
-					window.localStorage.setItem('operatorName',operator.operatorName);
-					window.localStorage.setItem('operatorImg',operator.operatorImg);
+					window.localStorage.setItem('operatorName',data.operator.operatorName);
+					window.localStorage.setItem('operatorImg',data.operator.operatorImg);
 					window.location.href='/zhou/page/main';
 				}else{
 					$('#login-reset').click();//清空内容

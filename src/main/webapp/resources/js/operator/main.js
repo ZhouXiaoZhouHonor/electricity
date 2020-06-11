@@ -91,6 +91,13 @@ function mainMapInit(jquery){
 			$('#operator-name a').attr('src',operatorImg);
 			layer.msg(operator.operatorName);
 			$('#operator-name').append(operator.operatorName);*/
+			//添加姓名，头像
+			var operatorName=window.localStorage.getItem('operatorName');
+			var operatorImg=window.localStorage.getItem('operatorImg');
+			console.log(operatorName);
+			console.log(operatorImg);
+			$('#operator-name').append(operatorName);
+			$('#operator-name a').attr('src',operatorImg);
 			//创建数据指定长度
 			var markers=[];
 			var pileList=data.pileList;
