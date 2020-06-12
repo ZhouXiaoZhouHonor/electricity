@@ -161,8 +161,12 @@ layui.use(['layer','jquery','element','table'],function(){
 				    		  return '<span style="color:red">禁用</span>';
 				    	  }
 				      }},
-				      {field:'areaName',title:'所属区域',align:'center',width:100,templet:function(data){
-				    	  return data.area.areaName;
+				      {field:'areaName',title:'所属区域',align:'center',width:150,templet:function(data){
+				    	  if(data.area==undefined||data.area=='null'){
+				    		  return '<span style="color:red;">未分配区域</span>';
+				    	  }else{
+				    		  return data.area.areaName;
+				    	  }
 				      }},
 				      {fixed: 'right',title:'操作',align:'center',toolbar:'#barDemo'}
 				    ]],

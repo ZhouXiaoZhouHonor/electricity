@@ -41,6 +41,8 @@ layui.use(['jquery','layer','element','form'],function(){
 						yes:function(index,layero){//按钮一(取消按钮)
 							//点击取消按钮，跳转到展示页面 
 							window.location.href='/zhou/pagesuper/main';
+							$('#coordinate-message').click();
+							
 						},
 						btn2:function(index,layero){//按钮二(继续添加按钮)
 							//刷新本页面，继续添加

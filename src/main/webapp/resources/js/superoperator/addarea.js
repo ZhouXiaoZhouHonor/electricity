@@ -34,8 +34,9 @@ layui.use(['layer','jquery','form','element'],function(){
 						closeBtn:0,
 						btn:['取消','继续添加'],
 						yes:function(index,layero){//按钮一(取消按钮)
-							//点击取消按钮，跳转到展示页面 TODO
+							//点击取消按钮，跳转到展示页面 
 							window.location.href='/zhou/pagesuper/main';
+							//document.getElementById('area-message').click();
 							//$('#area-message').click();
 						},
 						btn2:function(index,layero){//按钮二(继续添加按钮)
