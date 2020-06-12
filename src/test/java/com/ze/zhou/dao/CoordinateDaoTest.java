@@ -28,9 +28,10 @@ public class CoordinateDaoTest extends BaseTest{
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void queryCoordinateListTest() {
 		List<Coordinate> coordinateList=coordinateDao.queryCoordinateList(0, 5);
+		System.out.println(coordinateList.size());
 		System.out.println(coordinateList.get(0).getCoordinateName());
 		System.out.println(coordinateList.get(0).getArea().getAreaName());
 	}

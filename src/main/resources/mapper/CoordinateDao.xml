@@ -109,9 +109,10 @@
  		a.area_id,
  		a.area_name
  		FROM
- 		tb_coordinate c,
+ 		tb_coordinate c
+ 		LEFT JOIN
  		tb_area a
- 		WHERE
+ 		ON
  		c.area_id=a.area_id
  		ORDER BY
  		c.priority

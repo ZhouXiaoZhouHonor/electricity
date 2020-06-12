@@ -20,7 +20,7 @@ layui.use(['element','jquery','layer'], function(){
   });
   //添加充电桩
   $('#pile-add').on('click',function(){
-	  window.location.href='/zhou/page/addpile';
+	  windowlocation.href='/zhou/page/addpile';
   });
   
   //手机用户数量显示
@@ -58,7 +58,7 @@ layui.use(['element','jquery','layer'], function(){
 	  //alert('点击了退出');
 	  window.localStorage.clear();
 	  //alert('即将跳转');
-	  window.location.href='/zhou/login/operatorlogin';
+	  window.parent.location.href='/zhou/login/operatorlogin';
   });
   
   //初步加载高德地图,同时添加充电桩坐标点
