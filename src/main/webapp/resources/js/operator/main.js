@@ -53,9 +53,10 @@ layui.use(['element','jquery','layer'], function(){
 	  //layer.msg('点击了监测记录');
 	  layui.reportTable();
   });
-  
+  //退出
   $(document).on('click','#exit-system',function(){
-	  //window.localStorage.
+	  window.localStorage.clear();
+	  window.location.href='/zhou/login/operatorlogin';
   });
   
   //初步加载高德地图,同时添加充电桩坐标点
