@@ -1,17 +1,3 @@
-2020-06-11 18:22:37.651[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
-2020-06-11 18:22:37.701[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
-2020-06-11 18:22:37.730[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
-2020-06-11 18:26:35.143[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status, area_id FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
-2020-06-11 18:26:35.182[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
-2020-06-11 18:26:35.203[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
-2020-06-11 18:31:24.416[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status, area_id FROM tb_coordinate ORDER BY priority DESC LIMIT ?,? 
-2020-06-11 18:31:24.499[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
-2020-06-11 18:31:24.567[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
-2020-06-11 18:35:13.538[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT coordinate_id, coordinate_longitude, coordinate_latitude, create_time, last_edit_time, priority, coordinate_name, coordinate_pile_number, coordinate_enable_status, area_id FROM tb_coordinate c, tb_area a WHERE c.area_id=a.area_id ORDER BY priority DESC LIMIT ?,? 
-2020-06-11 18:35:13.572[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
-2020-06-11 18:36:02.028[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT c.coordinate_id, c.coordinate_longitude, c.coordinate_latitude, c.create_time, c.last_edit_time, c.priority, c.coordinate_name, c.coordinate_pile_number, c.coordinate_enable_status, a.area_id FROM tb_coordinate c, tb_area a WHERE c.area_id=a.area_id ORDER BY priority DESC LIMIT ?,? 
-2020-06-11 18:36:02.078[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
-2020-06-11 18:36:02.108[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
-2020-06-11 18:36:45.444[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT c.coordinate_id, c.coordinate_longitude, c.coordinate_latitude, c.create_time, c.last_edit_time, c.priority, c.coordinate_name, c.coordinate_pile_number, c.coordinate_enable_status, a.area_id, a.area_name FROM tb_coordinate c, tb_area a WHERE c.area_id=a.area_id ORDER BY c.priority DESC LIMIT ?,? 
-2020-06-11 18:36:45.478[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
-2020-06-11 18:36:45.499[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 4
+2020-06-12 09:57:11.144[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==>  Preparing: SELECT c.coordinate_id, c.coordinate_longitude, c.coordinate_latitude, c.create_time, c.last_edit_time, c.priority, c.coordinate_name, c.coordinate_pile_number, c.coordinate_enable_status, a.area_id, a.area_name FROM tb_coordinate c LEFT JOIN tb_area a ON c.area_id=a.area_id ORDER BY c.priority DESC LIMIT ?,? 
+2020-06-12 09:57:11.182[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - ==> Parameters: 0(Integer), 5(Integer)
+2020-06-12 09:57:11.203[main]DEBUG com.ze.zhou.dao.CoordinateDao.queryCoordinateList - <==      Total: 5
