@@ -55,7 +55,9 @@ layui.use(['element','jquery','layer'], function(){
   });
   //退出
   $(document).on('click','#exit-system',function(){
+	  //alert('点击了退出');
 	  window.localStorage.clear();
+	  //alert('即将跳转');
 	  window.location.href='/zhou/login/operatorlogin';
   });
   
