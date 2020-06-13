@@ -68,6 +68,9 @@ public class LoginController {
 			modelMap.put("success", false);
 			modelMap.put("errMsg", e.getMessage());
 		}
+		if(request.getSession().getAttribute("operatorCurrent")!=null) {
+			request.getSession().removeAttribute("operatorCurrent");
+		}
 		//进行账号验证
 		OperatorExecution oe=operatorService.operatorCheck(operator);
 		if(oe.getState()==OperatorStateEnum.CHECK_SUCCESS.getState()) {
