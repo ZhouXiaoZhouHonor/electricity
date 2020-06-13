@@ -44,6 +44,7 @@ public class LoginController {
 	private String operatorLogin(HttpServletRequest request) {
 		if(request.getSession().getAttribute("operatorCurrent")!=null) {
 			request.getSession().removeAttribute("operatorCurrent");
+			request.getSession().removeAttribute("pileList");
 		}
 		return "login/operatorlogin";
 	}
@@ -70,6 +71,7 @@ public class LoginController {
 		}
 		if(request.getSession().getAttribute("operatorCurrent")!=null) {
 			request.getSession().removeAttribute("operatorCurrent");
+			request.getSession().removeAttribute("pileList");
 		}
 		//进行账号验证
 		OperatorExecution oe=operatorService.operatorCheck(operator);
