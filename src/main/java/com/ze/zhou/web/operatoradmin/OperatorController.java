@@ -133,6 +133,12 @@ public class OperatorController {
 		int pageIndex=HttpServletRequestUtil.getInt(request, "pageIndex");
 		int pageSize=HttpServletRequestUtil.getInt(request, "pageSize");
 		
+		
+		
+/*当第一次从数据库中获取pileList后，将其放入session中*/
+		
+		//从session中获取operator
+		Operator operator=(Operator) request.getSession().getAttribute("operatorCurrent");
 		/*1、首先从session获取pileList，若session中的pileList不为空，则获取
 		 * 2、session中的pileList为空则从后台数据库中获取*/
 		@SuppressWarnings("unchecked")
@@ -141,13 +147,10 @@ public class OperatorController {
 		if(pileList!=null&&pileList.size()>0&&pageSize<=0&&pageIndex<0) {
 			modelMap.put("success", true);
 			modelMap.put("pileList",pileList);
+			modelMap.put("operator",operator);
 			return modelMap;
 		}
 		
-/*当第一次从数据库中获取pileList后，将其放入session中*/
-		
-		//从session中获取operator
-		Operator operator=(Operator) request.getSession().getAttribute("operatorCurrent");
 		//先使用设值注入的方法
 		//Operator operator=new Operator();
 		//operator.setOperatorId(1);

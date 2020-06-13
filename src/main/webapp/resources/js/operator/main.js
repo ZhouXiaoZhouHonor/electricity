@@ -20,7 +20,7 @@ layui.use(['element','jquery','layer'], function(){
   });
   //添加充电桩
   $('#pile-add').on('click',function(){
-	  windowlocation.href='/zhou/page/addpile';
+	  window.location.href='/zhou/page/addpile';
   });
   
   //手机用户数量显示
@@ -82,8 +82,10 @@ function mainMapInit(jquery){
 	$.getJSON(getPileListUrl,function(data){
 		if(data.success){
 			//添加姓名，头像
-			var operatorName=window.localStorage.getItem('operatorName');
-			var operatorImg=window.localStorage.getItem('operatorImg');
+			var operatorName=data.operator.operatorName;
+			var operatorImg=data.operator.operatorImg;
+			window.localStorage.setItem('operatorName',operatorName);
+			window.localStorage.setItem('operatorImg',operatorImg);
 			console.log(operatorName);
 			console.log(operatorImg);
 			$('#operator-name').append(operatorName);
