@@ -41,7 +41,10 @@ public class LoginController {
 	private OperatorService operatorService;
 	
 	@RequestMapping(value="/operatorlogin",method=RequestMethod.GET)
-	private String operatorLogin() {
+	private String operatorLogin(HttpServletRequest request) {
+		if(request.getSession().getAttribute("operatorCurrent")!=null) {
+			request.getSession().removeAttribute("operatorCurrent");
+		}
 		return "login/operatorlogin";
 	}
 	
@@ -78,4 +81,6 @@ public class LoginController {
 		}
 		return modelMap;
 	}
+	
+	
 }

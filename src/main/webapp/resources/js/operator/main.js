@@ -56,7 +56,7 @@ layui.use(['element','jquery','layer'], function(){
   //退出
   $(document).on('click','#exit-system',function(){
 	  //alert('点击了退出');
-	  window.localStorage.clear();
+	  window.localStorage.clear();//清除存储的
 	  //alert('即将跳转');
 	  window.parent.location.href='/zhou/login/operatorlogin';
   });
